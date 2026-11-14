@@ -73,7 +73,7 @@ if (check) {
 }
 const body = {
   snippet: { ...meta, categoryId: "22", defaultLanguage: "es", defaultAudioLanguage: "es" },
-  status: { privacyStatus: process.env.YT_PRIVACY || "public", selfDeclaredMadeForKids: false, containsSyntheticMedia: true },
+  status: { privacyStatus: process.env.YT_PRIVACY || "public", selfDeclaredMadeForKids: false, containsSyntheticMedia: false, embeddable: true, publicStatsViewable: true, license: "youtube" },
 };
 const size = statSync(video).size;
 const init = await fetch("https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status", {
