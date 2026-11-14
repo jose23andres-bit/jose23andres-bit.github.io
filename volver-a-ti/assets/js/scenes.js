@@ -501,6 +501,189 @@
     };
   }
 
-  window.VAT_SCENES = { respiracion, chakras, dormir, loto, libelula, geometria };
+  /* =================================================================
+   * Paisajes naturales
+   * ================================================================= */
+  // Silueta de pino
+  function pine(ctx, x, base, hgt, wid) {
+    ctx.beginPath(); ctx.moveTo(x, base - hgt);
+    const tiers = 5;
+    for (let i = 1; i <= tiers; i++) {
+      const y = base - hgt + (hgt * 0.9 * i) / tiers;
+      const ww = wid * (0.35 + 0.65 * i / tiers);
+      ctx.lineTo(x + ww / 2, y); ctx.lineTo(x + ww * 0.18, y - hgt * 0.04);
+    }
+    ctx.lineTo(x + wid * 0.05, base); ctx.lineTo(x - wid * 0.05, base);
+    for (let i = tiers; i >= 1; i--) {
+      const y = base - hgt + (hgt * 0.9 * i) / tiers;
+      const ww = wid * (0.35 + 0.65 * i / tiers);
+      ctx.lineTo(x - ww * 0.18, y - hgt * 0.04); ctx.lineTo(x - ww / 2, y);
+    }
+    ctx.closePath(); ctx.fill();
+  }
+  function ridge(ctx, w, base, amp, seed, t, speed) {
+    ctx.beginPath(); ctx.moveTo(0, base + amp * 2);
+    for (let x = 0; x <= w; x += w / 80) {
+      const u = x / w + t * speed;
+      ctx.lineTo(x, base - amp * (0.5 + 0.3 * Math.sin(u * 6.1 + seed) + 0.2 * Math.sin(u * 15.7 + seed * 2.3) + 0.08 * Math.sin(u * 41 + seed)));
+    }
+    ctx.lineTo(w, base + amp * 2); ctx.closePath(); ctx.fill();
+  }
+
+  /* 7 · Bosque al Amanecer — rayos de luz, niebla y polen dorado */
+  function bosque(w, h, opts) {
+    let layers, dust;
+    const init = () => {
+      layers = [0.66, 0.76, 0.88, 1.02].map((b, li) => {
+        const n = [30, 20, 9, 5][li], trees = [];
+        for (let i = 0; i < n; i++) {
+          let x = rand(-0.08, 1.08);
+          // las capas cercanas dejan un claro central para ver el amanecer
+          if (li >= 2) x = Math.random() < 0.5 ? rand(-0.08, 0.3 - li * 0.04) : rand(0.7 + li * 0.04, 1.08);
+          trees.push({ x, h: [0.13, 0.2, 0.34, 0.55][li] * rand(0.75, 1.2), w: [0.03, 0.045, 0.075, 0.11][li] * rand(0.8, 1.2) });
+        }
+        return { base: b, trees };
+      });
+      dust = makeDust(opts.preview ? 30 : 120, w, h);
+    };
+    init();
+    let last = 0;
+    return {
+      resize(nw, nh) { w = nw; h = nh; init(); },
+      draw(ctx, t) {
+        const dt = Math.min(0.05, t - last); last = t;
+        const s = Math.min(w, h);
+        const sky = ctx.createLinearGradient(0, 0, 0, h);
+        sky.addColorStop(0, "#2a0f55"); sky.addColorStop(0.45, "#7a3f8f"); sky.addColorStop(0.7, "#f2a65a"); sky.addColorStop(1, "#ffd9a0");
+        ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+        const sx = w * 0.56, sy = h * 0.6;
+        glow(ctx, sx, sy, s * 0.9, "255,214,150", 0.55);
+        glow(ctx, sx, sy, s * 0.12, "255,250,230", 0.95);
+        // rayos volumétricos
+        ctx.save(); ctx.globalCompositeOperation = "lighter";
+        for (let i = 0; i < 9; i++) {
+          const a = -Math.PI / 2 + (i - 4) * 0.2 + Math.sin(t * 0.07 + i) * 0.04;
+          const len = Math.hypot(w, h);
+          const g = ctx.createLinearGradient(sx, sy, sx + Math.cos(a) * len, sy + Math.sin(a) * len);
+          const al = 0.07 + 0.05 * Math.sin(t * 0.3 + i * 1.7);
+          g.addColorStop(0, `rgba(255,236,190,${al})`); g.addColorStop(1, "rgba(255,236,190,0)");
+          ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(sx, sy);
+          ctx.lineTo(sx + Math.cos(a - 0.05) * len, sy + Math.sin(a - 0.05) * len);
+          ctx.lineTo(sx + Math.cos(a + 0.05) * len, sy + Math.sin(a + 0.05) * len); ctx.fill();
+        }
+        ctx.restore();
+        const cols = ["rgba(120,70,140,.55)", "rgba(80,40,110,.75)", "rgba(45,18,75,.92)", "#140628"];
+        layers.forEach((L, li) => {
+          ctx.fillStyle = cols[li];
+          const drift = Math.sin(t * 0.02) * s * 0.01 * (li + 1);
+          ctx.fillRect(0, h * L.base, w, h);
+          for (const tr of L.trees) pine(ctx, tr.x * w + drift, h * L.base + 2, tr.h * h, tr.w * w);
+          // niebla entre capas
+          const m = ctx.createLinearGradient(0, h * (L.base - 0.08), 0, h * (L.base + 0.04));
+          m.addColorStop(0, "rgba(255,220,200,0)"); m.addColorStop(0.6, `rgba(255,214,190,${0.16 - li * 0.03})`); m.addColorStop(1, "rgba(255,214,190,0)");
+          ctx.fillStyle = m; ctx.fillRect(0, h * (L.base - 0.08), w, h * 0.12);
+        });
+        ctx.globalCompositeOperation = "lighter";
+        drawDust(ctx, dust, w, h, dt, t, "255,226,160");
+        ctx.globalCompositeOperation = "source-over";
+        if (!opts.preview) label(ctx, w, h, "Respira el bosque", "Bosque al amanecer", Math.sin(Math.PI * ((t % 20) / 20)) * 0.85, 0.16);
+      },
+    };
+  }
+
+  /* 8 · Océano al Atardecer — olas suaves y destellos dorados */
+  function oceano(w, h, opts) {
+    let stars;
+    const init = () => { stars = makeStars(opts.preview ? 30 : 90, w, h * 0.35); };
+    init();
+    return {
+      resize(nw, nh) { w = nw; h = nh; init(); },
+      draw(ctx, t) {
+        const s = Math.min(w, h), hz = h * 0.55;
+        const sky = ctx.createLinearGradient(0, 0, 0, hz);
+        sky.addColorStop(0, "#180838"); sky.addColorStop(0.5, "#5a2a86"); sky.addColorStop(0.85, "#e07a6a"); sky.addColorStop(1, "#ffc27a");
+        ctx.fillStyle = sky; ctx.fillRect(0, 0, w, hz);
+        drawStars(ctx, stars, t, 0.6);
+        // nubes alargadas
+        ctx.save(); ctx.globalCompositeOperation = "lighter";
+        for (let i = 0; i < 6; i++) {
+          const y = hz * (0.35 + i * 0.09), x = ((i * 0.37 + t * 0.004 * (1 + i * 0.2)) % 1.4 - 0.2) * w;
+          const g = ctx.createRadialGradient(x, y, 0, x, y, w * 0.25);
+          g.addColorStop(0, `rgba(255,170,150,${0.14 - i * 0.012})`); g.addColorStop(1, "rgba(255,170,150,0)");
+          ctx.fillStyle = g; ctx.save(); ctx.translate(x, y); ctx.scale(1, 0.12); ctx.translate(-x, -y);
+          ctx.beginPath(); ctx.arc(x, y, w * 0.25, 0, TAU); ctx.fill(); ctx.restore();
+        }
+        ctx.restore();
+        const sx = w * 0.5, r = s * 0.09;
+        glow(ctx, sx, hz, s * 0.7, "255,180,110", 0.5);
+        ctx.save(); ctx.beginPath(); ctx.rect(0, 0, w, hz); ctx.clip();
+        const sg = ctx.createLinearGradient(0, hz - r, 0, hz + r);
+        sg.addColorStop(0, "#fff3d0"); sg.addColorStop(1, "#ffb060");
+        ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(sx, hz + r * 0.25, r, 0, TAU); ctx.fill(); ctx.restore();
+        // mar
+        const sea = ctx.createLinearGradient(0, hz, 0, h);
+        sea.addColorStop(0, "#6a3a7a"); sea.addColorStop(0.3, "#2c1352"); sea.addColorStop(1, "#0b0322");
+        ctx.fillStyle = sea; ctx.fillRect(0, hz, w, h - hz);
+        ctx.globalCompositeOperation = "lighter";
+        for (let i = 0; i < 70; i++) {
+          const d = (i / 70) ** 1.6, y = hz + d * (h - hz);
+          const amp = 1 + d * s * 0.012, phase = t * (0.5 + d * 0.8) + i * 1.3;
+          ctx.strokeStyle = `rgba(255,200,150,${0.05 + 0.12 * (1 - d)})`; ctx.lineWidth = Math.max(1, d * s * 0.004);
+          ctx.beginPath();
+          for (let x = 0; x <= w; x += w / 60) { const yy = y + Math.sin(x / w * (8 + i * 0.3) + phase) * amp; x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy); }
+          ctx.stroke();
+          // camino de luz del sol
+          const width = r * (0.8 + d * 4), n = 3 + Math.floor(d * 5);
+          for (let k = 0; k < n; k++) {
+            const q = Math.sin(i * 7.1 + k * 3.3 + t * 1.4);
+            const len = width * 0.25 * (0.3 + 0.7 * Math.abs(q));
+            ctx.fillStyle = `rgba(255,220,160,${0.35 * (1 - d * 0.6)})`;
+            ctx.fillRect(sx + (k / (n - 1 || 1) - 0.5) * width + q * width * 0.06 - len / 2, y, len, Math.max(1, s * 0.002 * (1 + d * 2)));
+          }
+        }
+        ctx.globalCompositeOperation = "source-over";
+        if (!opts.preview) label(ctx, w, h, "Deja que la marea te lleve", "Océano al atardecer", Math.sin(Math.PI * ((t % 22) / 22)) * 0.85, 0.2);
+      },
+    };
+  }
+
+  /* 9 · Lluvia en la Montaña — niebla, lluvia y luz de luna */
+  function lluvia(w, h, opts) {
+    let drops;
+    const init = () => {
+      drops = Array.from({ length: opts.preview ? 120 : 520 }, () => ({ x: Math.random() * w, y: Math.random() * h, l: rand(0.015, 0.04), v: rand(0.7, 1.3), z: Math.random() }));
+    };
+    init();
+    let last = 0;
+    return {
+      resize(nw, nh) { w = nw; h = nh; init(); },
+      draw(ctx, t) {
+        const dt = Math.min(0.05, t - last); last = t;
+        const s = Math.min(w, h);
+        const sky = ctx.createLinearGradient(0, 0, 0, h);
+        sky.addColorStop(0, "#0d0826"); sky.addColorStop(0.6, "#2b1d55"); sky.addColorStop(1, "#3c2a66");
+        ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+        glow(ctx, w * 0.72, h * 0.22, s * 0.5, "190,175,255", 0.22);
+        const mts = [[0.5, 0.16, 1.2, "#3a2a6a"], [0.62, 0.14, 2.7, "#2a1b55"], [0.76, 0.12, 4.1, "#1a0f3d"], [0.9, 0.1, 5.3, "#0e0726"]];
+        mts.forEach(([b, a, seed, col], i) => {
+          ctx.fillStyle = col; ridge(ctx, w, h * b, s * a * 1.6, seed, t, 0.0015 * (i + 1));
+          const m = ctx.createLinearGradient(0, h * (b - 0.05), 0, h * (b + 0.06));
+          m.addColorStop(0, "rgba(200,190,240,0)"); m.addColorStop(0.5, `rgba(200,190,240,${0.12 + 0.04 * Math.sin(t * 0.2 + i)})`); m.addColorStop(1, "rgba(200,190,240,0)");
+          ctx.fillStyle = m; ctx.fillRect(0, h * (b - 0.05), w, h * 0.11);
+        });
+        ctx.strokeStyle = "rgba(210,205,255,.35)"; ctx.lineCap = "round";
+        for (const d of drops) {
+          d.y += d.v * h * 0.9 * dt * (0.6 + d.z); d.x -= h * 0.08 * dt;
+          if (d.y > h) { d.y = -10; d.x = Math.random() * w * 1.1; }
+          ctx.globalAlpha = 0.25 + d.z * 0.55; ctx.lineWidth = Math.max(0.6, s * 0.0012 * (0.5 + d.z));
+          ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x - d.l * h * 0.08, d.y + d.l * h * (0.6 + d.z)); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+        if (!opts.preview) label(ctx, w, h, "Escucha la lluvia", "Lluvia en la montaña", Math.sin(Math.PI * ((t % 24) / 24)) * 0.8, 0.86);
+      },
+    };
+  }
+
+  window.VAT_SCENES = { respiracion, chakras, dormir, loto, libelula, geometria, bosque, oceano, lluvia };
   window.VAT_DRAW = { makeStars, drawStars, makeDust, drawDust, glow, sparkle };
 })();

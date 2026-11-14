@@ -1,0 +1,19 @@
+{
+  "stream": {
+    "title": "🔴 Volver a Ti 24/7 · Música para Meditar, Dormir y Sanar · 432 Hz · Paisajes Naturales y Respiración Guiada",
+    "fps": 30,
+    "videoBitrate": "4500k",
+    "audioBitrate": "160k"
+  },
+  "programs": [
+    { "id": "bosque-432",       "scene": "bosque",      "minutes": 20, "title": "Bosque al Amanecer",       "subtitle": "Música 432 Hz · Calma y claridad mental",        "music": { "root": 216, "beat": 8,    "nature": "birds",  "mood": "warm"  } },
+    { "id": "respira-426",      "scene": "respiracion", "minutes": 10, "title": "Respiración Guiada 4 · 2 · 6", "subtitle": "Sigue la flor de la vida con tu respiración", "music": { "root": 216, "beat": 6,    "nature": "none",   "mood": "warm"  } },
+    { "id": "oceano-528",       "scene": "oceano",      "minutes": 20, "title": "Océano al Atardecer",      "subtitle": "528 Hz · Amor y transformación",                 "music": { "root": 264, "beat": 9,    "nature": "waves",  "mood": "open"  }, "breath": true },
+    { "id": "chakras-7",        "scene": "chakras",     "minutes": 14, "title": "Alineación de los 7 Chakras", "subtitle": "Del chakra raíz a la corona",                "music": { "root": 256, "beat": 7.83, "nature": "none",   "mood": "deep"  } },
+    { "id": "lluvia-sueno",     "scene": "lluvia",      "minutes": 25, "title": "Lluvia en la Montaña",     "subtitle": "Ondas delta · Sueño profundo",                   "music": { "root": 108, "beat": 3,    "nature": "rain",   "mood": "night" } },
+    { "id": "loto-paz",         "scene": "loto",        "minutes": 15, "title": "Despertar del Loto",       "subtitle": "Paz interior · Ondas alfa",                      "music": { "root": 264, "beat": 8,    "nature": "stream", "mood": "open"  }, "breath": true },
+    { "id": "luna-dormir",      "scene": "dormir",      "minutes": 25, "title": "Luna sobre el Agua",       "subtitle": "Música para dormir · Ondas delta 2 Hz",          "music": { "root": 108, "beat": 2,    "nature": "waves",  "mood": "night" } },
+    { "id": "libelula-cambio",  "scene": "libelula",    "minutes": 15, "title": "Vuelo de la Libélula",     "subtitle": "Transformación · 417 Hz",                        "music": { "root": 208.5, "beat": 10, "nature": "none",   "mood": "open"  } },
+    { "id": "geometria-963",    "scene": "geometria",   "minutes": 16, "title": "Geometría Sagrada",        "subtitle": "963 Hz · Chakra corona y consciencia",           "music": { "root": 240.75, "beat": 7, "nature": "none",   "mood": "deep"  } }
+  ]
+}

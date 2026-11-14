@@ -52,6 +52,30 @@
       tags: ["Contemplación", "Theta 7 Hz"],
       audio: { base: 216, beat: 7, pad: true, noise: 0.0 },
     },
+    {
+      id: "bosque",
+      kicker: "Paisajes naturales",
+      title: "Bosque al Amanecer",
+      text: "Los primeros rayos de sol atraviesan la niebla entre los pinos. Polen dorado flotando en el aire y una luz que lo renueva todo.",
+      tags: ["Naturaleza", "432 Hz"],
+      audio: { base: 216, beat: 8, pad: true, noise: 0.08 },
+    },
+    {
+      id: "oceano",
+      kicker: "Paisajes naturales",
+      title: "Océano al Atardecer",
+      text: "El sol se funde con el horizonte y el mar dibuja un camino de luz. Olas lentas para respirar al ritmo del agua.",
+      tags: ["Naturaleza", "Alfa 9 Hz"],
+      audio: { base: 192, beat: 9, pad: true, noise: 0.25 },
+    },
+    {
+      id: "lluvia",
+      kicker: "Dormir profundamente",
+      title: "Lluvia en la Montaña",
+      text: "Lluvia suave sobre montañas cubiertas de niebla bajo la luz de la luna. El sonido perfecto para soltar el día.",
+      tags: ["Sueño", "Delta 3 Hz"],
+      audio: { base: 108, beat: 3, pad: true, noise: 0.35 },
+    },
   ];
 
   /* ---------- Los siete chakras (de la corona a la raíz) ---------- */

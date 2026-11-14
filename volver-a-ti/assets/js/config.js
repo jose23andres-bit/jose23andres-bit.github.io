@@ -8,6 +8,13 @@ window.VAT_CONFIG = {
   // URL de tu canal de YouTube (cámbiala cuando lo crees)
   channelUrl: "https://www.youtube.com/@VolverATi",
 
+  /*
+   * ID del canal (empieza por "UC", 24 caracteres). Está en YouTube Studio →
+   * Configuración → Canal → Configuración avanzada.
+   * Con él, la web muestra el directo 24/7 y se actualiza sola con cada vídeo nuevo.
+   */
+  channelId: "",
+
   // Redes sociales (deja "" para ocultar el enlace)
   social: {
     youtube: "https://www.youtube.com/@VolverATi",

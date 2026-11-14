@@ -284,8 +284,21 @@
       </div>
     </article>`).join("");
 
-  // Últimos vídeos (desde config.js) con carga diferida del reproductor de YouTube
-  const vids = (CFG.videos || []).filter((v) => /^[\w-]{11}$/.test(v.id));
+  // Directo 24/7: YouTube muestra automáticamente la emisión activa del canal
+  if (/^UC[\w-]{22}$/.test(CFG.channelId || "")) {
+    $("#live").hidden = false;
+    $("#liveFrame").src = `https://www.youtube.com/embed/live_stream?channel=${CFG.channelId}&mute=1&autoplay=1`;
+  }
+
+  // Últimos vídeos: los que añade GitHub Actions (assets/data/videos.json) + los de config.js
+  fetch("assets/data/videos.json", { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : { videos: [] }))
+    .catch(() => ({ videos: [] }))
+    .then((d) => {
+      const seen = new Set();
+      renderLatest([...(d.videos || []), ...(CFG.videos || [])].filter((v) => /^[\w-]{11}$/.test(v.id) && !seen.has(v.id) && seen.add(v.id)));
+    });
+  function renderLatest(vids) {
   if (vids.length) {
     $("#latest").hidden = false;
     $("#latestGrid").innerHTML = vids.map((v) => `
@@ -301,6 +314,8 @@
       const b = e.target.closest("[data-yt]"); if (!b) return;
       b.outerHTML = `<div class="yt__frame"><iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.yt}?autoplay=1&rel=0" title="YouTube" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`;
     });
+    observeReveals();
+  }
   }
 
   /* ---------- Estudio: prompts cinematográficos ---------- */

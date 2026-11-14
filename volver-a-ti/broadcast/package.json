@@ -1,0 +1,14 @@
+{
+  "name": "volver-a-ti-directo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Renderizador y emisor del directo 24/7 de Volver a Ti",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "stream": "bash stream.sh"
+  },
+  "dependencies": {
+    "playwright": "1.65.1"
+  }
+}

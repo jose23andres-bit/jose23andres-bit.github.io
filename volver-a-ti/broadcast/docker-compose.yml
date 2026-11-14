@@ -1,0 +1,18 @@
+# Uso en el servidor:
+#   1. Crea broadcast/.env con:  YOUTUBE_STREAM_KEY=xxxx-xxxx-xxxx-xxxx-xxxx
+#   2. docker compose up -d --build
+#   3. docker compose logs -f     (ver el progreso)
+services:
+  directo:
+    build:
+      context: ..
+      dockerfile: broadcast/Dockerfile
+    env_file: .env
+    volumes:
+      - segments:/data
+    restart: always
+    shm_size: "1gb"
+    logging:
+      options: { max-size: "10m", max-file: "3" }
+volumes:
+  segments:
