@@ -1,0 +1,57 @@
+# Volver a Ti · genera y sube un vídeo nuevo al canal cada día (10:00 hora de España).
+# Se activa en cuanto existan los secretos YT_CLIENT_ID, YT_CLIENT_SECRET y YT_REFRESH_TOKEN.
+name: Volver a Ti · vídeo diario
+on:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+    inputs:
+      program: { description: "ID del programa (vacío = rotación diaria)", required: false }
+jobs:
+  video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+      YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+      YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+    defaults: { run: { working-directory: volver-a-ti/broadcast } }
+    steps:
+      - name: Comprobar autorización del canal
+        id: auth
+        working-directory: .
+        run: |
+          if [ -z "$YT_REFRESH_TOKEN" ]; then echo "Sin autorización de YouTube todavía: no se sube nada."; echo "ok=0" >> $GITHUB_OUTPUT; else echo "ok=1" >> $GITHUB_OUTPUT; fi
+      - uses: actions/checkout@v4
+        if: steps.auth.outputs.ok == '1'
+      - uses: actions/setup-node@v4
+        if: steps.auth.outputs.ok == '1'
+        with: { node-version: 22 }
+      - uses: actions/setup-python@v5
+        if: steps.auth.outputs.ok == '1'
+        with: { python-version: "3.12" }
+      - name: Instalar herramientas
+        if: steps.auth.outputs.ok == '1'
+        run: |
+          npm ci && npx playwright install --with-deps chromium
+          pip install numpy scipy imageio-ffmpeg pillow
+      - name: Elegir programa del día
+        if: steps.auth.outputs.ok == '1'
+        id: pick
+        run: |
+          P="${{ github.event.inputs.program }}"
+          if [ -z "$P" ]; then P=$(node -e 'const c=require("./programs.json");const d=Math.floor(Date.now()/864e5);console.log(c.programs[d%c.programs.length].id)'); fi
+          echo "id=$P" >> $GITHUB_OUTPUT; echo "Programa: $P"
+      - name: Renderizar vídeo (10 min, 1080p)
+        if: steps.auth.outputs.ok == '1'
+        run: VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast VAT_WORKERS=1 node render.mjs --only ${{ steps.pick.outputs.id }} --seconds 600
+      - name: Miniatura
+        if: steps.auth.outputs.ok == '1'
+        run: |
+          FF=$(python -c "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())")
+          $FF -loglevel error -y -ss 120 -i out/${{ steps.pick.outputs.id }}.mp4 -frames:v 1 out/frame.png
+          read BIG SCRIPT TAG < <(node -e 'const p=require("./programs.json").programs.find(x=>x.id==="${{ steps.pick.outputs.id }}");const s=p.subtitle.split("·").map(x=>x.trim());console.log([(s[0]||p.title).toUpperCase().replace(/ /g,"_"),p.title.replace(/ /g,"_"),(s[1]||"Volver a Ti").toUpperCase().replace(/ /g,"_")].join(" "))')
+          python thumbnail.py out/frame.png out/thumb.jpg "${BIG//_/ }" "${SCRIPT//_/ }" "${TAG//_/ }"
+      - name: Subir a YouTube
+        if: steps.auth.outputs.ok == '1'
+        run: node upload.mjs out/${{ steps.pick.outputs.id }}.mp4 out/thumb.jpg ${{ steps.pick.outputs.id }}
