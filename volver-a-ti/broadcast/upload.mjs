@@ -61,7 +61,7 @@ async function token() {
   return j.access_token;
 }
 
-const minutes = Math.round((p.uploadMinutes || 10));
+const minutes = Math.round(+(process.env.VAT_MINUTES || p.uploadMinutes || 10));
 let meta = metadata(p, minutes);
 const at = dry ? "" : await token();
 

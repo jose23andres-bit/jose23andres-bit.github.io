@@ -1,4 +1,4 @@
-# Volver a Ti · vídeo largo 2 veces al día (10:00 y 22:00 hora de España).
+# Volver a Ti · vídeo de 10 min a las 10:00 y vídeo de 1 HORA para dormir a las 22:00 (hora de España).
 # Se activa en cuanto existan los secretos YT_CLIENT_ID, YT_CLIENT_SECRET y YT_REFRESH_TOKEN.
 name: Volver a Ti · vídeo diario
 on:
@@ -43,11 +43,16 @@ jobs:
         id: pick
         run: |
           P="${{ github.event.inputs.program }}"
-          if [ -z "$P" ]; then P=$(node -e 'const c=require("./programs.json");const n=Math.floor(Date.now()/432e5);console.log(c.programs[(n*4)%c.programs.length].id)'); fi
+          if [ -z "$P" ]; then P=$(node -e 'const c=require("./programs.json");const n=Math.floor(Date.now()/432e5),night=new Date().getUTCHours()>=18,sleep=["lluvia-sueno","luna-dormir","oceano-528","bosque-432"];console.log(night?sleep[Math.floor(n/2)%sleep.length]:c.programs[(n*4)%c.programs.length].id)'); fi
           echo "id=$P" >> $GITHUB_OUTPUT; echo "Programa: $P"
-      - name: Renderizar vídeo (10 min, 1080p)
+      - name: Duración (de noche, 1 hora)
         if: steps.auth.outputs.ok == '1'
-        run: VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast VAT_WORKERS=1 node render.mjs --only ${{ steps.pick.outputs.id }} --seconds 600
+        id: dur
+        run: |
+          H=$(date -u +%H); if [ "$H" -ge 18 ]; then echo "min=60" >> $GITHUB_OUTPUT; else echo "min=10" >> $GITHUB_OUTPUT; fi
+      - name: Renderizar vídeo (1080p)
+        if: steps.auth.outputs.ok == '1'
+        run: VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast VAT_WORKERS=1 node render.mjs --only ${{ steps.pick.outputs.id }} --seconds $(( ${{ steps.dur.outputs.min }} * 60 ))
       - name: Miniatura
         if: steps.auth.outputs.ok == '1'
         run: |
@@ -57,4 +62,4 @@ jobs:
           python -c "import json,subprocess;a=json.load(open('out/thumb.json'));subprocess.run(['python','thumbnail.py','out/frame.png','out/thumb.jpg',*a],check=True)"
       - name: Subir a YouTube
         if: steps.auth.outputs.ok == '1'
-        run: node upload.mjs out/${{ steps.pick.outputs.id }}.mp4 out/thumb.jpg ${{ steps.pick.outputs.id }}
+        run: VAT_MINUTES=${{ steps.dur.outputs.min }} node upload.mjs out/${{ steps.pick.outputs.id }}.mp4 out/thumb.jpg ${{ steps.pick.outputs.id }}
