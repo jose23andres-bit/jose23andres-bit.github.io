@@ -15,8 +15,9 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const [video, thumb, pid] = process.argv.slice(2);
 const dry = process.argv.includes("--dry");
+const check = process.argv.includes("--check");
 const cfg = JSON.parse(readFileSync(join(HERE, "programs.json"), "utf8"));
-const p = cfg.programs.find((x) => x.id === pid);
+const p = check ? cfg.programs[0] : cfg.programs.find((x) => x.id === pid);
 if (!p) throw new Error(`Programa desconocido: ${pid}`);
 
 export function metadata(p, minutes) {
@@ -46,7 +47,8 @@ export function metadata(p, minutes) {
 }
 
 async function token() {
-  const { YT_CLIENT_ID: id, YT_CLIENT_SECRET: secret, YT_REFRESH_TOKEN: refresh } = process.env;
+  const clean = (v) => (v || "").replace(/\s+/g, "");
+  const id = clean(process.env.YT_CLIENT_ID), secret = clean(process.env.YT_CLIENT_SECRET), refresh = clean(process.env.YT_REFRESH_TOKEN);
   if (!id || !secret || !refresh) throw new Error("Faltan YT_CLIENT_ID, YT_CLIENT_SECRET o YT_REFRESH_TOKEN");
   const r = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -64,6 +66,11 @@ console.log(`Título: ${meta.title}`);
 if (dry) { console.log(meta.description); process.exit(0); }
 
 const at = await token();
+if (check) {
+  const me = await (await fetch("https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true", { headers: { Authorization: `Bearer ${at}` } })).json();
+  console.log(`✓ Claves correctas · canal: ${me.items?.[0]?.snippet?.title}`);
+  process.exit(0);
+}
 const body = {
   snippet: { ...meta, categoryId: "22", defaultLanguage: "es", defaultAudioLanguage: "es" },
   status: { privacyStatus: process.env.YT_PRIVACY || "public", selfDeclaredMadeForKids: false, containsSyntheticMedia: true },

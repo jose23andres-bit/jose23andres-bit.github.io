@@ -35,6 +35,9 @@ jobs:
         run: |
           npm ci && npx playwright install --with-deps chromium
           pip install numpy scipy imageio-ffmpeg pillow
+      - name: Comprobar claves con YouTube
+        if: steps.auth.outputs.ok == '1'
+        run: node upload.mjs x x x --check
       - name: Elegir programa del día
         if: steps.auth.outputs.ok == '1'
         id: pick
