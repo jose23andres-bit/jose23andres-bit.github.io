@@ -284,17 +284,16 @@
       </div>
     </article>`).join("");
 
-  // Directo 24/7: YouTube muestra automáticamente la emisión activa del canal
-  if (/^UC[\w-]{22}$/.test(CFG.channelId || "")) {
-    $("#live").hidden = false;
-    $("#liveFrame").src = `https://www.youtube.com/embed/live_stream?channel=${CFG.channelId}&mute=1&autoplay=1`;
-  }
-
-  // Últimos vídeos: los que añade GitHub Actions (assets/data/videos.json) + los de config.js
+  // Datos que actualiza GitHub Actions cada hora: directo activo y últimos vídeos
   fetch("assets/data/videos.json", { cache: "no-cache" })
     .then((r) => (r.ok ? r.json() : { videos: [] }))
     .catch(() => ({ videos: [] }))
     .then((d) => {
+      // Directo 24/7: el reproductor solo aparece cuando el canal está emitiendo
+      if (d.live && /^UC[\w-]{22}$/.test(CFG.channelId || "")) {
+        $("#live").hidden = false;
+        $("#liveFrame").src = `https://www.youtube.com/embed/live_stream?channel=${CFG.channelId}&mute=1&autoplay=1`;
+      }
       const seen = new Set();
       renderLatest([...(d.videos || []), ...(CFG.videos || [])].filter((v) => /^[\w-]{11}$/.test(v.id) && !seen.has(v.id) && seen.add(v.id)));
     });

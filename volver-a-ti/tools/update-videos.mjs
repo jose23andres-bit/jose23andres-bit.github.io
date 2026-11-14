@@ -31,9 +31,18 @@ const videos = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(([, e]) => {
   return { id, title, published, series };
 }).filter((v) => v.id).slice(0, 12);
 
-const next = JSON.stringify({ channelId, updated: new Date().toISOString().slice(0, 10), videos }, null, 2) + "\n";
+// ¿Está el canal emitiendo ahora? (la web solo muestra el reproductor del directo si es así)
+let live = false;
+try {
+  const html = await (await fetch(`https://www.youtube.com/channel/${channelId}/live`, { headers: { "Accept-Language": "es", "User-Agent": "Mozilla/5.0" } })).text();
+  live = /"isLiveNow":\s*true/.test(html) || /"isLive":\s*true/.test(html);
+} catch { /* sin conexión: se mantiene en falso */ }
+
+const next = JSON.stringify({ channelId, live, updated: new Date().toISOString().slice(0, 10), videos }, null, 2) + "\n";
 const prev = existsSync(out) ? readFileSync(out, "utf8") : "";
-const same = prev && JSON.stringify(JSON.parse(prev).videos) === JSON.stringify(videos);
+const old = prev ? JSON.parse(prev) : {};
+const same = prev && old.live === live && JSON.stringify(old.videos) === JSON.stringify(videos);
+console.log(`Directo activo: ${live ? "sí" : "no"}`);
 if (same) { console.log("Sin vídeos nuevos."); process.exit(0); }
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, next);
