@@ -6,14 +6,260 @@
     "audioBitrate": "160k"
   },
   "programs": [
-    { "id": "bosque-432",       "scene": "bosque",      "minutes": 20, "title": "Bosque al Amanecer",       "subtitle": "Música 432 Hz · Calma y claridad mental",        "music": { "root": 216, "beat": 8,    "nature": "birds",  "mood": "warm"  } },
-    { "id": "respira-426",      "scene": "respiracion", "minutes": 10, "title": "Respiración Guiada 4 · 2 · 6", "subtitle": "Sigue la flor de la vida con tu respiración", "music": { "root": 216, "beat": 6,    "nature": "none",   "mood": "warm"  } },
-    { "id": "oceano-528",       "scene": "oceano",      "minutes": 20, "title": "Océano al Atardecer",      "subtitle": "528 Hz · Amor y transformación",                 "music": { "root": 264, "beat": 9,    "nature": "waves",  "mood": "open"  }, "breath": true },
-    { "id": "chakras-7",        "scene": "chakras",     "minutes": 14, "title": "Alineación de los 7 Chakras", "subtitle": "Del chakra raíz a la corona",                "music": { "root": 256, "beat": 7.83, "nature": "none",   "mood": "deep"  } },
-    { "id": "lluvia-sueno",     "scene": "lluvia",      "minutes": 25, "title": "Lluvia en la Montaña",     "subtitle": "Ondas delta · Sueño profundo",                   "music": { "root": 108, "beat": 3,    "nature": "rain",   "mood": "night" } },
-    { "id": "loto-paz",         "scene": "loto",        "minutes": 15, "title": "Despertar del Loto",       "subtitle": "Paz interior · Ondas alfa",                      "music": { "root": 264, "beat": 8,    "nature": "stream", "mood": "open"  }, "breath": true },
-    { "id": "luna-dormir",      "scene": "dormir",      "minutes": 25, "title": "Luna sobre el Agua",       "subtitle": "Música para dormir · Ondas delta 2 Hz",          "music": { "root": 108, "beat": 2,    "nature": "waves",  "mood": "night" } },
-    { "id": "libelula-cambio",  "scene": "libelula",    "minutes": 15, "title": "Vuelo de la Libélula",     "subtitle": "Transformación · 417 Hz",                        "music": { "root": 208.5, "beat": 10, "nature": "none",   "mood": "open"  } },
-    { "id": "geometria-963",    "scene": "geometria",   "minutes": 16, "title": "Geometría Sagrada",        "subtitle": "963 Hz · Chakra corona y consciencia",           "music": { "root": 240.75, "beat": 7, "nature": "none",   "mood": "deep"  } }
+    {
+      "id": "bosque-432",
+      "scene": "bosque",
+      "minutes": 20,
+      "title": "Bosque al Amanecer",
+      "subtitle": "Música 432 Hz · Calma y claridad mental",
+      "music": {
+        "root": 216,
+        "beat": 8,
+        "nature": "birds",
+        "mood": "warm"
+      },
+      "meta": {
+        "title": "Música 432 Hz para Calmar la Mente 🌲 Bosque al Amanecer · Deja de Pensar y Relájate",
+        "hashtags": "#432Hz #Naturaleza",
+        "tags": [
+          "432 hz",
+          "bosque",
+          "dejar de pensar",
+          "ansiedad"
+        ]
+      },
+      "thumb": {
+        "big": "MÚSICA|432 Hz",
+        "script": "Respira el bosque",
+        "tag": "CALMA TU MENTE"
+      }
+    },
+    {
+      "id": "respira-426",
+      "scene": "respiracion",
+      "minutes": 10,
+      "title": "Respiración Guiada 4 · 2 · 6",
+      "subtitle": "Sigue la flor de la vida con tu respiración",
+      "music": {
+        "root": 216,
+        "beat": 6,
+        "nature": "none",
+        "mood": "warm"
+      },
+      "meta": {
+        "title": "Respiración Guiada 4·2·6 para Calmar la Ansiedad 🌸 Meditación Visual en 10 Minutos",
+        "hashtags": "#Respiración #Ansiedad",
+        "tags": [
+          "respiracion guiada",
+          "ansiedad",
+          "meditacion guiada",
+          "calma"
+        ]
+      },
+      "thumb": {
+        "big": "RESPIRA|CONMIGO",
+        "script": "Inhala, sostén, exhala",
+        "tag": "CALMA LA ANSIEDAD"
+      }
+    },
+    {
+      "id": "oceano-528",
+      "scene": "oceano",
+      "minutes": 20,
+      "title": "Océano al Atardecer",
+      "subtitle": "528 Hz · Amor y transformación",
+      "music": {
+        "root": 264,
+        "beat": 9,
+        "nature": "waves",
+        "mood": "open"
+      },
+      "breath": true,
+      "meta": {
+        "title": "528 Hz Frecuencia del Amor 🌅 Océano al Atardecer · Sanación y Paz Interior",
+        "hashtags": "#528Hz #Sanación",
+        "tags": [
+          "528 hz",
+          "frecuencia del amor",
+          "oceano",
+          "sanacion"
+        ]
+      },
+      "thumb": {
+        "big": "528 Hz|AMOR",
+        "script": "Océano al atardecer",
+        "tag": "SANACIÓN Y PAZ"
+      }
+    },
+    {
+      "id": "chakras-7",
+      "scene": "chakras",
+      "minutes": 14,
+      "title": "Alineación de los 7 Chakras",
+      "subtitle": "Del chakra raíz a la corona",
+      "music": {
+        "root": 256,
+        "beat": 7.83,
+        "nature": "none",
+        "mood": "deep"
+      },
+      "meta": {
+        "title": "Alineación de los 7 Chakras 🌈 Meditación para Equilibrar tu Energía · Raíz a Corona",
+        "hashtags": "#Chakras #Energía",
+        "tags": [
+          "7 chakras",
+          "alinear chakras",
+          "equilibrio energetico",
+          "reiki"
+        ]
+      },
+      "thumb": {
+        "big": "7 CHAKRAS",
+        "script": "Alinea tu energía",
+        "tag": "DE LA RAÍZ A LA CORONA"
+      }
+    },
+    {
+      "id": "lluvia-sueno",
+      "scene": "lluvia",
+      "minutes": 25,
+      "title": "Lluvia en la Montaña",
+      "subtitle": "Ondas delta · Sueño profundo",
+      "music": {
+        "root": 108,
+        "beat": 3,
+        "nature": "rain",
+        "mood": "night"
+      },
+      "meta": {
+        "title": "Lluvia Suave para Dormir Profundamente 🌧️ Ondas Delta · Sueño Reparador y Calma",
+        "hashtags": "#Dormir #Lluvia",
+        "tags": [
+          "lluvia para dormir",
+          "sonido de lluvia",
+          "dormir profundamente",
+          "insomnio",
+          "ondas delta"
+        ]
+      },
+      "thumb": {
+        "big": "DUERME|PROFUNDO",
+        "script": "Escucha la lluvia",
+        "tag": "ONDAS DELTA · SUEÑO"
+      }
+    },
+    {
+      "id": "loto-paz",
+      "scene": "loto",
+      "minutes": 15,
+      "title": "Despertar del Loto",
+      "subtitle": "Paz interior · Ondas alfa",
+      "music": {
+        "root": 264,
+        "beat": 8,
+        "nature": "stream",
+        "mood": "open"
+      },
+      "breath": true,
+      "meta": {
+        "title": "Música para la Paz Interior 🪷 Despertar del Loto · Ondas Alfa, Calma y Amor Propio",
+        "hashtags": "#PazInterior #Loto",
+        "tags": [
+          "paz interior",
+          "amor propio",
+          "ondas alfa",
+          "loto"
+        ]
+      },
+      "thumb": {
+        "big": "PAZ|INTERIOR",
+        "script": "Florece desde dentro",
+        "tag": "ONDAS ALFA"
+      }
+    },
+    {
+      "id": "luna-dormir",
+      "scene": "dormir",
+      "minutes": 25,
+      "title": "Luna sobre el Agua",
+      "subtitle": "Música para dormir · Ondas delta 2 Hz",
+      "music": {
+        "root": 108,
+        "beat": 2,
+        "nature": "waves",
+        "mood": "night"
+      },
+      "meta": {
+        "title": "Música para Dormir en 10 Minutos 🌙 Luna sobre el Agua · Ondas Delta 2 Hz",
+        "hashtags": "#Dormir #Insomnio",
+        "tags": [
+          "musica para dormir",
+          "dormir rapido",
+          "insomnio",
+          "ondas delta"
+        ]
+      },
+      "thumb": {
+        "big": "DUERME|YA",
+        "script": "Suelta el día",
+        "tag": "LUNA SOBRE EL AGUA"
+      }
+    },
+    {
+      "id": "libelula-cambio",
+      "scene": "libelula",
+      "minutes": 15,
+      "title": "Vuelo de la Libélula",
+      "subtitle": "Transformación · 417 Hz",
+      "music": {
+        "root": 208.5,
+        "beat": 10,
+        "nature": "none",
+        "mood": "open"
+      },
+      "meta": {
+        "title": "417 Hz Elimina la Energía Negativa 🦋 Vuelo de la Libélula · Transformación",
+        "hashtags": "#417Hz #Transformación",
+        "tags": [
+          "417 hz",
+          "energia negativa",
+          "transformacion",
+          "libelula"
+        ]
+      },
+      "thumb": {
+        "big": "417 Hz",
+        "script": "Todo cambio es un vuelo",
+        "tag": "SUELTA LO NEGATIVO"
+      }
+    },
+    {
+      "id": "geometria-963",
+      "scene": "geometria",
+      "minutes": 16,
+      "title": "Geometría Sagrada",
+      "subtitle": "963 Hz · Chakra corona y consciencia",
+      "music": {
+        "root": 240.75,
+        "beat": 7,
+        "nature": "none",
+        "mood": "deep"
+      },
+      "meta": {
+        "title": "963 Hz Frecuencia de los Dioses ✨ Geometría Sagrada · Activa tu Chakra Corona",
+        "hashtags": "#963Hz #Consciencia",
+        "tags": [
+          "963 hz",
+          "chakra corona",
+          "glandula pineal",
+          "geometria sagrada"
+        ]
+      },
+      "thumb": {
+        "big": "963 Hz",
+        "script": "Todo está conectado",
+        "tag": "CHAKRA CORONA"
+      }
+    }
   ]
 }

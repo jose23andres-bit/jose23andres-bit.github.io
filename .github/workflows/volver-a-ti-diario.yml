@@ -50,8 +50,8 @@ jobs:
         run: |
           FF=$(python -c "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())")
           $FF -loglevel error -y -ss 120 -i out/${{ steps.pick.outputs.id }}.mp4 -frames:v 1 out/frame.png
-          read BIG SCRIPT TAG < <(node -e 'const p=require("./programs.json").programs.find(x=>x.id==="${{ steps.pick.outputs.id }}");const s=p.subtitle.split("·").map(x=>x.trim());console.log([(s[0]||p.title).toUpperCase().replace(/ /g,"_"),p.title.replace(/ /g,"_"),(s[1]||"Volver a Ti").toUpperCase().replace(/ /g,"_")].join(" "))')
-          python thumbnail.py out/frame.png out/thumb.jpg "${BIG//_/ }" "${SCRIPT//_/ }" "${TAG//_/ }"
+          node -e 'const p=require("./programs.json").programs.find(x=>x.id==="${{ steps.pick.outputs.id }}");const t=p.thumb||{};require("fs").writeFileSync("out/thumb.json",JSON.stringify([t.big||p.title,t.script||p.title,t.tag||"VOLVER A TI"]))'
+          python -c "import json,subprocess;a=json.load(open('out/thumb.json'));subprocess.run(['python','thumbnail.py','out/frame.png','out/thumb.jpg',*a],check=True)"
       - name: Subir a YouTube
         if: steps.auth.outputs.ok == '1'
         run: node upload.mjs out/${{ steps.pick.outputs.id }}.mp4 out/thumb.jpg ${{ steps.pick.outputs.id }}
