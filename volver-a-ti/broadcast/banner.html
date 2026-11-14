@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8" />
+<!-- Banner del canal de YouTube 2560x1440. Zona segura (visible en todos los dispositivos): 1546x423 centrada. -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:wght@300;400&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet" />
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="2560" height="1440"></canvas>
+<script>
+(async function () {
+  const W = 2560, H = 1440, TAU = Math.PI * 2;
+  const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  const glow = (x, y, r, rgb, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${rgb},${a})`); g.addColorStop(0.4, `rgba(${rgb},${a * 0.35})`); g.addColorStop(1, `rgba(${rgb},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); };
+  const HZ = 905; // línea del horizonte (justo bajo la zona segura)
+
+  // Cielo
+  const sky = ctx.createLinearGradient(0, 0, 0, HZ);
+  sky.addColorStop(0, "#07021a"); sky.addColorStop(0.35, "#1c0a45"); sky.addColorStop(0.62, "#4a1a7a"); sky.addColorStop(0.82, "#a8418f"); sky.addColorStop(0.93, "#f08a5c"); sky.addColorStop(1, "#ffc77a");
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, HZ);
+  // Nebulosa suave
+  glow(700, 260, 700, "120,60,200", 0.25); glow(1900, 380, 800, "180,70,190", 0.18);
+  // Estrellas (más densas arriba)
+  for (let i = 0; i < 1400; i++) {
+    const y = Math.pow(rnd(), 1.6) * HZ * 0.85, x = rnd() * W, r = Math.pow(rnd(), 3) * 2.6 + 0.4;
+    ctx.globalAlpha = (0.35 + rnd() * 0.65) * (1 - y / HZ); ctx.fillStyle = rnd() < 0.15 ? "#ffe2a8" : "#fff6ec";
+    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  // Sol en el horizonte, centrado detrás del rótulo
+  const SX = 1280;
+  glow(SX, HZ, 1200, "255,170,110", 0.45); glow(SX, HZ, 420, "255,210,150", 0.6);
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, HZ); ctx.clip();
+  const sg = ctx.createRadialGradient(SX, HZ, 0, SX, HZ, 110); sg.addColorStop(0, "#fffaf0"); sg.addColorStop(1, "#ffcf80");
+  ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(SX, HZ + 20, 110, 0, TAU); ctx.fill(); ctx.restore();
+  // Rayos de luz
+  ctx.save(); ctx.globalCompositeOperation = "lighter";
+  for (let i = 0; i < 16; i++) {
+    const a = -Math.PI / 2 + (i - 7.5) * 0.16, L = 1500;
+    const g = ctx.createLinearGradient(SX, HZ, SX + Math.cos(a) * L, HZ + Math.sin(a) * L);
+    g.addColorStop(0, `rgba(255,220,170,${0.05 + (i % 3) * 0.02})`); g.addColorStop(1, "rgba(255,220,170,0)");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(SX, HZ); ctx.lineTo(SX + Math.cos(a - 0.035) * L, HZ + Math.sin(a - 0.035) * L); ctx.lineTo(SX + Math.cos(a + 0.035) * L, HZ + Math.sin(a + 0.035) * L); ctx.fill();
+  }
+  ctx.restore();
+  // Luna creciente (encima de los rayos)
+  glow(2160, 250, 260, "230,210,255", 0.28);
+  ctx.save(); ctx.beginPath(); ctx.arc(2160, 250, 78, 0, TAU); ctx.clip();
+  ctx.beginPath(); ctx.rect(2000, 100, 320, 320); ctx.arc(2190, 226, 70, 0, TAU);
+  ctx.fillStyle = "#fff4dc"; ctx.shadowColor = "rgba(255,240,210,.9)"; ctx.shadowBlur = 30; ctx.fill("evenodd"); ctx.restore();
+  // Montañas en capas
+  const ridge = (base, amp, s, col, f) => {
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, HZ + 2);
+    for (let x = 0; x <= W; x += 8) { const u = x / W; const d = Math.abs(u - 0.5) * 2; ctx.lineTo(x, base - amp * (0.25 + 0.75 * Math.pow(d, f)) * (0.55 + 0.3 * Math.sin(u * 9 + s) + 0.15 * Math.sin(u * 27 + s * 2))); }
+    ctx.lineTo(W, HZ + 2); ctx.fill();
+    const m = ctx.createLinearGradient(0, base - 60, 0, HZ); m.addColorStop(0, "rgba(255,190,200,0)"); m.addColorStop(1, "rgba(255,190,200,.12)"); ctx.fillStyle = m; ctx.fillRect(0, base - 60, W, HZ - base + 60);
+  };
+  ridge(HZ, 330, 1.3, "#5a2a7c", 1.4); ridge(HZ, 250, 3.7, "#3c1a63", 1.1); ridge(HZ, 160, 5.2, "#24103f", 0.8);
+  // Lago
+  const lake = ctx.createLinearGradient(0, HZ, 0, H);
+  lake.addColorStop(0, "#7a3d82"); lake.addColorStop(0.25, "#3a1860"); lake.addColorStop(1, "#0b0322");
+  ctx.fillStyle = lake; ctx.fillRect(0, HZ, W, H - HZ);
+  ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.filter = "blur(2.5px)";
+  for (let y = HZ + 3, i = 0; y < H; y += 7, i++) {
+    const d = (y - HZ) / (H - HZ), w = 140 + d * 900;
+    for (let k = -3; k <= 3; k++) {
+      const len = w * 0.14 * (0.3 + 0.7 * Math.abs(Math.sin(i * 1.7 + k * 2.3)));
+      ctx.fillStyle = `rgba(255,214,150,${0.3 * (1 - d * 0.65) * (1 - Math.abs(k) * 0.18)})`;
+      ctx.fillRect(SX + k * w * 0.14 + Math.sin(i * 0.9 + k) * 12 - len / 2, y, len, 2 + d * 3);
+    }
+  }
+  ctx.restore();
+  // Lotos flotando (fuera de la zona segura: se ven en TV/ordenador)
+  const lotus = (x, y, s) => {
+    glow(x, y - 20 * s, 160 * s, "255,200,120", 0.5);
+    for (const [n, len, spread, col] of [[7, 80, 1.15, "rgba(196,120,240,.9)"], [5, 72, 0.75, "rgba(240,180,255,.92)"], [1, 66, 0, "rgba(255,236,200,.95)"]]) {
+      for (let i = 0; i < n; i++) {
+        const ang = n === 1 ? 0 : (i / (n - 1) - 0.5) * spread * 2;
+        ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.scale(s, s);
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(-26, -24, -18, -len * 0.85, 0, -len); ctx.bezierCurveTo(18, -len * 0.85, 26, -24, 0, 0);
+        ctx.fillStyle = col; ctx.fill(); ctx.strokeStyle = "rgba(245,198,106,.95)"; ctx.lineWidth = 2; ctx.stroke(); ctx.restore();
+      }
+    }
+    ctx.fillStyle = "rgba(20,8,40,.55)"; ctx.beginPath(); ctx.ellipse(x, y + 6 * s, 110 * s, 16 * s, 0, 0, TAU); ctx.fill();
+  };
+  lotus(380, 1150, 1.5); lotus(2210, 1110, 1.2); lotus(2420, 1260, 0.8);
+  // Polvo dorado
+  for (let i = 0; i < 260; i++) { ctx.globalAlpha = 0.3 + rnd() * 0.6; ctx.fillStyle = "#ffdf9a"; ctx.beginPath(); ctx.arc(rnd() * W, 300 + rnd() * 1100, rnd() * 2.4 + 0.5, 0, TAU); ctx.fill(); }
+  ctx.globalAlpha = 1;
+
+  // Velo central elíptico para que el rótulo se lea
+  ctx.save(); ctx.translate(W / 2, 720); ctx.scale(1, 0.42);
+  const veil = ctx.createRadialGradient(0, 0, 0, 0, 0, 1000);
+  veil.addColorStop(0, "rgba(14,3,36,.5)"); veil.addColorStop(0.55, "rgba(14,3,36,.22)"); veil.addColorStop(1, "rgba(14,3,36,0)");
+  ctx.fillStyle = veil; ctx.beginPath(); ctx.arc(0, 0, 1000, 0, TAU); ctx.fill(); ctx.restore();
+
+  // ---------- Zona segura: emblema + nombre + lema ----------
+  await document.fonts.load('200px "Great Vibes"'); await document.fonts.load('300 40px "Jost"'); await document.fonts.load('italic 500 40px "Cormorant Garamond"');
+  const load = (s) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = s; });
+  const orig = await load("../assets/img/logo-original.png");
+  const em = orig || await load("../assets/img/emblem.svg");
+  const TITLE = '400 200px "Great Vibes"', TAG = '300 30px "Jost"', SUB = 'italic 500 36px "Cormorant Garamond"';
+  const tagTxt = "M E D I T A C I Ó N  ·  M Ú S I C A  P A R A  D O R M I R  ·  7  C H A K R A S";
+  const subTxt = "Un universo de paz y consciencia · Nuevos vídeos cada día";
+  ctx.font = TITLE; const tw = ctx.measureText("Volver a Ti").width;
+  ctx.font = TAG; const gw = ctx.measureText(tagTxt).width;
+  ctx.font = SUB; const sw = ctx.measureText(subTxt).width;
+  const ES = 330, GAP = 50, textW = Math.max(tw, gw + 20, sw + 20), total = ES + GAP + textW;
+  const left = W / 2 - total / 2, EX = left + ES / 2, EY = 712, TX = left + ES + GAP;
+  glow(EX, EY, 270, "245,198,106", 0.35);
+  if (orig) { const r = ES / 2; ctx.save(); ctx.beginPath(); ctx.arc(EX, EY, r, 0, TAU); ctx.clip(); ctx.drawImage(orig, EX - r, EY - r, ES, ES); ctx.restore(); ctx.strokeStyle = "rgba(255,226,160,.9)"; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(EX, EY, r, 0, TAU); ctx.stroke(); }
+  else { const h = ES * 1.02, w = h * 880 / 720; ctx.save(); ctx.shadowColor = "rgba(245,198,106,.7)"; ctx.shadowBlur = 40; ctx.drawImage(em, EX - w / 2, EY - h / 2 - 10, w, h); ctx.restore(); }
+  const gold = ctx.createLinearGradient(0, 580, 0, 780);
+  gold.addColorStop(0, "#fff4cc"); gold.addColorStop(0.45, "#f6c45c"); gold.addColorStop(0.8, "#d48a26"); gold.addColorStop(1, "#fbe1a0");
+  ctx.textBaseline = "alphabetic";
+  ctx.save(); ctx.font = TITLE; ctx.shadowColor = "rgba(245,198,106,.75)"; ctx.shadowBlur = 40; ctx.fillStyle = gold; ctx.fillText("Volver a Ti", TX, 740); ctx.restore();
+  ctx.font = TITLE; ctx.fillStyle = gold; ctx.fillText("Volver a Ti", TX, 740);
+  const lg = ctx.createLinearGradient(TX, 0, TX + textW, 0); lg.addColorStop(0, "rgba(245,198,106,0)"); lg.addColorStop(0.12, "rgba(245,198,106,.95)"); lg.addColorStop(1, "rgba(245,198,106,0)");
+  ctx.fillStyle = lg; ctx.fillRect(TX + 10, 775, textW - 10, 3);
+  ctx.save(); ctx.translate(TX + textW * 0.12 + 10, 776.5); ctx.rotate(Math.PI / 4); ctx.fillStyle = "#ffe7a8"; ctx.fillRect(-7, -7, 14, 14); ctx.restore();
+  ctx.font = TAG; ctx.fillStyle = "#fbf3e4"; ctx.fillText(tagTxt, TX + 16, 830);
+  ctx.font = SUB; ctx.fillStyle = "rgba(255,231,168,.95)"; ctx.fillText(subTxt, TX + 16, 880);
+  window.bannerBox = [left, total];
+  window.bannerDone = true;
+})();
+</script></body></html>
