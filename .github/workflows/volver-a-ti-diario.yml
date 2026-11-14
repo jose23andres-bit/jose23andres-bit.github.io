@@ -1,9 +1,9 @@
-# Volver a Ti · genera y sube un vídeo nuevo al canal cada día (10:00 hora de España).
+# Volver a Ti · genera y sube 3 vídeos al día (10:00, 16:00 y 22:00 hora de España), cada uno distinto.
 # Se activa en cuanto existan los secretos YT_CLIENT_ID, YT_CLIENT_SECRET y YT_REFRESH_TOKEN.
 name: Volver a Ti · vídeo diario
 on:
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "0 9,15,21 * * *"
   workflow_dispatch:
     inputs:
       program: { description: "ID del programa (vacío = rotación diaria)", required: false }
@@ -40,7 +40,7 @@ jobs:
         id: pick
         run: |
           P="${{ github.event.inputs.program }}"
-          if [ -z "$P" ]; then P=$(node -e 'const c=require("./programs.json");const d=Math.floor(Date.now()/864e5);console.log(c.programs[d%c.programs.length].id)'); fi
+          if [ -z "$P" ]; then P=$(node -e 'const c=require("./programs.json");const n=Math.floor(Date.now()/216e5);console.log(c.programs[(n*4)%c.programs.length].id)'); fi
           echo "id=$P" >> $GITHUB_OUTPUT; echo "Programa: $P"
       - name: Renderizar vídeo (10 min, 1080p)
         if: steps.auth.outputs.ok == '1'
