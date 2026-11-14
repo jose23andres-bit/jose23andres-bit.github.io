@@ -26,6 +26,7 @@ const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
 const only = opt("--only"), forceSeconds = opt("--seconds") ? +opt("--seconds") : undefined, force = args.includes("--force");
 const FPS = cfg.stream.fps;
+const VOICE = opt("--voice") || "";
 const VW = +(opt("--w") || 1920), VH = +(opt("--h") || 1080), PHRASE = opt("--phrase") || "", CTA = opt("--cta") || "", NAME = opt("--name");
 
 function ffmpegPath() {
@@ -49,13 +50,21 @@ async function renderProgram(browser, prog) {
   const tmpVideo = join(OUT, `.${prog.id}.video.mp4`), tmpAudio = join(OUT, `.${prog.id}.m4a`), tmpFinal = join(OUT, `.${prog.id}.mp4`);
 
   console.log(`▶ ${prog.id}: ${seconds} s · ${frames} fotogramas`);
-  const audio = run(PY, [join(HERE, "music.py"), prog.id, tmpAudio, String(seconds)]);
+  // Voz guiada (opcional): primero se sintetiza, porque la música se mezcla con ella y la imagen muestra los subtítulos
+  const vdir = join(OUT, `.${NAME || prog.id}.voice`);
+  let captions = [];
+  if (VOICE) {
+    await run(PY, [join(HERE, "voice.py"), prog.id, String(seconds), VOICE, vdir, PHRASE]);
+    captions = JSON.parse(readFileSync(join(vdir, "captions.json"), "utf8"));
+  }
+  const audio = run(PY, [join(HERE, "music.py"), prog.id, tmpAudio, String(seconds), VOICE ? vdir : "-"]);
 
   const page = await browser.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: 1 });
   const url = pathToFileURL(join(HERE, "stage.html"));
   url.search = new URLSearchParams({ scene: prog.scene, title: prog.title, subtitle: prog.subtitle || "", breath: prog.breath && VH <= VW ? "1" : "0", duration: String(seconds), w: String(VW), h: String(VH), phrase: PHRASE, cta: CTA }).toString();
   await page.goto(url.href, { waitUntil: "networkidle" });
   await page.evaluate(() => window.stageReady);
+  await page.evaluate((c) => { window.CAPTIONS = c; }, captions);
 
   // Parámetros de YouTube Live: H.264 High, 1080p30, CBR ~4,5 Mbps, keyframe cada 2 s
   const vb = cfg.stream.videoBitrate;
@@ -83,7 +92,7 @@ async function renderProgram(browser, prog) {
 
   await run(FF, ["-y", "-loglevel", "error", "-i", tmpVideo, "-i", tmpAudio, "-map", "0:v", "-map", "1:a", "-c", "copy", "-shortest", "-movflags", "+faststart", tmpFinal]);
   renameSync(tmpFinal, final);
-  rmSync(tmpVideo, { force: true }); rmSync(tmpAudio, { force: true });
+  rmSync(tmpVideo, { force: true }); rmSync(tmpAudio, { force: true }); rmSync(vdir, { recursive: true, force: true });
   console.log(`✓ ${prog.id} listo en ${Math.round((Date.now() - t0) / 1000)} s → ${final}`);
 }
 

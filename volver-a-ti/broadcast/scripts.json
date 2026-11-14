@@ -1,0 +1,58 @@
+{
+  "_info": "Textos originales de Volver a Ti para la voz guiada. intro: al empezar · middle: recordatorios espaciados · outro: al final. Cada línea se lee y aparece en pantalla.",
+  "common": {
+    "intro": [
+      "Bienvenido, bienvenida, a Volver a Ti.",
+      "Busca una postura cómoda, y deja que tu cuerpo se apoye.",
+      "Si quieres, cierra los ojos suavemente."
+    ],
+    "outro": [
+      "Poco a poco, vuelve a sentir tu cuerpo.",
+      "Mueve suavemente los dedos de las manos y de los pies.",
+      "Llévate esta calma contigo.",
+      "Gracias por regalarte este momento. Has vuelto a ti."
+    ]
+  },
+  "programs": {
+    "bosque-432": {
+      "intro": ["Imagina que caminas por un bosque al amanecer.", "La luz atraviesa la niebla entre los árboles.", "Inhala profundamente, y siente el aire limpio llenando tu pecho.", "Exhala despacio, y deja que los pensamientos se alejen como la niebla.", "No tienes que hacer nada. Solo estar aquí.", "Cada respiración te trae un poco más de calma."],
+      "middle": ["Si tu mente se distrae, vuelve a tu respiración. Sin juicio.", "Siente tus pies firmes, como las raíces de un árbol.", "Aquí estás a salvo. Aquí puedes descansar.", "Respira el bosque. Respira la calma."]
+    },
+    "respira-426": {
+      "intro": ["Vamos a respirar juntos, siguiendo el círculo de luz.", "Cuando el círculo crece, inhala durante cuatro segundos.", "Cuando se detiene, sostén el aire dos segundos.", "Y cuando se recoge, exhala lentamente durante seis segundos.", "Exhalar más largo de lo que inhalas le dice a tu cuerpo que está a salvo.", "Inhala. Sostén. Y suelta."],
+      "middle": ["Sigue el ritmo del círculo. Inhala, sostén, exhala.", "Con cada exhalación, tus hombros bajan un poco más.", "Tu corazón se calma. Tu mente se aquieta.", "Si te pierdes, no pasa nada. Vuelve al círculo."]
+    },
+    "oceano-528": {
+      "intro": ["Imagina que estás frente al mar, al atardecer.", "El sol se funde con el horizonte, y el agua brilla en dorado.", "Escucha el ritmo de las olas. Van y vienen, sin prisa.", "Deja que tu respiración siga ese mismo ritmo.", "Con cada ola que llega, inhalas calma.", "Con cada ola que se va, sueltas lo que ya no necesitas."],
+      "middle": ["Siente el calor del sol en tu rostro.", "Lleva la atención a tu corazón. Siente cómo late, tranquilo.", "Mereces amor. Empezando por el tuyo.", "Deja que la marea te lleve."]
+    },
+    "chakras-7": {
+      "intro": ["Vamos a recorrer juntos tus siete centros de energía.", "Lleva la atención a la base de tu columna. Tu chakra raíz. Siente estabilidad.", "Sube hasta tu vientre. Tu chakra sacro. Siente creatividad y fluidez.", "Ahora tu plexo solar, sobre el ombligo. Siente tu fuerza.", "Tu corazón, en el centro del pecho. Siente amor y compasión.", "Tu garganta. Siente la libertad de expresar tu verdad.", "Tu entrecejo, el tercer ojo. Siente claridad e intuición.", "Y la coronilla. Siente cómo te conectas con todo lo que existe."],
+      "middle": ["Imagina una luz que sube desde la raíz hasta la corona.", "Cada centro brilla con su color, en armonía.", "Estás alineado, alineada. Estás en equilibrio.", "Respira hacia el centro que más lo necesite hoy."]
+    },
+    "lluvia-sueno": {
+      "intro": ["Es hora de descansar.", "Escucha la lluvia caer suavemente sobre las montañas.", "Cada gota se lleva un poco del cansancio del día.", "Relaja tu frente. Tus mandíbulas. Tus hombros.", "Deja que tu cuerpo pese, y se hunda en el descanso.", "No tienes que hacer nada más hoy. Solo dormir."],
+      "middle": ["Deja que la lluvia te acune.", "Tu respiración es lenta y profunda.", "Suelta el día. Ya pasó."]
+    },
+    "loto-paz": {
+      "intro": ["Imagina una flor de loto en el centro de tu pecho.", "Con cada inhalación, uno de sus pétalos se abre.", "El loto crece desde el barro, y aun así florece limpio y luminoso.", "Así eres tú. Lo difícil también te ha hecho florecer.", "Respira, y deja que tu paz interior se expanda.", "Repite en silencio: estoy en paz conmigo."],
+      "middle": ["Eres suficiente, tal como eres.", "Tu paz no depende de lo que pasa fuera.", "Florece desde dentro.", "Estoy en paz conmigo."]
+    },
+    "luna-dormir": {
+      "intro": ["La noche ha llegado, y la luna ilumina el agua en calma.", "Respira lento. Cada exhalación te lleva más hondo.", "Relaja los pies. Las piernas. La espalda.", "Relaja los brazos, las manos, el rostro.", "Todo lo que hiciste hoy fue suficiente.", "Ahora, solo descansa."],
+      "middle": ["Estás a salvo. Puedes soltar.", "Deja que el sueño llegue solo.", "Suelta el día."]
+    },
+    "libelula-cambio": {
+      "intro": ["La libélula vive en el agua antes de aprender a volar.", "Su transformación nos recuerda que podemos cambiar sin dejar de ser quienes somos.", "Respira, y piensa en algo que está cambiando en tu vida.", "No te resistas. Deja que el cambio te haga más ligero, más ligera.", "Con cada exhalación, sueltas lo que ya no te pertenece.", "Todo cambio es un vuelo."],
+      "middle": ["Suelta lo que pesa.", "Confía en tu proceso.", "Estás aprendiendo a volar."]
+    },
+    "geometria-963": {
+      "intro": ["Observa la geometría sagrada que gira frente a ti.", "Cada círculo está unido a todos los demás.", "Así estás tú: conectado, conectada, con todo lo que existe.", "Lleva la atención a tu coronilla, y siente una luz suave.", "Deja que tu mente se aquiete, como el centro del mandala.", "Todo está conectado. Tú eres el centro."],
+      "middle": ["Observa sin pensar. Solo observa.", "Eres parte de algo mucho más grande.", "Todo está conectado."]
+    }
+  },
+  "shorts": {
+    "afterPhrase": ["Respira hondo, conmigo.", "Inhala calma. Exhala lo que pesa.", "Quédate un momento aquí.", "Cierra los ojos y escucha.", "Tu calma empieza ahora."],
+    "close": ["Te espero en el vídeo completo.", "Guárdalo para cuando lo necesites.", "Sígueme para volver a ti cada día."]
+  }
+}

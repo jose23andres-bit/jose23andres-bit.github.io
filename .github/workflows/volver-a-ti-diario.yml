@@ -1,4 +1,5 @@
-# Volver a Ti · vídeo de 10 min a las 10:00 y vídeo de 1 HORA para dormir a las 22:00 (hora de España).
+# Volver a Ti · 10:00 meditación guiada con voz (10 min) · 22:00 vídeo de 1 HORA para dormir con introducción hablada (hora de España).
+# Cada vídeo varía la música (ánimo, acordes, instrumentos) con VAT_SEED.
 # Se activa en cuanto existan los secretos YT_CLIENT_ID, YT_CLIENT_SECRET y YT_REFRESH_TOKEN.
 name: Volver a Ti · vídeo diario
 on:
@@ -38,6 +39,16 @@ jobs:
       - name: Comprobar claves con YouTube
         if: steps.auth.outputs.ok == '1'
         run: node upload.mjs x x x --check
+      - uses: actions/cache@v4
+        if: steps.auth.outputs.ok == '1'
+        with: { path: volver-a-ti/broadcast/voices, key: piper-daniela-high-v1 }
+      - name: Voz en español (Piper)
+        if: steps.auth.outputs.ok == '1'
+        run: |
+          pip install piper-tts
+          mkdir -p voices && cd voices
+          B=https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_AR/daniela/high/es_AR-daniela-high
+          [ -f es_AR-daniela-high.onnx ] || { curl -sL -o es_AR-daniela-high.onnx $B.onnx; curl -sL -o es_AR-daniela-high.onnx.json $B.onnx.json; }
       - name: Elegir programa del día
         if: steps.auth.outputs.ok == '1'
         id: pick
@@ -49,10 +60,10 @@ jobs:
         if: steps.auth.outputs.ok == '1'
         id: dur
         run: |
-          H=$(date -u +%H); if [ "$H" -ge 18 ]; then echo "min=60" >> $GITHUB_OUTPUT; else echo "min=10" >> $GITHUB_OUTPUT; fi
+          H=$(date -u +%H); if [ "$H" -ge 18 ]; then echo "min=60" >> $GITHUB_OUTPUT; echo "voice=sleep" >> $GITHUB_OUTPUT; else echo "min=10" >> $GITHUB_OUTPUT; echo "voice=guided" >> $GITHUB_OUTPUT; fi
       - name: Renderizar vídeo (1080p)
         if: steps.auth.outputs.ok == '1'
-        run: VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast VAT_WORKERS=1 node render.mjs --only ${{ steps.pick.outputs.id }} --seconds $(( ${{ steps.dur.outputs.min }} * 60 ))
+        run: VAT_SEED=${{ github.run_id }} VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast VAT_WORKERS=1 node render.mjs --only ${{ steps.pick.outputs.id }} --seconds $(( ${{ steps.dur.outputs.min }} * 60 )) --voice ${{ steps.dur.outputs.voice }}
       - name: Miniatura
         if: steps.auth.outputs.ok == '1'
         run: |
@@ -62,4 +73,4 @@ jobs:
           python -c "import json,subprocess;a=json.load(open('out/thumb.json'));subprocess.run(['python','thumbnail.py','out/frame.png','out/thumb.jpg',*a],check=True)"
       - name: Subir a YouTube
         if: steps.auth.outputs.ok == '1'
-        run: VAT_MINUTES=${{ steps.dur.outputs.min }} node upload.mjs out/${{ steps.pick.outputs.id }}.mp4 out/thumb.jpg ${{ steps.pick.outputs.id }}
+        run: VAT_HAS_VOICE=1 VAT_MINUTES=${{ steps.dur.outputs.min }} node upload.mjs out/${{ steps.pick.outputs.id }}.mp4 out/thumb.jpg ${{ steps.pick.outputs.id }}

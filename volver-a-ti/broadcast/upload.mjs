@@ -23,9 +23,7 @@ if (!p) throw new Error(`Programa desconocido: ${pid}`);
 
 export function metadata(p, minutes) {
   const m = p.meta || {};
-  let title = m.title || `${p.subtitle} · ${p.title} · Música para Meditar y Relajarse`;
-  if (minutes >= 60) title = `${title.split(" · ")[0]} · ${Math.round(minutes / 60)} Hora${minutes >= 120 ? "s" : ""} · ${p.title}`;
-  title = title.slice(0, 100);
+  const title = (m.title || `${p.subtitle} · ${p.title} · Música para Meditar y Relajarse`).slice(0, 100);
   const description = [
     m.intro || `${p.title}. ${p.subtitle}. ${minutes} minutos de música original, paisaje en calma y frecuencias suaves para volver a tu centro.`,
     "",
@@ -41,6 +39,7 @@ export function metadata(p, minutes) {
     "🔔 Suscríbete a Volver a Ti para recibir nuevas meditaciones cada día.",
     "",
     "Música original de Volver a Ti.",
+    ...(process.env.VAT_HAS_VOICE ? ["Voz guiada sintetizada con Piper TTS (voz es_AR-daniela, datos CC BY-SA 4.0)."] : []),
     "Este contenido acompaña tu bienestar, pero no sustituye la atención médica ni psicológica profesional.",
     "",
     `#VolverATi #Meditación #MúsicaRelajante ${(m.hashtags || "#PazInterior").trim()}`,
@@ -63,7 +62,7 @@ async function token() {
   return j.access_token;
 }
 
-const minutes = Math.round(+(process.env.VAT_MINUTES || p.uploadMinutes || 10));
+const minutes = Math.round((p.uploadMinutes || 10));
 let meta = metadata(p, minutes);
 const at = dry ? "" : await token();
 
@@ -79,7 +78,7 @@ if (shortIdx >= 0) {
   }
   meta = {
     title: `${sh.title} #Shorts`.slice(0, 100),
-    description: [`${sh.title}`, "", `▶ Vídeo completo: ${longUrl}`, "🌐 https://jose23andres-bit.github.io/volver-a-ti/", "🔔 Suscríbete a Volver a Ti: nuevas meditaciones cada día.", "", `#Shorts #VolverATi #Meditación ${(p.meta?.hashtags || "").trim()}`].join("\n"),
+    description: [`${sh.title}`, "", `▶ Vídeo completo: ${longUrl}`, "🌐 https://jose23andres-bit.github.io/volver-a-ti/", "🔔 Suscríbete a Volver a Ti: nuevas meditaciones cada día.", ...(process.env.VAT_HAS_VOICE ? ["Voz: Piper TTS (es_AR-daniela, CC BY-SA 4.0)."] : []), "", `#Shorts #VolverATi #Meditación ${(p.meta?.hashtags || "").trim()}`].join("\n"),
     tags: ["shorts", ...meta.tags],
   };
 }

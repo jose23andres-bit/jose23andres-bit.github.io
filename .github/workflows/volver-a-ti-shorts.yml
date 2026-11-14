@@ -28,6 +28,14 @@ jobs:
           pip install numpy scipy imageio-ffmpeg
       - name: Comprobar claves con YouTube
         run: node upload.mjs x x x --check
+      - uses: actions/cache@v4
+        with: { path: volver-a-ti/broadcast/voices, key: piper-daniela-high-v1 }
+      - name: Voz en español (Piper)
+        run: |
+          pip install piper-tts
+          mkdir -p voices && cd voices
+          B=https://huggingface.co/rhasspy/piper-voices/resolve/main/es/es_AR/daniela/high/es_AR-daniela-high
+          [ -f es_AR-daniela-high.onnx ] || { curl -sL -o es_AR-daniela-high.onnx $B.onnx; curl -sL -o es_AR-daniela-high.onnx.json $B.onnx.json; }
       - name: Elegir programa y frase
         id: pick
         run: |
@@ -36,9 +44,9 @@ jobs:
             const want="${{ github.event.inputs.program }}";
             const p=want?c.programs.find(x=>x.id===want):c.programs[(n*5)%c.programs.length];
             const i=Math.floor(n/c.programs.length)%p.shorts.length;
-            const fs=require("fs"); fs.appendFileSync(process.env.GITHUB_OUTPUT,`id=${p.id}\nidx=${i}\nphrase=${p.shorts[i].phrase}\n`);
+            const fs=require("fs"); fs.appendFileSync(process.env.GITHUB_OUTPUT,`id=${p.id}\nidx=${i}\nphrase=${p.shorts[i].phrase}\nvoice=${n%2===0?"short":""}\n`);
             console.log(p.id, i, p.shorts[i].phrase);'
       - name: Renderizar Short (30 s, 1080x1920)
-        run: VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast node render.mjs --only ${{ steps.pick.outputs.id }} --seconds 30 --w 1080 --h 1920 --phrase "${{ steps.pick.outputs.phrase }}" --cta "Vídeo completo en el canal" --name short
+        run: VAT_SEED=${{ github.run_id }} VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast node render.mjs --only ${{ steps.pick.outputs.id }} --seconds 30 --w 1080 --h 1920 --phrase "${{ steps.pick.outputs.phrase }}" --cta "Vídeo completo en el canal" --name short ${{ steps.pick.outputs.voice && '--voice short' || '' }}
       - name: Subir Short
-        run: node upload.mjs out/short.mp4 - ${{ steps.pick.outputs.id }} --short ${{ steps.pick.outputs.idx }}
+        run: VAT_HAS_VOICE=${{ steps.pick.outputs.voice && '1' || '' }} node upload.mjs out/short.mp4 - ${{ steps.pick.outputs.id }} --short ${{ steps.pick.outputs.idx }}
