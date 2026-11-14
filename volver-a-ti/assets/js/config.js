@@ -6,18 +6,18 @@
  */
 window.VAT_CONFIG = {
   // URL de tu canal de YouTube (cámbiala cuando lo crees)
-  channelUrl: "https://www.youtube.com/@VolverATi",
+  channelUrl: "https://www.youtube.com/@volveratibydayanaquintero",
 
   /*
    * ID del canal (empieza por "UC", 24 caracteres). Está en YouTube Studio →
    * Configuración → Canal → Configuración avanzada.
    * Con él, la web muestra el directo 24/7 y se actualiza sola con cada vídeo nuevo.
    */
-  channelId: "",
+  channelId: "UCTq2U_TT7BjBU3QTsp5ah0Q",
 
   // Redes sociales (deja "" para ocultar el enlace)
   social: {
-    youtube: "https://www.youtube.com/@VolverATi",
+    youtube: "https://www.youtube.com/@volveratibydayanaquintero",
     instagram: "",
     tiktok: "",
     spotify: "",

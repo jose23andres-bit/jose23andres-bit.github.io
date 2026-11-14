@@ -32,7 +32,7 @@ Todo se genera en el navegador: las animaciones y el audio no usan archivos de v
 Edita `assets/js/config.js`:
 
 ```js
-channelUrl: "https://www.youtube.com/@VolverATi",   // URL real de tu canal
+channelUrl: "https://www.youtube.com/@volveratibydayanaquintero",   // URL real de tu canal
 social: { youtube: "...", instagram: "", tiktok: "", spotify: "" },
 videos: [
   { id: "ID_DEL_VIDEO", title: "Meditación para soltar la ansiedad", series: "guiada", duration: "15:00" },
