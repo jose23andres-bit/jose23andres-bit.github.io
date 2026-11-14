@@ -50,7 +50,7 @@
     ctx.fill(); ctx.restore();
   }
   function label(ctx, w, h, text, sub, a = 1, y = 0.86) {
-    if (a <= 0) return;
+    if (a <= 0 || window.VAT_NO_LABEL) return;
     const s = Math.min(w, h);
     ctx.save(); ctx.globalAlpha = a; ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillStyle = "#fbe9c2";

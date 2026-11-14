@@ -16,6 +16,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const [video, thumb, pid] = process.argv.slice(2);
 const dry = process.argv.includes("--dry");
 const check = process.argv.includes("--check");
+const shortIdx = process.argv.includes("--short") ? +process.argv[process.argv.indexOf("--short") + 1] : -1;
 const cfg = JSON.parse(readFileSync(join(HERE, "programs.json"), "utf8"));
 const p = check ? cfg.programs[0] : cfg.programs.find((x) => x.id === pid);
 if (!p) throw new Error(`Programa desconocido: ${pid}`);
@@ -61,11 +62,28 @@ async function token() {
 }
 
 const minutes = Math.round((p.uploadMinutes || 10));
-const meta = metadata(p, minutes);
+let meta = metadata(p, minutes);
+const at = dry ? "" : await token();
+
+// Short: título con #Shorts y enlace al vídeo largo más reciente del mismo programa
+if (shortIdx >= 0) {
+  const sh = p.shorts[shortIdx % p.shorts.length];
+  let longUrl = "https://www.youtube.com/@volveratibydayanaquintero/videos";
+  if (!dry) {
+    const list = await (await fetch("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=UUTq2U_TT7BjBU3QTsp5ah0Q", { headers: { Authorization: `Bearer ${at}` } })).json();
+    const key = (p.meta?.title || p.title).slice(0, 25);
+    const hit = (list.items || []).find((i) => i.snippet.title.startsWith(key) && !/#shorts/i.test(i.snippet.title));
+    if (hit) longUrl = `https://youtu.be/${hit.snippet.resourceId.videoId}`;
+  }
+  meta = {
+    title: `${sh.title} #Shorts`.slice(0, 100),
+    description: [`${sh.title}`, "", `▶ Vídeo completo: ${longUrl}`, "🌐 https://jose23andres-bit.github.io/volver-a-ti/", "🔔 Suscríbete a Volver a Ti: nuevas meditaciones cada día.", "", `#Shorts #VolverATi #Meditación ${(p.meta?.hashtags || "").trim()}`].join("\n"),
+    tags: ["shorts", ...meta.tags],
+  };
+}
 console.log(`Título: ${meta.title}`);
 if (dry) { console.log(meta.description); process.exit(0); }
 
-const at = await token();
 if (check) {
   const me = await (await fetch("https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true", { headers: { Authorization: `Bearer ${at}` } })).json();
   console.log(`✓ Claves correctas · canal: ${me.items?.[0]?.snippet?.title}`);
@@ -92,7 +110,7 @@ const res = await up.json();
 if (!res.id) throw new Error(`Subida fallida: ${JSON.stringify(res)}`);
 console.log(`✓ Subido: https://youtu.be/${res.id} (${res.status?.privacyStatus})`);
 
-if (thumb) {
+if (thumb && shortIdx < 0 && thumb !== "-") {
   const t = await fetch(`https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId=${res.id}`, {
     method: "POST", headers: { Authorization: `Bearer ${at}`, "Content-Type": "image/jpeg" }, body: readFileSync(thumb),
   });

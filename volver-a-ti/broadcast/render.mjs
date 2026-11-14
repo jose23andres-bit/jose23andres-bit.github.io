@@ -26,6 +26,7 @@ const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
 const only = opt("--only"), forceSeconds = opt("--seconds") ? +opt("--seconds") : undefined, force = args.includes("--force");
 const FPS = cfg.stream.fps;
+const VW = +(opt("--w") || 1920), VH = +(opt("--h") || 1080), PHRASE = opt("--phrase") || "", CTA = opt("--cta") || "", NAME = opt("--name");
 
 function ffmpegPath() {
   if (process.env.FFMPEG) return process.env.FFMPEG;
@@ -42,7 +43,7 @@ const run = (cmd, a) => new Promise((ok, ko) => {
 async function renderProgram(browser, prog) {
   const seconds = forceSeconds ?? prog.minutes * 60;
   const frames = Math.round(seconds * FPS);
-  const final = join(OUT, `${prog.id}.mp4`);
+  const final = join(OUT, `${NAME || prog.id}.mp4`);
   if (existsSync(final) && !force && !forceSeconds) { console.log(`✓ ${prog.id} ya existe`); return; }
   mkdirSync(OUT, { recursive: true });
   const tmpVideo = join(OUT, `.${prog.id}.video.mp4`), tmpAudio = join(OUT, `.${prog.id}.m4a`), tmpFinal = join(OUT, `.${prog.id}.mp4`);
@@ -50,9 +51,9 @@ async function renderProgram(browser, prog) {
   console.log(`▶ ${prog.id}: ${seconds} s · ${frames} fotogramas`);
   const audio = run(PY, [join(HERE, "music.py"), prog.id, tmpAudio, String(seconds)]);
 
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: 1 });
   const url = pathToFileURL(join(HERE, "stage.html"));
-  url.search = new URLSearchParams({ scene: prog.scene, title: prog.title, subtitle: prog.subtitle || "", breath: prog.breath ? "1" : "0", duration: String(seconds) }).toString();
+  url.search = new URLSearchParams({ scene: prog.scene, title: prog.title, subtitle: prog.subtitle || "", breath: prog.breath && VH <= VW ? "1" : "0", duration: String(seconds), w: String(VW), h: String(VH), phrase: PHRASE, cta: CTA }).toString();
   await page.goto(url.href, { waitUntil: "networkidle" });
   await page.evaluate(() => window.stageReady);
 

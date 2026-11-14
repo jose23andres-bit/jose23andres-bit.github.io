@@ -32,7 +32,17 @@
         "big": "MÚSICA|432 Hz",
         "script": "Respira el bosque",
         "tag": "CALMA TU MENTE"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Respira|el bosque",
+          "title": "🌲 Respira el bosque · 432 Hz para calmar la mente"
+        },
+        {
+          "phrase": "Deja de|pensar",
+          "title": "Deja de pensar 🌲 30 segundos de calma · 432 Hz"
+        }
+      ]
     },
     {
       "id": "respira-426",
@@ -60,7 +70,17 @@
         "big": "RESPIRA|CONMIGO",
         "script": "Inhala, sostén, exhala",
         "tag": "CALMA LA ANSIEDAD"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Respira|conmigo",
+          "title": "Respira conmigo 🌸 Inhala 4 · Sostén 2 · Exhala 6"
+        },
+        {
+          "phrase": "Inhala|calma",
+          "title": "Calma la ansiedad en 30 segundos 🌸 Respiración guiada"
+        }
+      ]
     },
     {
       "id": "oceano-528",
@@ -89,7 +109,17 @@
         "big": "528 Hz|AMOR",
         "script": "Océano al atardecer",
         "tag": "SANACIÓN Y PAZ"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Deja que|el mar te calme",
+          "title": "528 Hz 🌅 Deja que el mar te calme"
+        },
+        {
+          "phrase": "Frecuencia|del amor",
+          "title": "528 Hz · Frecuencia del amor 🌅 Sanación y paz"
+        }
+      ]
     },
     {
       "id": "chakras-7",
@@ -117,7 +147,17 @@
         "big": "7 CHAKRAS",
         "script": "Alinea tu energía",
         "tag": "DE LA RAÍZ A LA CORONA"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Alinea|tus chakras",
+          "title": "Alinea tus 7 chakras 🌈 en 30 segundos"
+        },
+        {
+          "phrase": "Siente|tu energía",
+          "title": "Siente tu energía 🌈 De la raíz a la corona"
+        }
+      ]
     },
     {
       "id": "lluvia-sueno",
@@ -146,7 +186,17 @@
         "big": "DUERME|PROFUNDO",
         "script": "Escucha la lluvia",
         "tag": "ONDAS DELTA · SUEÑO"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Escucha|la lluvia",
+          "title": "Escucha la lluvia 🌧 y duerme profundamente"
+        },
+        {
+          "phrase": "Duerme|ya",
+          "title": "Duerme ya 🌧 Lluvia suave · Ondas delta"
+        }
+      ]
     },
     {
       "id": "loto-paz",
@@ -175,7 +225,17 @@
         "big": "PAZ|INTERIOR",
         "script": "Florece desde dentro",
         "tag": "ONDAS ALFA"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Florece|desde dentro",
+          "title": "Florece desde dentro 🪷 Paz interior"
+        },
+        {
+          "phrase": "Tu paz|empieza aquí",
+          "title": "Tu paz empieza aquí 🪷 Ondas alfa"
+        }
+      ]
     },
     {
       "id": "luna-dormir",
@@ -203,7 +263,17 @@
         "big": "DUERME|YA",
         "script": "Suelta el día",
         "tag": "LUNA SOBRE EL AGUA"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Escucha esto|antes de dormir",
+          "title": "Escucha esto antes de dormir 🌙"
+        },
+        {
+          "phrase": "Suelta|el día",
+          "title": "Suelta el día 🌙 Música para dormir"
+        }
+      ]
     },
     {
       "id": "libelula-cambio",
@@ -231,7 +301,17 @@
         "big": "417 Hz",
         "script": "Todo cambio es un vuelo",
         "tag": "SUELTA LO NEGATIVO"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Todo cambio|es un vuelo",
+          "title": "Todo cambio es un vuelo 🦋 417 Hz"
+        },
+        {
+          "phrase": "Suelta|lo que pesa",
+          "title": "Suelta lo que pesa 🦋 417 Hz · Energía negativa fuera"
+        }
+      ]
     },
     {
       "id": "geometria-963",
@@ -259,7 +339,17 @@
         "big": "963 Hz",
         "script": "Todo está conectado",
         "tag": "CHAKRA CORONA"
-      }
+      },
+      "shorts": [
+        {
+          "phrase": "Todo está|conectado",
+          "title": "Todo está conectado ✨ 963 Hz"
+        },
+        {
+          "phrase": "Eleva tu|consciencia",
+          "title": "Eleva tu consciencia ✨ 963 Hz · Chakra corona"
+        }
+      ]
     }
   ]
 }
