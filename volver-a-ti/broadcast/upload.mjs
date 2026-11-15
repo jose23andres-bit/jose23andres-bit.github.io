@@ -24,7 +24,7 @@ if (!p) throw new Error(`Programa desconocido: ${pid}`);
 export function metadata(p, minutes) {
   const m = p.meta || {};
   let title = m.title || `${p.subtitle} · ${p.title} · Música para Meditar y Relajarse`;
-  if (minutes >= 60) title = `${title.split(" · ")[0]} · ${Math.round(minutes / 60)} Hora${minutes >= 120 ? "s" : ""} · ${p.title}`;
+  if (minutes >= 60) title = `${title.split(" · ")[0]} · ${Math.round(minutes / 60)} Hora${minutes >= 120 ? "s" : ""} para Dormir y Meditar`;
   title = title.slice(0, 100);
   const description = [
     m.intro || `${p.title}. ${p.subtitle}. ${minutes} minutos de música original, paisaje en calma y frecuencias suaves para volver a tu centro.`,
