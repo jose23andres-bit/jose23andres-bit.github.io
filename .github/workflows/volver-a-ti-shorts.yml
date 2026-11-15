@@ -44,7 +44,7 @@ jobs:
             const want="${{ github.event.inputs.program }}";
             const land=c.programs.filter(x=>x.id!=="consejos"), tips=c.programs.find(x=>x.id==="consejos"); const p=want?c.programs.find(x=>x.id===want):(n%2===0?tips:land[(n*5)%land.length]);
             const i=Math.floor(n/c.programs.length)%p.shorts.length;
-            const fs=require("fs"); const tip=p.id==="consejos", day=Math.floor(n/24), ii=tip?(day*2+(n%24>=19?1:0))%p.shorts.length:i; fs.appendFileSync(process.env.GITHUB_OUTPUT,`id=${p.id}\nidx=${ii}\nphrase=${p.shorts[ii].phrase}\nvoice=${tip?"tips":(day%2===0?"short":"")}\n`);
+            const fs=require("fs"); const tip=p.id==="consejos", day=Math.floor(n/24), ii=tip?(day*2+1+(n%24>=19?1:0))%p.shorts.length:i; fs.appendFileSync(process.env.GITHUB_OUTPUT,`id=${p.id}\nidx=${ii}\nphrase=${p.shorts[ii].phrase}\nvoice=${tip?"tips":(day%2===0?"short":"")}\n`);
             console.log(p.id, i, p.shorts[i].phrase);'
       - name: Renderizar Short (30 s, 1080x1920)
         run: VAT_SEED=${{ github.run_id }} VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast node render.mjs --only ${{ steps.pick.outputs.id }} --seconds 30 --w 1080 --h 1920 --phrase "${{ steps.pick.outputs.phrase }}" --cta "Vídeo completo en el canal" --name short ${{ steps.pick.outputs.voice && '--voice ' || '' }}${{ steps.pick.outputs.voice }}
