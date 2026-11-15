@@ -62,5 +62,38 @@ if ("IntersectionObserver" in window) {
   revealEls.forEach((el) => el.classList.add("is-visible"));
 }
 
+/* Música de fondo: Ibiza Global Radio en directo, sin controles visibles.
+   Los navegadores bloquean el sonido automático hasta que la visitante
+   interactúa con la página, así que si el intento inicial falla,
+   la radio arranca sola con el primer toque, clic o tecla. */
+const RADIO_URL = "https://listenssl.ibizaglobalradio.com:8024/ibizaglobalradio.mp3";
+const radio = new Audio();
+radio.preload = "none";
+radio.volume = 0.35;
+let radioOn = false;
+
+const startRadio = () => {
+  if (radioOn) return;
+  if (!radio.src) radio.src = RADIO_URL;
+  radio.play().then(() => {
+    radioOn = true;
+    ["pointerdown", "touchend", "click", "keydown"].forEach((ev) => document.removeEventListener(ev, startRadio, true));
+  }).catch(() => {});
+};
+
+startRadio();
+["pointerdown", "touchend", "click", "keydown"].forEach((ev) => document.addEventListener(ev, startRadio, true));
+
+/* Pausa al salir de la pestaña y retoma al volver (en directo, sin retraso acumulado) */
+document.addEventListener("visibilitychange", () => {
+  if (!radioOn) return;
+  if (document.hidden) {
+    radio.pause();
+  } else {
+    radio.src = RADIO_URL;
+    radio.play().catch(() => {});
+  }
+});
+
 /* Año actual en el pie */
 document.getElementById("year").textContent = new Date().getFullYear();
