@@ -465,6 +465,7 @@ html { scrollbar-color: var(--pink) var(--black); scrollbar-width: thin; }
 /* ---------- Portada: entrada cinematográfica ---------- */
 .hero__media img { transform: scale(1.1); transition: transform 2.8s var(--ease); will-change: transform; }
 .is-ready .hero__media img { transform: scale(1); }
+.hero__brand { white-space: nowrap; }
 .hero__brand .char { display: inline-block; opacity: 0; transform: translateY(.35em); filter: blur(6px); transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease); transition-delay: calc(var(--i) * 55ms + .2s); }
 .is-ready .hero__brand .char { opacity: 1; transform: none; filter: none; }
 
