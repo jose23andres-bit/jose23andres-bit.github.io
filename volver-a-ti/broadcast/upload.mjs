@@ -23,7 +23,9 @@ if (!p) throw new Error(`Programa desconocido: ${pid}`);
 
 export function metadata(p, minutes) {
   const m = p.meta || {};
-  const title = (m.title || `${p.subtitle} · ${p.title} · Música para Meditar y Relajarse`).slice(0, 100);
+  let title = m.title || `${p.subtitle} · ${p.title} · Música para Meditar y Relajarse`;
+  if (minutes >= 60) title = `${title.split(" · ")[0]} · ${Math.round(minutes / 60)} Hora${minutes >= 120 ? "s" : ""} · ${p.title}`;
+  title = title.slice(0, 100);
   const description = [
     m.intro || `${p.title}. ${p.subtitle}. ${minutes} minutos de música original, paisaje en calma y frecuencias suaves para volver a tu centro.`,
     "",
@@ -62,7 +64,7 @@ async function token() {
   return j.access_token;
 }
 
-const minutes = Math.round((p.uploadMinutes || 10));
+const minutes = Math.round(+(process.env.VAT_MINUTES || p.uploadMinutes || 10));
 let meta = metadata(p, minutes);
 const at = dry ? "" : await token();
 
