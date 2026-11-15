@@ -43,8 +43,97 @@ const setMenu = (open) => {
 toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
 nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
 
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* Titular de portada letra a letra */
+document.querySelectorAll("[data-split]").forEach((el) => {
+  const text = el.textContent;
+  el.setAttribute("aria-label", text);
+  el.innerHTML = [...text].map((c, i) => `<span class="char" aria-hidden="true" style="--i:${i}">${c}</span>`).join("");
+});
+
+/* Intro: se retira cuando la portada está lista (máx. 2,2 s) */
+const intro = document.getElementById("intro");
+const heroImg = document.querySelector(".hero__media img");
+let introClosed = false;
+const closeIntro = () => {
+  if (introClosed) return;
+  introClosed = true;
+  intro && intro.classList.add("is-done");
+  setTimeout(() => document.body.classList.add("is-ready"), 150);
+};
+const minIntro = new Promise((r) => setTimeout(r, reducedMotion ? 0 : 1500));
+const heroLoaded = new Promise((resolve) => {
+  if (!heroImg || heroImg.complete) return resolve();
+  heroImg.addEventListener("load", resolve, { once: true });
+  heroImg.addEventListener("error", resolve, { once: true });
+});
+Promise.all([minIntro, heroLoaded]).then(closeIntro);
+setTimeout(closeIntro, 2200);
+
+/* Manifiesto: las palabras se encienden al hacer scroll */
+const manifesto = document.getElementById("manifesto");
+let manifestoWords = [];
+if (manifesto) {
+  const wrap = (node) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          const s = document.createElement("span");
+          s.className = "w";
+          s.textContent = part;
+          frag.appendChild(s);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) {
+        wrap(n);
+      }
+    });
+  };
+  wrap(manifesto);
+  manifestoWords = [...manifesto.querySelectorAll(".w")];
+}
+
+/* Barra de progreso, manifiesto y parallax suave de la portada (un solo bucle por frame) */
+const progress = document.getElementById("progress");
+const heroMedia = document.querySelector(".hero__media");
+const isDesktop = window.matchMedia("(min-width: 881px)").matches;
+let ticking = false;
+const onFrame = () => {
+  ticking = false;
+  const y = window.scrollY;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  if (progress) progress.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+
+  if (manifestoWords.length) {
+    const r = manifesto.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+    const lit = Math.round(p * manifestoWords.length);
+    manifestoWords.forEach((w, i) => w.classList.toggle("on", reducedMotion || i < lit));
+  }
+
+  if (heroMedia && isDesktop && !reducedMotion && y < window.innerHeight * 1.2) {
+    heroMedia.style.transform = `translate3d(0, ${y * 0.18}px, 0)`;
+  }
+};
+window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onFrame); } }, { passive: true });
+onFrame();
+
+/* Tarjetas: brillo que sigue al cursor */
+document.querySelectorAll(".card").forEach((card) => {
+  card.addEventListener("pointermove", (e) => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    card.style.setProperty("--my", `${e.clientY - r.top}px`);
+  });
+});
+
 /* Animación de aparición al hacer scroll */
-const revealEls = document.querySelectorAll(".reveal");
+const revealEls = document.querySelectorAll(".reveal, .wipe");
 if ("IntersectionObserver" in window) {
   const io = new IntersectionObserver(
     (entries) => {

@@ -17,6 +17,14 @@
 </head>
 <body>
 
+  <!-- Intro: logo y línea champagne, se retira sola -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <svg class="intro__logo"><use href="#logo" /></svg>
+    <span class="intro__line"></span>
+    <p class="intro__claim">Tu fuerza. Tu evolución. Tu mejor versión.</p>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
   <!-- ===================== CABECERA ===================== -->
   <header class="header" id="header">
     <div class="container header__inner">
@@ -51,7 +59,7 @@
         <div class="hero__content">
           <p class="eyebrow reveal">Entrenamiento online personalizado</p>
           <h1 class="hero__title reveal">
-            <span class="hero__brand">PowerVane</span>
+            <span class="hero__brand" data-split>PowerVane</span>
             <span class="hero__amp">&amp; Wellness</span>
           </h1>
           <span class="rule reveal" aria-hidden="true"></span>
@@ -82,10 +90,19 @@
       </div>
     </div>
 
+    <!-- ===================== MANIFIESTO ===================== -->
+    <section class="manifesto bg-black" aria-label="Manifiesto PowerVane">
+      <div class="container">
+        <p class="eyebrow reveal">La esencia</p>
+        <p class="manifesto__text" id="manifesto">No vendo solo entrenamientos. Te acompaño en un proceso para que desarrolles <em>fuerza</em>, <em>seguridad</em>, <em>disciplina</em> y <em>confianza</em> en ti misma, sin renunciar a tu <em>feminidad</em>.</p>
+        <p class="manifesto__sign reveal">PowerVane &amp; Wellness</p>
+      </div>
+    </section>
+
     <!-- ===================== 2 · PRESENTACIÓN ===================== -->
     <section class="section about bg-burgundy" id="sobre-mi">
       <div class="container about__grid">
-        <figure class="about__media cine cine--rim-right reveal">
+        <figure class="about__media cine cine--rim-right wipe">
           <img src="assets/img/sobre-mi.jpg" alt="Retrato de la entrenadora" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
           <figcaption class="about__badge"><strong>10</strong><span>años de<br />experiencia</span></figcaption>
         </figure>
@@ -225,10 +242,10 @@
     <!-- ===================== 6 + 7 · GLUTE FOCUS / STRONG & FEMININE ===================== -->
     <section class="workouts bg-black" id="workouts">
       <article class="workout">
-        <figure class="workout__media cine cine--rim-right">
+        <figure class="workout__media cine cine--rim-right wipe">
           <img src="assets/img/glute-focus.jpg" alt="Entrenadora mostrando el trabajo de glúteo" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
         </figure>
-        <div class="workout__content reveal">
+        <div class="workout__content reveal" data-num="01">
           <p class="workout__weeks">8 semanas</p>
           <h2 class="workout__title">Glute Focus<br /><em>Workout</em></h2>
           <span class="rule" aria-hidden="true"></span>
@@ -238,10 +255,10 @@
       </article>
 
       <article class="workout workout--reverse">
-        <figure class="workout__media cine cine--rim-left">
+        <figure class="workout__media cine cine--rim-left wipe">
           <img src="assets/img/strong-feminine.jpg" alt="Selfie de la entrenadora con top deportivo negro" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
         </figure>
-        <div class="workout__content reveal">
+        <div class="workout__content reveal" data-num="02">
           <p class="workout__weeks">8 semanas</p>
           <h2 class="workout__title">Strong &amp; Feminine<br /><em>Workout</em></h2>
           <span class="rule" aria-hidden="true"></span>
@@ -265,13 +282,13 @@
           </a>
         </div>
         <div class="gallery__grid">
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item gallery__item--tall cine reveal" aria-label="Ver en Instagram">
+          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item gallery__item--tall cine wipe" aria-label="Ver en Instagram">
             <img src="assets/img/galeria-1.jpg" alt="Entrenadora con conjunto rojo" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
           </a>
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item cine reveal" aria-label="Ver en Instagram">
+          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item cine wipe" aria-label="Ver en Instagram">
             <img src="assets/img/galeria-2.jpg" alt="Entrenadora en estudio con top blanco" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
           </a>
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item cine reveal" aria-label="Ver en Instagram">
+          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item cine wipe" aria-label="Ver en Instagram">
             <img src="assets/img/galeria-3.jpg" alt="Entrenadora en estudio con top negro" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
           </a>
         </div>
