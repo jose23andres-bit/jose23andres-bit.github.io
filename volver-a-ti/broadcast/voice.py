@@ -47,7 +47,13 @@ def main() -> None:
         caps.append({"t0": round(t0, 2), "t1": round(t0 + d, 2), "text": text, "wav": wav.name})
         return t0 + d + gap
 
-    if mode == "short":
+    if mode == "tips":
+        tip = S["tips"][int(phrase or 0) % len(S["tips"])]
+        t = place(tip["title"], 0.8, 0.7)
+        for line in tip["lines"]:
+            t = place(line, t, 0.7)
+        place(rng.choice(S["tipsClose"]), t + 0.3, 0)
+    elif mode == "short":
         t = place(phrase.replace("|", " "), 1.4, 1.2)
         t = place(rng.choice(S["shorts"]["afterPhrase"]), t, 1.5)
         close = rng.choice(S["shorts"]["close"])

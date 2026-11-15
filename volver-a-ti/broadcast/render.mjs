@@ -42,8 +42,8 @@ const run = (cmd, a) => new Promise((ok, ko) => {
 });
 
 async function renderProgram(browser, prog) {
-  const seconds = forceSeconds ?? prog.minutes * 60;
-  const frames = Math.round(seconds * FPS);
+  let seconds = forceSeconds ?? prog.minutes * 60;
+  let frames = Math.round(seconds * FPS);
   const final = join(OUT, `${NAME || prog.id}.mp4`);
   if (existsSync(final) && !force && !forceSeconds) { console.log(`✓ ${prog.id} ya existe`); return; }
   mkdirSync(OUT, { recursive: true });
@@ -56,12 +56,14 @@ async function renderProgram(browser, prog) {
   if (VOICE) {
     await run(PY, [join(HERE, "voice.py"), prog.id, String(seconds), VOICE, vdir, PHRASE]);
     captions = JSON.parse(readFileSync(join(vdir, "captions.json"), "utf8"));
+    if (VOICE === "tips") { seconds = Math.ceil(captions[captions.length - 1].t1 + 2.5); frames = Math.round(seconds * FPS); console.log(`  duración según la voz: ${seconds} s`); }
   }
   const audio = run(PY, [join(HERE, "music.py"), prog.id, tmpAudio, String(seconds), VOICE ? vdir : "-"]);
 
   const page = await browser.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: 1 });
   const url = pathToFileURL(join(HERE, "stage.html"));
-  url.search = new URLSearchParams({ scene: prog.scene, title: prog.title, subtitle: prog.subtitle || "", breath: prog.breath && VH <= VW ? "1" : "0", duration: String(seconds), w: String(VW), h: String(VH), phrase: PHRASE, cta: CTA }).toString();
+  const title = prog.kind === "tips" ? (JSON.parse(readFileSync(join(HERE, "scripts.json"), "utf8")).tips[+PHRASE % 8] || {}).title || prog.title : prog.title;
+  url.search = new URLSearchParams({ scene: prog.scene, title, subtitle: prog.subtitle || "", breath: prog.breath && VH <= VW ? "1" : "0", duration: String(seconds), w: String(VW), h: String(VH), phrase: prog.kind === "tips" ? "" : PHRASE, cta: prog.kind === "tips" ? "" : CTA }).toString();
   await page.goto(url.href, { waitUntil: "networkidle" });
   await page.evaluate(() => window.stageReady);
   await page.evaluate((c) => { window.CAPTIONS = c; }, captions);

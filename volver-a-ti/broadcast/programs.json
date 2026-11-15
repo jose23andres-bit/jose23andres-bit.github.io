@@ -422,6 +422,67 @@
           "title": "Conecta con el universo ✨ 963 Hz"
         }
       ]
+    },
+    {
+      "id": "consejos",
+      "scene": "kawaii",
+      "minutes": 1,
+      "title": "Volver a Ti",
+      "subtitle": "Consejos de calma",
+      "kind": "tips",
+      "music": {
+        "root": 264,
+        "beat": 4,
+        "nature": "none",
+        "mood": "warm"
+      },
+      "meta": {
+        "title": "Consejos de calma",
+        "hashtags": "#Ansiedad #Calma #SaludMental",
+        "tags": [
+          "ansiedad",
+          "como calmar la ansiedad",
+          "estres",
+          "respiracion",
+          "manifestar",
+          "autoestima",
+          "consejos"
+        ]
+      },
+      "shorts": [
+        {
+          "phrase": "0",
+          "title": "¿Ansiedad? Prueba esto 💜"
+        },
+        {
+          "phrase": "1",
+          "title": "Qué hacer cuando estás estresada 💜"
+        },
+        {
+          "phrase": "2",
+          "title": "Cómo respirar para calmarte 💜"
+        },
+        {
+          "phrase": "3",
+          "title": "Cómo manifestar lo que deseas 💜"
+        },
+        {
+          "phrase": "4",
+          "title": "Cómo dejar de sobrepensar 💜"
+        },
+        {
+          "phrase": "5",
+          "title": "Cómo dormirte más rápido 💜"
+        },
+        {
+          "phrase": "6",
+          "title": "Cómo quererte un poco más 💜"
+        },
+        {
+          "phrase": "7",
+          "title": "Cuando todo te supera 💜"
+        }
+      ]
     }
   ]
 }

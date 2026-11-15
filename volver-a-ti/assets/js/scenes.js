@@ -684,6 +684,82 @@
     };
   }
 
-  window.VAT_SCENES = { respiracion, chakras, dormir, loto, libelula, geometria, bosque, oceano, lluvia };
+
+  /* 10 · Kawaii — mascota libélula de Volver a Ti sobre nubes y arcoíris (Shorts de consejos) */
+  function kawaii(w, h, opts) {
+    let stars, clouds;
+    const init = () => {
+      stars = makeStars(140, w, h * 0.5);
+      clouds = [];
+      const rows = [[0.62, 0.16, "#f3c6f0", "#fbe3f7"], [0.72, 0.19, "#d9b3f5", "#f6d8fb"], [0.84, 0.22, "#f7a8d8", "#ffd3ec"], [0.95, 0.25, "#c9a3f2", "#ecd6ff"]];
+      rows.forEach(([y, r, c1, c2], ri) => { for (let i = -1; i < 7; i++) clouds.push({ x: (i + (ri % 2) * 0.5) / 5.5, y, r: r * rand(0.8, 1.15), c1, c2, ph: Math.random() * TAU, ri }); });
+    };
+    init();
+    const OL = () => Math.max(4, w * 0.009);
+    function mascot(ctx, cx, cy, S, t) {
+      const lw = OL(), bob = Math.sin(t * 1.6) * S * 0.03, flap = Math.sin(t * 5) * 0.12;
+      const blink = (t % 3.6) > 3.45 ? 0.12 : 1;
+      ctx.save(); ctx.translate(cx, cy + bob); ctx.lineJoin = "round"; ctx.lineCap = "round"; ctx.lineWidth = lw; ctx.strokeStyle = "#1b0b2e";
+      // alas (traseras y delanteras)
+      const wing = (side, up) => {
+        ctx.save(); ctx.scale(side, 1); ctx.rotate((up ? -0.35 : 0.28) + (up ? -flap : flap * 0.7));
+        const L = S * (up ? 0.62 : 0.52), Wd = S * (up ? 0.2 : 0.17);
+        ctx.beginPath(); ctx.ellipse(S * 0.08 + L / 2, 0, L / 2, Wd, 0, 0, TAU);
+        const g = ctx.createLinearGradient(0, 0, L, 0); g.addColorStop(0, "#fff6d6"); g.addColorStop(0.5, "#d7b4ff"); g.addColorStop(1, "#b38bff");
+        ctx.fillStyle = g; ctx.globalAlpha = 0.95; ctx.fill(); ctx.globalAlpha = 1; ctx.stroke();
+        ctx.lineWidth = lw * 0.35; ctx.strokeStyle = "rgba(27,11,46,.35)"; ctx.beginPath(); ctx.moveTo(S * 0.12, 0); ctx.lineTo(S * 0.08 + L * 0.92, 0); ctx.stroke();
+        ctx.restore(); ctx.lineWidth = lw; ctx.strokeStyle = "#1b0b2e";
+      };
+      for (const sd of [-1, 1]) { wing(sd, false); wing(sd, true); }
+      // cola con chakras
+      const cols = ["#ff4545", "#ff8a2a", "#ffd23a", "#2fd46a", "#25b4ff", "#6f6bff", "#b15cff"];
+      ctx.beginPath(); ctx.ellipse(0, S * 0.42, S * 0.13, S * 0.34, 0, 0, TAU); ctx.fillStyle = "#3a1d63"; ctx.fill(); ctx.stroke();
+      cols.forEach((c, i) => { ctx.beginPath(); ctx.arc(0, S * 0.66 - i * S * 0.075, S * 0.034, 0, TAU); ctx.fillStyle = c; ctx.fill(); ctx.lineWidth = lw * 0.45; ctx.stroke(); });
+      ctx.lineWidth = lw;
+      // cabeza
+      ctx.beginPath(); ctx.arc(0, -S * 0.06, S * 0.3, 0, TAU);
+      const hg = ctx.createRadialGradient(-S * 0.1, -S * 0.18, S * 0.05, 0, -S * 0.06, S * 0.32); hg.addColorStop(0, "#8b5cf0"); hg.addColorStop(1, "#5a2fb8");
+      ctx.fillStyle = hg; ctx.fill(); ctx.stroke();
+      // antenas
+      for (const sd of [-1, 1]) { ctx.beginPath(); ctx.moveTo(sd * S * 0.1, -S * 0.33); ctx.quadraticCurveTo(sd * S * 0.16, -S * 0.5, sd * S * 0.24, -S * 0.52); ctx.stroke(); ctx.beginPath(); ctx.arc(sd * S * 0.25, -S * 0.53, S * 0.045, 0, TAU); ctx.fillStyle = "#ffd23a"; ctx.fill(); ctx.stroke(); }
+      // ojos grandes
+      for (const sd of [-1, 1]) {
+        ctx.save(); ctx.translate(sd * S * 0.12, -S * 0.08); ctx.scale(1, blink);
+        ctx.beginPath(); ctx.ellipse(0, 0, S * 0.085, S * 0.1, 0, 0, TAU); ctx.fillStyle = "#1b0b2e"; ctx.fill();
+        ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(-S * 0.025, -S * 0.035, S * 0.03, 0, TAU); ctx.fill(); ctx.beginPath(); ctx.arc(S * 0.03, S * 0.03, S * 0.014, 0, TAU); ctx.fill();
+        ctx.fillStyle = "#ffd23a"; ctx.beginPath(); ctx.arc(0, S * 0.05, S * 0.02, 0, Math.PI); ctx.fill();
+        ctx.restore();
+      }
+      // mejillas y sonrisa
+      ctx.fillStyle = "rgba(255,120,170,.75)"; for (const sd of [-1, 1]) { ctx.beginPath(); ctx.ellipse(sd * S * 0.2, S * 0.05, S * 0.05, S * 0.03, 0, 0, TAU); ctx.fill(); }
+      ctx.lineWidth = lw * 0.7; ctx.beginPath(); ctx.arc(0, S * 0.04, S * 0.05, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+      ctx.restore();
+    }
+    return {
+      resize(nw, nh) { w = nw; h = nh; init(); },
+      draw(ctx, t) {
+        const sky = ctx.createLinearGradient(0, 0, 0, h);
+        sky.addColorStop(0, "#3b0f96"); sky.addColorStop(0.45, "#6a2bd1"); sky.addColorStop(0.7, "#b65ee0"); sky.addColorStop(1, "#f7a8d8");
+        ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+        drawStars(ctx, stars, t, 0.9);
+        // arcoíris
+        const cx = w / 2, cy = h * 0.62, bands = ["#ffd23a", "#7fd3ff", "#ff9bd2", "#b38bff"], bw = w * 0.035;
+        bands.forEach((c, i) => { ctx.beginPath(); ctx.arc(cx, cy, w * 0.46 - i * bw, Math.PI, 0); ctx.lineWidth = bw; ctx.strokeStyle = c; ctx.stroke(); });
+        glow(ctx, cx, cy - w * 0.1, w * 0.45, "255,240,200", 0.35);
+        // nubes
+        const cloud = (c, layer) => {
+          const x = ((c.x + t * 0.004 * (1 + c.ri * 0.3)) % 1.3 - 0.15) * w, y = c.y * h + Math.sin(t * 0.6 + c.ph) * h * 0.004, r = c.r * w;
+          const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.4, r * 0.1, x, y, r * 1.2); g.addColorStop(0, c.c2); g.addColorStop(1, c.c1);
+          ctx.fillStyle = g;
+          for (const [dx, dy, rr] of [[0, 0, 1], [-0.7, 0.25, 0.75], [0.7, 0.22, 0.8], [-0.3, -0.35, 0.7], [0.35, -0.3, 0.65]]) { ctx.beginPath(); ctx.arc(x + dx * r, y + dy * r, rr * r, 0, TAU); ctx.fill(); }
+        };
+        clouds.filter((c) => c.ri < 2).forEach(cloud);
+        mascot(ctx, cx, h * 0.5, w * 0.5, t);
+        clouds.filter((c) => c.ri >= 2).forEach(cloud);
+      },
+    };
+  }
+
+  window.VAT_SCENES = { respiracion, chakras, dormir, loto, libelula, geometria, bosque, oceano, lluvia, kawaii };
   window.VAT_DRAW = { makeStars, drawStars, makeDust, drawDust, glow, sparkle };
 })();

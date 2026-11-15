@@ -1,4 +1,4 @@
-# Volver a Ti · Shorts verticales automáticos, 4 al día (08:00, 13:00, 18:00 y 21:00 hora de España).
+# Volver a Ti · Shorts verticales automáticos, 4 al día (2 de consejos kawaii con voz + 2 de paisajes) (08:00, 13:00, 18:00 y 21:00 hora de España).
 # Límite: la cuota gratuita de la API de YouTube (10.000 unidades/día) permite unas 6 subidas diarias en total.
 name: Volver a Ti · Shorts
 on:
@@ -42,11 +42,11 @@ jobs:
           node -e '
             const c=require("./programs.json"), n=Math.floor(Date.now()/36e5);
             const want="${{ github.event.inputs.program }}";
-            const p=want?c.programs.find(x=>x.id===want):c.programs[(n*5)%c.programs.length];
+            const land=c.programs.filter(x=>x.id!=="consejos"), tips=c.programs.find(x=>x.id==="consejos"); const p=want?c.programs.find(x=>x.id===want):(n%2===0?tips:land[(n*5)%land.length]);
             const i=Math.floor(n/c.programs.length)%p.shorts.length;
-            const fs=require("fs"); fs.appendFileSync(process.env.GITHUB_OUTPUT,`id=${p.id}\nidx=${i}\nphrase=${p.shorts[i].phrase}\nvoice=${n%2===0?"short":""}\n`);
+            const fs=require("fs"); const tip=p.id==="consejos", ii=tip?Math.floor(n/2)%p.shorts.length:i; fs.appendFileSync(process.env.GITHUB_OUTPUT,`id=${p.id}\nidx=${ii}\nphrase=${p.shorts[ii].phrase}\nvoice=${tip?"tips":(n%3===0?"short":"")}\n`);
             console.log(p.id, i, p.shorts[i].phrase);'
       - name: Renderizar Short (30 s, 1080x1920)
-        run: VAT_SEED=${{ github.run_id }} VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast node render.mjs --only ${{ steps.pick.outputs.id }} --seconds 30 --w 1080 --h 1920 --phrase "${{ steps.pick.outputs.phrase }}" --cta "Vídeo completo en el canal" --name short ${{ steps.pick.outputs.voice && '--voice short' || '' }}
+        run: VAT_SEED=${{ github.run_id }} VAT_PYTHON=python VAT_OUT=out VAT_PRESET=veryfast node render.mjs --only ${{ steps.pick.outputs.id }} --seconds 30 --w 1080 --h 1920 --phrase "${{ steps.pick.outputs.phrase }}" --cta "Vídeo completo en el canal" --name short ${{ steps.pick.outputs.voice && '--voice ' || '' }}${{ steps.pick.outputs.voice }}
       - name: Subir Short
         run: VAT_HAS_VOICE=${{ steps.pick.outputs.voice && '1' || '' }} node upload.mjs out/short.mp4 - ${{ steps.pick.outputs.id }} --short ${{ steps.pick.outputs.idx }}
