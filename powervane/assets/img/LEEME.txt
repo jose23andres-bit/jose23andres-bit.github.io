@@ -1,27 +1,25 @@
-FOTOS DE LA WEB · PowerVane & Wellness
-=======================================
+FOTOS DE LA WEB · PowerVane & Wellness (Dark Pink Cinematic)
+=============================================================
 
-Sube las fotos a esta carpeta con estos nombres EXACTOS (en minúsculas):
+Sube aquí las fotos ORIGINALES (sin texto encima, sin capturas de pantalla)
+con estos nombres exactos, en minúsculas:
 
-  hero.png       -> Foto RECORTADA sin fondo (PNG transparente): top negro de perfil,
-                    mirando a cámara con la mano delante. Va en la portada sobre el círculo rosa.
-  sobre-mi.jpg   -> Foto de estudio de cuerpo entero con top blanco y leggings negros,
-                    fondo gris. Sección "Sobre mí".
-  story.jpg      -> Foto en casa con conjunto negro de manga larga y la pierna levantada
-                    (espejo / armario). Sección "Entrena conmigo".
-  entrena.jpg    -> Foto de estudio con top negro y mano en la cadera (la desenfocada de
-                    "Entrena conmigo"). Se usa de fondo difuminado en dos secciones.
-  summer.jpg     -> Selfie en el espejo con top negro Nike ("8 weeks workout pre-summer").
-                    Banner de 8 semanas.
-  galeria-1.jpg  -> Conjunto rojo (galería de Instagram)
-  galeria-2.jpg  -> Cualquier otra foto que te guste (galería)
-  galeria-3.jpg  -> Cualquier otra foto que te guste (galería)
-  galeria-4.jpg  -> Cualquier otra foto que te guste (galería)
+  hero.jpg            Portada. Foto de estudio de cuerpo entero, top blanco, leggings negros,
+                      fondo gris, manos bajo la barbilla.
+  sobre-mi.jpg        "Entrena conmigo". Foto de estudio con top negro y mano en la cadera.
+  best-body.png       "Best Body Ever". La foto RECORTADA sin fondo (PNG transparente) con top
+                      negro de perfil.
+  glute-focus.jpg     "Glute Focus Workout". Foto en casa con conjunto negro de manga larga y
+                      la pierna levantada (la versión SIN textos).
+  strong-feminine.jpg "Strong & Feminine Workout". Selfie en el espejo con top negro Nike
+                      (sin los textos de la story).
+  galeria-1.jpg       Conjunto rojo.
+  galeria-2.jpg       Libre.
+  galeria-3.jpg       Libre.
+  galeria-4.jpg       Libre.
+  contacto.jpg        Fondo de la sección final (cualquier foto de estudio con fondo oscuro).
 
-Recomendado: fotos verticales, mínimo 1200 px de alto, comprimidas (menos de 500 KB cada una,
-por ejemplo con squoosh.app o tinypng.com).
+La web aplica sola el tratamiento cinematográfico (contraste, negros profundos, sombras
+burgundy y luz lateral rosa) por encima de cada foto, sin modificar el archivo original.
 
-El logo ya está creado en logo.svg (círculo gris con aro rosa). Si prefieres usar el
-archivo original, súbelo como logo.png y avísame.
-
-Mientras falte una foto, la web muestra un degradado gris en su lugar.
+Recomendado: verticales, mínimo 1400 px de alto, menos de 500 KB cada una.

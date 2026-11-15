@@ -9,7 +9,9 @@ const WHATSAPP_NUMBER = "34600000000";
 /* Mensaje que se envía automáticamente según el botón pulsado */
 const WA_MESSAGES = {
   general: "¡Hola! 💗 He visto la web de PowerVane & Wellness y me gustaría recibir más información.",
-  especializado: "¡Hola! 💗 Me interesan los Programas especializados de 8 semanas (Glute Focus / Strong&Feminine, 79 €). ¿Me cuentas más?",
+  especializado: "¡Hola! 💗 Me interesan los Programas especializados (79 €). ¿Me cuentas más?",
+  glute: "¡Hola! 💗 Me interesa el Glute Focus Workout de 8 semanas. ¿Me das más información?",
+  strong: "¡Hola! 💗 Me interesa el Strong & Feminine Workout de 8 semanas. ¿Me das más información?",
   powerstart: "¡Hola! 💗 Quiero empezar con PowerStart (220 €). ¿Cuáles son los siguientes pasos?",
   transformation: "¡Hola! 💗 Me interesa Power Transformation (300 € + nutrición). Me gustaría saber cómo empezar."
 };
