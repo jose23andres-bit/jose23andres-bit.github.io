@@ -689,6 +689,7 @@ html { scrollbar-color: var(--pink) var(--black); scrollbar-width: thin; }
 .live__kind { color: var(--magenta); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .64rem; }
 .live__when time { color: var(--white); text-transform: capitalize; }
 .live__count { color: var(--text-dim); }
+.live__count.is-live::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: #ff3d7f; box-shadow: 0 0 10px #ff3d7f; animation: recBlink 1.4s infinite; vertical-align: middle; }
 .live__info h3 { font-size: 1.35rem; margin: 0 0 .2em; }
 .live__info p { margin: 0; font-size: .9rem; }
 .live__item.is-locked .live__info { filter: blur(.4px); opacity: .85; }
@@ -812,6 +813,9 @@ html { scrollbar-color: var(--pink) var(--black); scrollbar-width: thin; }
 
 .timeline { list-style: none; margin: 0; padding: 0 0 0 22px; border-left: 1px solid rgba(228, 90, 155, .45); display: grid; gap: 18px; }
 .timeline li { position: relative; display: flex; align-items: center; gap: 16px; }
+.timeline__dot svg { width: 15px; height: 15px; fill: none; stroke: var(--champagne); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.chart__arrow { color: var(--magenta); margin: 0 2px; }
+.gallery__item img { filter: contrast(1.07) saturate(1.04); }
 .timeline__dot { position: absolute; left: -38px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--black); border: 1px solid var(--magenta); font-size: .85rem; box-shadow: 0 0 12px -2px rgba(228, 90, 155, .6); }
 .timeline time { font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; color: var(--magenta); }
 .timeline p { margin: 0; font-size: .95rem; color: var(--white); }

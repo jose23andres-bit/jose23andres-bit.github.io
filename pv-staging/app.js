@@ -58,12 +58,18 @@
   }));
 
   /* ---------- Gráfica SVG (línea) ---------- */
+  const ICONS = {
+    scale: '<svg viewBox="0 0 24 24"><path d="M5 20h14l-2-12H7L5 20zM9 8a3 3 0 0 1 6 0"/></svg>',
+    photo: '<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg>',
+    star: '<svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
+    trophy: '<svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/></svg>',
+  };
   const lineChart = (box, points, unit) => {
     if (points.length < 2) {
       box.innerHTML = `<p class="chart__empty">${points.length ? "Añade otro registro para ver la gráfica" : "Aún no hay registros"}</p>`;
       return;
     }
-    const W = 560, H = 220, P = { l: 44, r: 16, t: 18, b: 34 };
+    const W = Math.max(320, Math.round(box.clientWidth) || 560), H = 220, P = { l: 44, r: 16, t: 18, b: 34 };
     const ys = points.map((p) => p.v), min = Math.min(...ys), max = Math.max(...ys);
     const span = max - min || 1, lo = min - span * 0.15, hi = max + span * 0.15;
     const x = (i) => P.l + (i * (W - P.l - P.r)) / (points.length - 1);
@@ -78,7 +84,7 @@
     box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" class="chart__svg" role="img" aria-label="Evolución: de ${fmt(first)} a ${fmt(last)} ${unit}">
       <defs><linearGradient id="g-${box.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E45A9B" stop-opacity=".35"/><stop offset="1" stop-color="#E45A9B" stop-opacity="0"/></linearGradient></defs>
       ${grid}<path d="${area}" fill="url(#g-${box.id})"/><path d="${path}" class="chart__line"/>${dots}${labels}</svg>
-      <p class="chart__summary">${fmt(first)} → <strong>${fmt(last)} ${unit}</strong> <span class="${diff <= 0 ? "down" : "up"}">(${diff > 0 ? "+" : ""}${fmt(diff)})</span></p>`;
+      <p class="chart__summary">${fmt(first)} <span class="chart__arrow">›</span> <strong>${fmt(last)} ${unit}</strong> <span class="${diff <= 0 ? "down" : "up"}">(${diff > 0 ? "+" : ""}${fmt(diff)})</span></p>`;
   };
 
   /* =========================================================
@@ -128,7 +134,7 @@
     // Racha
     $("kStreak").textContent = streak();
     const done = S.trainings.includes(today());
-    $("trainToday").textContent = done ? "Hoy ya entrenaste ✓" : "He entrenado hoy";
+    $("trainToday").textContent = done ? "¡Hoy ya entrenaste!" : "He entrenado hoy";
     $("trainToday").classList.toggle("is-done", done);
 
     // Nivel
@@ -259,13 +265,13 @@
 
     // Línea temporal
     const ev = [];
-    sorted(S.measures).forEach((m) => ev.push({ date: m.date, icon: "⚖️", text: [m.weight != null && `Peso ${fmt(m.weight)} kg`, m.waist != null && `cintura ${fmt(m.waist)} cm`, m.hip != null && `cadera ${fmt(m.hip)} cm`].filter(Boolean).join(" · ") || "Nuevas medidas" }));
-    ph.forEach((p) => ev.push({ date: p.month + "-01", icon: "📸", text: `Foto de ${fmtMonth(p.month)}`, img: p.src }));
-    S.level.forEach((l) => ev.push({ date: l.date, icon: "⭐", text: `Test de nivel: ${l.name} (${l.score}/100)` }));
+    sorted(S.measures).forEach((m) => ev.push({ date: m.date, icon: "scale", text: [m.weight != null && `Peso ${fmt(m.weight)} kg`, m.waist != null && `cintura ${fmt(m.waist)} cm`, m.hip != null && `cadera ${fmt(m.hip)} cm`].filter(Boolean).join(" · ") || "Nuevas medidas" }));
+    ph.forEach((p) => ev.push({ date: p.month + "-01", icon: "photo", text: `Foto de ${fmtMonth(p.month)}`, img: p.src }));
+    S.level.forEach((l) => ev.push({ date: l.date, icon: "star", text: `Test de nivel: ${l.name} (${l.score}/100)` }));
     const best = {};
-    sorted(S.lifts).forEach((l) => { const rm = epley(l.kg, l.reps); if (!best[l.lift] || rm > best[l.lift]) { if (best[l.lift]) ev.push({ date: l.date, icon: "🏆", text: `Récord en ${l.lift}: ${fmt(l.kg)} kg × ${l.reps}` }); best[l.lift] = rm; } });
+    sorted(S.lifts).forEach((l) => { const rm = epley(l.kg, l.reps); if (!best[l.lift] || rm > best[l.lift]) { if (best[l.lift]) ev.push({ date: l.date, icon: "trophy", text: `Récord en ${l.lift}: ${fmt(l.kg)} kg × ${l.reps}` }); best[l.lift] = rm; } });
     ev.sort((x, y) => (x.date < y.date ? 1 : -1));
-    $("timeline").innerHTML = ev.length ? ev.slice(0, 30).map((e) => `<li><span class="timeline__dot" aria-hidden="true">${e.icon}</span><div><time>${esc(fmtDate(e.date))}</time><p>${esc(e.text)}</p></div>${e.img ? `<img src="${e.img}" alt="" loading="lazy"/>` : ""}</li>`).join("") : `<li class="muted">Tu historia empieza con tu primer registro 💗</li>`;
+    $("timeline").innerHTML = ev.length ? ev.slice(0, 30).map((e) => `<li><span class="timeline__dot" aria-hidden="true">${ICONS[e.icon]}</span><div><time>${esc(fmtDate(e.date))}</time><p>${esc(e.text)}</p></div>${e.img ? `<img src="${e.img}" alt="" loading="lazy"/>` : ""}</li>`).join("") : `<li class="muted">Tu historia empieza con tu primer registro 💗</li>`;
   };
 
   $("photoForm").addEventListener("submit", async (e) => {
@@ -349,9 +355,9 @@
           const opts = RECIPES.filter((r) => r.meal === meal && fits(r, pref));
           const alt = RECIPES.filter((r) => fits(r, pref) && r.meal !== "Merienda");
           const r = opts[0] || (meal === "Merienda" ? null : alt[0]);
-          return `<li><span class="plan__meal">${meal}</span><span class="plan__kcal">≈ ${fmt(Math.round((p.kcal * share) / 10) * 10, 0)} kcal</span><span class="plan__idea">${r ? `Idea: ${esc(r.name)}` : "Fruta + un lácteo o alternativa vegetal"}</span></li>`;
+          return `<li><span class="plan__meal">${meal}</span><span class="plan__kcal">~ ${fmt(Math.round((p.kcal * share) / 10) * 10, 0)} kcal</span><span class="plan__idea">${r ? `Idea: ${esc(r.name)}` : "Fruta + un lácteo o alternativa vegetal"}</span></li>`;
         }).join("")}</ol>
-        <p class="panel__note">Metabolismo basal ≈ ${fmt(p.bmr, 0)} kcal · gasto diario estimado ≈ ${fmt(p.tdee, 0)} kcal · preferencia: ${PREF_LABEL[pref]}.</p>`;
+        <p class="panel__note">Metabolismo basal ~ ${fmt(p.bmr, 0)} kcal · gasto diario estimado ~ ${fmt(p.tdee, 0)} kcal · preferencia: ${PREF_LABEL[pref]}.</p>`;
     } else {
       $("plan").innerHTML = `<p class="muted">Rellena tus datos para ver tus calorías, tus macros y un día de comidas de ejemplo.</p>`;
     }
@@ -364,7 +370,7 @@
         <summary>
           <span class="recipe__meal">${r.meal} · ${r.time}</span>
           <span class="recipe__name">${esc(r.name)}</span>
-          <span class="recipe__macros">≈ ${r.kcal} kcal · ${r.prot} g proteína</span>
+          <span class="recipe__macros">~ ${r.kcal} kcal · ${r.prot} g proteína</span>
           <span class="recipe__tags">${r.tags.map((t) => `<i>${TAG_LABEL[t]}</i>`).join("")}</span>
         </summary>
         <ul>${r.ing.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>
@@ -377,7 +383,7 @@
     $("meals").innerHTML = meals.length ? meals.map((m) => `<li><span class="meals__type">${esc(m.type)}</span><span>${esc(m.desc)}</span><span class="meals__kcal">${m.kcal != null ? fmt(m.kcal, 0) + " kcal" : ""}</span><button type="button" class="x" data-meal-del="${m.id}" aria-label="Eliminar comida">×</button></li>`).join("") : `<li class="muted">Aún no has registrado comidas hoy</li>`;
     const total = meals.reduce((s, m) => s + (m.kcal || 0), 0);
     const target = n.age && n.height && n.weight ? calcPlan(n).kcal : null;
-    $("mealTotal").textContent = meals.length ? `Total: ${fmt(total, 0)} kcal${target ? ` de ≈ ${fmt(target, 0)} kcal` : ""}` : "";
+    $("mealTotal").textContent = meals.length ? `Total: ${fmt(total, 0)} kcal${target ? ` de ~ ${fmt(target, 0)} kcal` : ""}` : "";
 
     // Agua
     const w = latestWeight() || n.weight;
@@ -403,7 +409,7 @@
     const r = RECIPES.find((x) => x.id === id);
     r.ing.forEach((i) => { if (!S.shop.some((s) => s.text === i)) S.shop.push({ id: uid(), text: i, done: false }); });
     save(); render();
-    e.target.textContent = "Añadida ✓";
+    e.target.textContent = "¡Añadida!";
   });
   $("mealForm").addEventListener("submit", (e) => {
     e.preventDefault();

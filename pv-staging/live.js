@@ -107,7 +107,7 @@
       } else action = `<a class="btn btn--line btn--small" href="${icsFor(s)}" download="powervane-${esc(s.id)}.ics">Añadir al calendario</a><span class="live__hint">El enlace aparece 15 min antes</span>`;
       const live = now() >= startMs(s) && now() < endMs(s);
       return `<li class="live__item ${allowed ? "is-open" : "is-locked"} ${live ? "is-live" : ""}">
-        <div class="live__when"><span class="live__kind">${kindLabel(s.kind)}</span><time datetime="${esc(s.start)}">${esc(fmtWhen(s))}</time><span class="live__count">${live ? "● En directo ahora" : esc(countdown(startMs(s) - now()))} · ${s.duration || 60} min</span></div>
+        <div class="live__when"><span class="live__kind">${kindLabel(s.kind)}</span><time datetime="${esc(s.start)}">${esc(fmtWhen(s))}</time><span class="live__count${live ? " is-live" : ""}">${live ? "En directo ahora" : esc(countdown(startMs(s) - now()))} · ${s.duration || 60} min</span></div>
         <div class="live__info"><h3>${esc(s.title)}</h3>${s.desc ? `<p>${esc(s.desc)}</p>` : ""}</div>
         <div class="live__action">${action}</div>
       </li>`;
