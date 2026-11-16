@@ -936,3 +936,8 @@ html { scrollbar-color: var(--pink) var(--black); scrollbar-width: thin; }
 @media (max-width: 600px) {
   .app__actions .btn { width: 100%; justify-content: center; }
 }
+
+/* Móvil: los trazos finos de Bodoni se pierden en pantallas pequeñas; se usa un tamaño óptico más robusto */
+@media (max-width: 600px) {
+  .hero__brand, .cta__title, .workout__title, .live__title, .bbe__title { font-variation-settings: "opsz" 20; }
+}
