@@ -163,7 +163,7 @@ document.querySelectorAll("[data-stagger]").forEach((group) => {
 });
 
 /* Fotos: parallax suave al hacer scroll (solo escritorio) */
-const parallaxEls = isDesktop && !reducedMotion ? [...document.querySelectorAll(".about__media, .gallery__item, .cta__bg")] : [];
+const parallaxEls = isDesktop && !reducedMotion ? [...document.querySelectorAll(".gallery__item, .cta__bg")] : [];
 const parallax = () => {
   const vh = window.innerHeight;
   parallaxEls.forEach((el) => {
