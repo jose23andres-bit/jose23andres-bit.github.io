@@ -913,3 +913,31 @@ html { scrollbar-color: var(--pink) var(--black); scrollbar-width: thin; }
   .wd > span, .features.reveal > li, .live__perks.reveal > li, .goals > li { transform: none; opacity: 1; transition: none; }
   .gallery__item img, .cta__bg img { translate: none; scale: none; }
 }
+
+/* ---------- Power App · acciones: enviar progreso, instalar, copia ---------- */
+.app__actions { display: flex; flex-wrap: wrap; gap: 10px; margin: -6px 0 22px; }
+.app__actions .btn { display: inline-flex; align-items: center; gap: 8px; }
+.app__actions .icon { width: 15px; height: 15px; }
+.app__panel { margin: 0 0 22px; padding: 18px 20px; border: 1px solid rgba(228, 90, 155, .45); border-radius: var(--radius); background: linear-gradient(170deg, rgba(40, 16, 31, .75), rgba(16, 13, 18, .9)); animation: fadeUp .45s var(--ease) both; }
+.app__panel[hidden] { display: none; }
+.app__panel p { margin: 0; font-size: .9rem; }
+.app__panel p + p { margin-top: .6rem; }
+.app__panel-title { margin-bottom: 12px !important; font-family: var(--serif); font-size: 1.2rem !important; color: var(--white); }
+#sendForm { display: grid; gap: 12px; max-width: 640px; }
+#sendForm[hidden] { display: none; }
+.app__preview { margin: 0; max-height: 260px; overflow: auto; padding: 14px 16px; border: 1px dashed rgba(233, 166, 194, .3); border-radius: 10px; background: rgba(16, 13, 18, .6); color: var(--text); font: 400 .84rem/1.65 var(--sans); white-space: pre-wrap; word-break: break-word; }
+.app__panel-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.app__panel-actions .btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+.app__fine { font-size: .8rem !important; color: var(--text-dim); }
+.app__share { display: inline-block; width: 14px; height: 16px; vertical-align: -2px; background: var(--champagne); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v12M8 7l4-4 4 4M5 12v8h14v-8'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v12M8 7l4-4 4 4M5 12v8h14v-8'/%3E%3C/svg%3E") center / contain no-repeat; }
+.app__notice { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 22px; padding: 12px 18px; border: 1px solid rgba(233, 166, 194, .45); border-radius: var(--radius); background: rgba(233, 166, 194, .08); font-size: .88rem; }
+.app__notice[hidden] { display: none; }
+.app__notice > span { flex: 1 1 280px; }
+@media (max-width: 600px) {
+  .app__actions .btn { width: 100%; justify-content: center; }
+}
+
+/* Móvil: los trazos finos de Bodoni se pierden en pantallas pequeñas; se usa un tamaño óptico más robusto */
+@media (max-width: 600px) {
+  .hero__brand, .cta__title, .workout__title, .live__title, .bbe__title { font-variation-settings: "opsz" 20; }
+}

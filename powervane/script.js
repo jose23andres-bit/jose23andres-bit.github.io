@@ -18,10 +18,11 @@ const WA_MESSAGES = {
   transformation: "¡Hola! 💗 Me interesa Power Transformation (300 € + nutrición). Me gustaría saber cómo empezar."
 };
 
-window.PVwa = (key) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_MESSAGES[key] || WA_MESSAGES.general)}`;
+window.PVwaText = (text) => `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(text)}`;
+window.PVwa = (key) => `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(WA_MESSAGES[key] || WA_MESSAGES.general)}`;
 document.querySelectorAll("[data-wa]").forEach((link) => {
   const message = WA_MESSAGES[link.dataset.wa] || WA_MESSAGES.general;
-  link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  link.href = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
   link.target = "_blank";
   link.rel = "noopener";
 });
@@ -299,6 +300,11 @@ document.querySelectorAll("[data-yt]").forEach((btn) => {
     setTimeout(() => { radio.pause(); radioOn = true; }, 50); /* silencia la radio mientras ve el vídeo */
   });
 });
+
+/* App instalable y disponible sin conexión */
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
 
 /* Año actual en el pie */
 document.getElementById("year").textContent = new Date().getFullYear();

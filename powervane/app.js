@@ -18,7 +18,9 @@
   let S;
   try { S = Object.assign(empty(), JSON.parse(localStorage.getItem(KEY) || "{}")); } catch { S = empty(); }
   let warned = false;
+  function hasReal() { return !S.demo && (S.measures.length + S.photos.length + S.lifts.length + S.meals.length + S.trainings.length + S.level.length) > 0; }
   const save = () => {
+    if (hasReal() && !S.createdAt) S.createdAt = Date.now();
     try { localStorage.setItem(KEY, JSON.stringify(S)); }
     catch {
       if (warned) return;
@@ -433,17 +435,138 @@
   /* =========================================================
      Copia, ejemplo y borrado
      ========================================================= */
-  $("appExport").addEventListener("click", () => {
+  /* Guardar copia: en el móvil abre "Compartir" (Archivos, Drive, WhatsApp a ti misma…); si no, descarga el archivo */
+  const doBackup = async () => {
+    const name = `powervane-copia-${today()}.json`;
     const blob = new Blob([JSON.stringify(S)], { type: "application/json" });
-    const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `powervane-${today()}.json` });
-    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  });
+    let done = false;
+    try {
+      const file = new File([blob], name, { type: "application/json" });
+      if (navigator.canShare && navigator.canShare({ files: [file] }) && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        await navigator.share({ files: [file], title: "Copia de mi Power App" });
+        done = true;
+      }
+    } catch (err) { if (err && err.name === "AbortError") return; }
+    if (!done) {
+      const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: name });
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    }
+    S.lastBackup = Date.now(); S.snooze = 0; save(); renderBackup();
+  };
+  $("appExport").addEventListener("click", doBackup);
   $("appImport").addEventListener("change", async (e) => {
     const f = e.target.files[0]; if (!f) return;
-    try { S = Object.assign(empty(), JSON.parse(await f.text())); save(); render(); }
-    catch { alert("Ese archivo no es una copia válida de la Power App."); }
+    try {
+      const data = JSON.parse(await f.text());
+      if (!data || typeof data !== "object" || !Array.isArray(data.measures)) throw new Error("formato");
+      S = Object.assign(empty(), data); S.lastBackup = Date.now(); save(); render();
+    } catch { alert("Ese archivo no es una copia válida de la Power App."); }
     e.target.value = "";
   });
+
+  /* Aviso de copia: si hay datos propios y hace más de 7 días que no se guarda copia */
+  const DAY = 864e5;
+  const renderBackup = () => {
+    const ref = S.lastBackup || S.createdAt;
+    const show = hasReal() && ref && Date.now() - ref > 7 * DAY && Date.now() > (S.snooze || 0);
+    $("backupBanner").hidden = !show;
+    if (!show) return;
+    const days = Math.floor((Date.now() - ref) / DAY);
+    $("backupText").textContent = S.lastBackup
+      ? `Tu última copia fue hace ${days} días. Guárdala para no perder tu progreso si cambias de móvil.`
+      : "Aún no has guardado ninguna copia. Guárdala para no perder tu progreso si cambias de móvil.";
+  };
+  $("backupNow").addEventListener("click", doBackup);
+  $("backupLater").addEventListener("click", () => { S.snooze = Date.now() + 3 * DAY; save(); renderBackup(); });
+
+  /* Enviar mi progreso a mi entrenadora (WhatsApp con un resumen) */
+  const signed = (n) => (n > 0 ? "+" : "") + fmt(n);
+  const buildSummary = (name) => {
+    const L = [`¡Hola! 💗 Soy ${name}. Te envío mi progreso de la Power App (${fmtDate(today())}):`, ""];
+    const ms = sorted(S.measures);
+    const ws = ms.filter((m) => m.weight != null);
+    if (ws.length) {
+      const first = ws[0].weight, last = ws[ws.length - 1].weight;
+      L.push(`⚖️ Peso: ${fmt(last)} kg${ws.length > 1 ? ` (empecé en ${fmt(first)} kg · ${signed(last - first)} kg)` : ""}`);
+    }
+    const pr = S.profile;
+    if (pr.goalWeight) {
+      const cur = latestWeight();
+      const p = pr.startWeight && cur != null && pr.startWeight !== pr.goalWeight ? Math.max(0, Math.min(1, (pr.startWeight - cur) / (pr.startWeight - pr.goalWeight))) : null;
+      L.push(`🎯 Objetivo: ${fmt(pr.goalWeight)} kg${p != null ? ` · progreso ${Math.round(p * 100)} %` : ""}`);
+    }
+    const parts = [["waist", "Cintura"], ["hip", "Cadera"], ["thigh", "Muslo"], ["arm", "Brazo"]].map(([k, label]) => {
+      const v = ms.filter((m) => m[k] != null);
+      if (!v.length) return null;
+      const a = v[0][k], b = v[v.length - 1][k];
+      return `${label} ${fmt(b)} cm${v.length > 1 && a !== b ? ` (${signed(b - a)})` : ""}`;
+    }).filter(Boolean);
+    if (parts.length) L.push(`📏 ${parts.join(" · ")}`);
+    const week = weekDates().filter((d) => S.trainings.includes(d)).length;
+    if (S.trainings.length) L.push(`🔥 Racha: ${streak()} días · Esta semana: ${week} de ${S.weekTarget} entrenos`);
+    if (S.level.length) { const lv = sorted(S.level)[S.level.length - 1]; L.push(`⭐ Nivel: ${lv.name} (${lv.score}/100)`); }
+    const best = {};
+    S.lifts.forEach((l) => { const rm = epley(l.kg, l.reps); if (!best[l.lift] || rm > best[l.lift].rm) best[l.lift] = { rm, l }; });
+    Object.entries(best).forEach(([lift, { rm, l }]) => L.push(`🏋️ ${lift}: ${fmt(l.kg)} kg × ${l.reps} (1RM estimado ${fmt(rm)} kg)`));
+    if (S.goals.length) L.push(`✅ Objetivos semanales: ${S.goals.filter((g) => g.done).length} de ${S.goals.length} cumplidos`);
+    const kcal = S.meals.filter((m) => m.date === today()).reduce((t, m) => t + (m.kcal || 0), 0);
+    if (kcal) L.push(`🍽️ Hoy he comido unas ${fmt(kcal, 0)} kcal`);
+    if (S.water[today()]) L.push(`💧 Agua hoy: ${fmt(S.water[today()] / 1000, 2)} L`);
+    if (S.photos.length) L.push(`📸 Fotos de evolución: ${S.photos.length} (te las paso si las quieres ver)`);
+    return L.join("\n");
+  };
+  const sendForm = $("sendForm"), sendName = $("sendName"), sendPreview = $("sendPreview");
+  const sendSubmit = sendForm.querySelector('[type="submit"]');
+  const updatePreview = () => {
+    if (S.demo) { sendPreview.textContent = "Estás viendo datos de ejemplo. Quita el ejemplo y añade tus propios registros para poder enviarlos."; sendSubmit.disabled = true; return; }
+    if (!hasReal()) { sendPreview.textContent = "Aún no tienes registros. Apunta tu peso, tus entrenos o tus medidas y vuelve aquí para enviarlos."; sendSubmit.disabled = true; return; }
+    sendSubmit.disabled = false;
+    sendPreview.textContent = buildSummary(sendName.value.trim() || "…");
+  };
+  $("appSend").addEventListener("click", () => {
+    sendForm.hidden = !sendForm.hidden;
+    $("installHelp").hidden = true;
+    if (sendForm.hidden) return;
+    sendName.value = S.profile.name || "";
+    updatePreview();
+    sendForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (!sendName.value) sendName.focus({ preventScroll: true });
+  });
+  sendName.addEventListener("input", updatePreview);
+  $("sendCancel").addEventListener("click", () => { sendForm.hidden = true; });
+  sendForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = sendName.value.trim();
+    if (!name || S.demo || !hasReal()) return;
+    S.profile.name = name; save();
+    const url = window.PVwaText ? window.PVwaText(buildSummary(name)) : null;
+    if (!url) return;
+    const a = Object.assign(document.createElement("a"), { href: url, target: "_blank", rel: "noopener" });
+    document.body.appendChild(a); a.click(); a.remove();
+    sendForm.hidden = true;
+  });
+
+  /* Instalar como app (Android/Chrome: botón directo · iPhone: instrucciones) */
+  const installBtn = $("appInstall"), installHelp = $("installHelp");
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  let installEvt = null;
+  if (!standalone && isIOS) installBtn.hidden = false;
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; if (!standalone) installBtn.hidden = false; });
+  window.addEventListener("appinstalled", () => { installBtn.hidden = true; installHelp.hidden = true; installEvt = null; });
+  installBtn.addEventListener("click", async () => {
+    if (installEvt) {
+      installEvt.prompt();
+      const { outcome } = await installEvt.userChoice;
+      installEvt = null;
+      if (outcome === "accepted") installBtn.hidden = true;
+      return;
+    }
+    installHelp.hidden = !installHelp.hidden;
+    sendForm.hidden = true;
+  });
+
   $("appReset").addEventListener("click", () => { if (confirm("¿Borrar todos tus datos de este dispositivo? No se puede deshacer.")) { S = empty(); save(); render(); } });
 
   /* Datos de ejemplo claramente marcados, para enseñar la app */
@@ -483,7 +606,8 @@
   /* ---------- Render ---------- */
   function render() {
     $("demoBanner").hidden = !S.demo;
-    renderDash(); renderEvo(); renderNutri();
+    renderDash(); renderEvo(); renderNutri(); renderBackup();
+    if (!$("sendForm").hidden) updatePreview();
   }
   render();
 })();
