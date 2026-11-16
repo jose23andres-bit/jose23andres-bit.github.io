@@ -89,10 +89,16 @@
     if (lo) lo.addEventListener("click", () => { localStorage.removeItem(STORE); access = null; render(); });
 
     if (!upcoming.length) {
-      list.innerHTML = `<li class="live__empty"><p class="live__empty-title">Nuevas clases muy pronto</p><p>Cuando se programe la próxima clase en directo o sesión exclusiva aparecerá aquí, con su cuenta atrás y el botón para entrar.</p></li>`;
+      list.innerHTML = `<li class="live__empty">
+        <span class="live__empty-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+        <p class="live__empty-text"><strong>Nuevas clases muy pronto</strong><span>Te aviso en cuanto se programe la próxima.</span></p>
+        <a href="#" class="btn btn--line btn--small" data-wa-live>Avísame</a>
+      </li>`;
+      const b = list.querySelector("[data-wa-live]");
+      if (b && window.PVwa) { b.href = window.PVwa("liveAviso"); b.target = "_blank"; b.rel = "noopener"; }
       return;
     }
-    const items = await Promise.all(upcoming.map(async (s) => {
+    const items = await Promise.all(upcoming.map(async (s, n) => {
       const allowed = access && s.plans.includes(access.plan);
       const isNow = now() >= startMs(s) - 15 * 60000;
       let action;
@@ -106,7 +112,9 @@
           : `<span class="live__hint">Enlace no disponible, escríbeme por WhatsApp</span>`;
       } else action = `<a class="btn btn--line btn--small" href="${icsFor(s)}" download="powervane-${esc(s.id)}.ics">Añadir al calendario</a><span class="live__hint">El enlace aparece 15 min antes</span>`;
       const live = now() >= startMs(s) && now() < endMs(s);
-      return `<li class="live__item ${allowed ? "is-open" : "is-locked"} ${live ? "is-live" : ""}">
+      const d = new Date(s.start);
+      return `<li class="live__item ${allowed ? "is-open" : "is-locked"} ${live ? "is-live" : ""}" style="--n:${n}">
+        <div class="live__date" aria-hidden="true"><b>${d.getDate()}</b><small>${esc(d.toLocaleString("es-ES", { month: "short" }).replace(".", ""))}</small></div>
         <div class="live__when"><span class="live__kind">${kindLabel(s.kind)}</span><time datetime="${esc(s.start)}">${esc(fmtWhen(s))}</time><span class="live__count${live ? " is-live" : ""}">${live ? "En directo ahora" : esc(countdown(startMs(s) - now()))} · ${s.duration || 60} min</span></div>
         <div class="live__info"><h3>${esc(s.title)}</h3>${s.desc ? `<p>${esc(s.desc)}</p>` : ""}</div>
         <div class="live__action">${action}</div>

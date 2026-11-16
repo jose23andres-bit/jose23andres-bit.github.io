@@ -12,11 +12,13 @@ const WA_MESSAGES = {
   especializado: "¡Hola! 💗 Me interesan los Programas especializados (69 €). ¿Me cuentas más?",
   glute: "¡Hola! 💗 Me interesa el Glute Focus Workout de 8 semanas. ¿Me das más información?",
   live: "¡Hola! 💗 Me interesa LIVE TRAINING. ¿Con qué plan puedo acceder a las clases en directo?",
+  liveAviso: "¡Hola! 💗 Avísame cuando programes la próxima clase de LIVE TRAINING, por favor.",
   strong: "¡Hola! 💗 Me interesa el Strong & Feminine Workout de 8 semanas. ¿Me das más información?",
   powerstart: "¡Hola! 💗 Quiero empezar con PowerStart (220 €). ¿Cuáles son los siguientes pasos?",
   transformation: "¡Hola! 💗 Me interesa Power Transformation (300 € + nutrición). Me gustaría saber cómo empezar."
 };
 
+window.PVwa = (key) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_MESSAGES[key] || WA_MESSAGES.general)}`;
 document.querySelectorAll("[data-wa]").forEach((link) => {
   const message = WA_MESSAGES[link.dataset.wa] || WA_MESSAGES.general;
   link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -133,6 +135,50 @@ document.querySelectorAll(".card").forEach((card) => {
   });
 });
 
+/* Titulares: las palabras suben una a una desde una máscara (estilo editorial) */
+document.querySelectorAll(".split").forEach((title) => {
+  let i = 0;
+  const wrap = (node) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+          const w = document.createElement("span");
+          w.className = "wd";
+          w.innerHTML = `<span style="--i:${i++}">${part.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</span>`;
+          frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && n.tagName !== "BR") wrap(n);
+    });
+  };
+  wrap(title);
+});
+
+/* Grupos (tarjetas, listas, galería, vídeos): entran en cascada */
+document.querySelectorAll("[data-stagger]").forEach((group) => {
+  [...group.children].forEach((child, i) => child.style.setProperty("--d", `${i * 110}ms`));
+});
+
+/* Fotos: parallax suave al hacer scroll (solo escritorio) */
+const parallaxEls = isDesktop && !reducedMotion ? [...document.querySelectorAll(".gallery__item, .cta__bg")] : [];
+const parallax = () => {
+  const vh = window.innerHeight;
+  parallaxEls.forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) return;
+    const p = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2); // -1..1
+    el.style.setProperty("--py", `${(-p * 4).toFixed(2)}%`);
+  });
+};
+if (parallaxEls.length) {
+  let pt = false;
+  window.addEventListener("scroll", () => { if (!pt) { pt = true; requestAnimationFrame(() => { pt = false; parallax(); }); } }, { passive: true });
+  parallax();
+}
+
 /* Animación de aparición al hacer scroll */
 const revealEls = document.querySelectorAll(".reveal, .wipe");
 /* Los .wipe parten recortados (clip-path) y el navegador los ve con 0 % visible:
@@ -197,7 +243,7 @@ document.addEventListener("visibilitychange", () => {
 });
 
 /* =========================================================
-   Escenas que se activan solas al verse: luces, glitch, vídeos, cifras
+   Escenas que se activan solas al verse: luces y vídeos
    ========================================================= */
 const onView = (selector, cb, options = { threshold: 0.25 }) => {
   const els = document.querySelectorAll(selector);
@@ -210,31 +256,20 @@ const onView = (selector, cb, options = { threshold: 0.25 }) => {
   });
 };
 
-/* Luces: las líneas LED se encienden con parpadeo y pasa un haz de luz */
+/* Luces: las líneas LED se encienden suavemente y pasa un haz de luz */
 onView("[data-lit]", (el, inView, io) => {
   if (!inView) return;
   el.classList.add("is-lit");
   io && io.unobserve(el);
 }, { threshold: 0.2 });
 
-/* Glitch elegante en los titulares, una vez al aparecer */
-const glitch = (el) => {
-  if (reducedMotion || el.classList.contains("is-glitching")) return;
-  el.classList.add("is-glitching");
-  setTimeout(() => el.classList.remove("is-glitching"), 720);
-};
-onView(".glitch", (el, inView, io) => {
-  if (!inView) return;
-  setTimeout(() => glitch(el), 350);
-  io && io.unobserve(el);
-}, { threshold: 0.6 });
-document.querySelectorAll(".glitch").forEach((el) => el.addEventListener("pointerenter", () => glitch(el)));
-
-/* Portada: un destello glitch en el titular cada cierto tiempo */
+/* Portada: un único destello glitch suave al entrar (nada más en toda la web) */
 const heroBrand = document.querySelector(".hero__brand");
 if (heroBrand && !reducedMotion) {
-  setTimeout(() => glitch(heroBrand), 3200);
-  setInterval(() => { if (window.scrollY < window.innerHeight) glitch(heroBrand); }, 9000);
+  setTimeout(() => {
+    heroBrand.classList.add("is-glitching");
+    setTimeout(() => heroBrand.classList.remove("is-glitching"), 450);
+  }, 3000);
 }
 
 /* Vídeos: se reproducen solos (en silencio) solo mientras se ven */
@@ -246,21 +281,6 @@ onView("video.bgvideo", (v, inView) => {
     v.pause();
   }
 }, { threshold: 0.15 });
-
-/* Precios: cuentan hasta la cifra al aparecer */
-onView("[data-count]", (el, inView, io) => {
-  if (!inView) return;
-  io && io.unobserve(el);
-  const to = +el.dataset.count;
-  if (reducedMotion) { el.textContent = to; return; }
-  const t0 = performance.now(), dur = 1300;
-  const step = (t) => {
-    const p = Math.min(1, (t - t0) / dur);
-    el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
-    if (p < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}, { threshold: 0.6 });
 
 /* YouTube: se carga el reproductor solo al pulsar (web rápida) y se pausa la radio */
 document.querySelectorAll("[data-yt]").forEach((btn) => {
