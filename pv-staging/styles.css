@@ -866,7 +866,6 @@ html { scrollbar-color: var(--pink) var(--black); scrollbar-width: thin; }
 }
 .manifesto__video { opacity: .38; }
 .compare__handle::after { content: "‹ ›"; letter-spacing: .1em; font-family: var(--sans); }
-@media (max-width: 600px) { 
 /* =========================================================
    MOVIMIENTO MODERNO · titulares, cascada, parallax
    ========================================================= */
