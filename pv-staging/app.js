@@ -542,8 +542,8 @@
     S.profile.name = name; save();
     const url = window.PVwaText ? window.PVwaText(buildSummary(name)) : null;
     if (!url) return;
-    const w = window.open(url, "_blank", "noopener");
-    if (!w) location.href = url;
+    const a = Object.assign(document.createElement("a"), { href: url, target: "_blank", rel: "noopener" });
+    document.body.appendChild(a); a.click(); a.remove();
     sendForm.hidden = true;
   });
 
