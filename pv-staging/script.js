@@ -135,19 +135,29 @@ document.querySelectorAll(".card").forEach((card) => {
 
 /* Animación de aparición al hacer scroll */
 const revealEls = document.querySelectorAll(".reveal, .wipe");
+/* Los .wipe parten recortados (clip-path) y el navegador los ve con 0 % visible:
+   se vigila su contenedor, que no está recortado */
+const watchTarget = (el) => {
+  const w = el.closest(".wipe");
+  return w ? w.parentElement : el;
+};
 if ("IntersectionObserver" in window) {
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
+          (entry.target._pvWipes || [entry.target]).forEach((el) => el.classList.add("is-visible"));
           io.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.12 }
   );
-  revealEls.forEach((el) => io.observe(el));
+  revealEls.forEach((el) => {
+    const t = el.classList.contains("wipe") ? el.parentElement : el;
+    if (t !== el) (t._pvWipes = t._pvWipes || []).push(el);
+    io.observe(t);
+  });
 } else {
   revealEls.forEach((el) => el.classList.add("is-visible"));
 }
@@ -192,8 +202,12 @@ document.addEventListener("visibilitychange", () => {
 const onView = (selector, cb, options = { threshold: 0.25 }) => {
   const els = document.querySelectorAll(selector);
   if (!("IntersectionObserver" in window)) { els.forEach((el) => cb(el, true)); return; }
-  const io = new IntersectionObserver((entries) => entries.forEach((e) => cb(e.target, e.isIntersecting, io)), options);
-  els.forEach((el) => io.observe(el));
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => cb(e.target._pvEl || e.target, e.isIntersecting, io)), options);
+  els.forEach((el) => {
+    const t = watchTarget(el);
+    if (t !== el) t._pvEl = el;
+    io.observe(t);
+  });
 };
 
 /* Luces: las líneas LED se encienden con parpadeo y pasa un haz de luz */
