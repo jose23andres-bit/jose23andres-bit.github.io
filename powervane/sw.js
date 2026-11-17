@@ -3,7 +3,7 @@
    - Páginas, CSS y JS: primero la red (siempre la última versión) y, sin conexión, la copia guardada.
    - Imágenes, iconos y fuentes: copia guardada al instante y se actualiza por detrás.
    - Vídeos, radio y YouTube no pasan por aquí. */
-const CACHE = "powervane-v20261126";
+const CACHE = "powervane-v20261129";
 const CORE = [
   "./",
   "styles.css",
@@ -11,6 +11,8 @@ const CORE = [
   "app.js",
   "live.js",
   "live-data.js",
+  "studio.js",
+  "design.css",
   "manifest.webmanifest",
   "assets/img/logo.svg",
   "assets/img/hero.jpg",

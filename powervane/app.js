@@ -14,6 +14,7 @@
     activity: {}, activityGoals: { kcal: 2000, steps: 8000, min: 45 },
     level: [], photos: [], lifts: [],
     nutri: {}, meals: [], water: {}, shop: [], demo: false,
+    routines: [], sessions: [], plan: {}, habits: {}, badgesSeen: [],
   });
   let S;
   try { S = Object.assign(empty(), JSON.parse(localStorage.getItem(KEY) || "{}")); } catch { S = empty(); }
@@ -51,15 +52,33 @@
   const monthInput = document.querySelector('#photoForm [name="month"]');
   if (monthInput) monthInput.value = today().slice(0, 7);
 
-  /* ---------- Pestañas ---------- */
-  const tabs = root.querySelectorAll(".tab");
-  tabs.forEach((t) => t.addEventListener("click", () => {
-    tabs.forEach((x) => { const on = x === t; x.classList.toggle("is-active", on); x.setAttribute("aria-selected", on); });
-    root.querySelectorAll(".tabpanel").forEach((p) => { const on = p.id === "tab-" + t.dataset.tab; p.hidden = !on; p.classList.toggle("is-active", on); });
+  /* ---------- Módulos (barra superior, barra inferior tipo app y accesos desde la web) ---------- */
+  let current = "dash";
+  const go = (tab, { scroll = true } = {}) => {
+    if (!$("tab-" + tab)) return;
+    current = tab;
+    root.querySelectorAll("[data-tab]").forEach((x) => {
+      const on = x.dataset.tab === tab;
+      x.classList.toggle("is-active", on);
+      if (x.getAttribute("role") === "tab") x.setAttribute("aria-selected", on);
+    });
+    root.querySelectorAll(".tabpanel").forEach((p) => { const on = p.id === "tab-" + tab; p.hidden = !on; p.classList.toggle("is-active", on); });
     render();
-  }));
+    if (scroll) {
+      const bar = root.querySelector(".app__bar");
+      const anchor = bar && bar.offsetParent ? bar : $("tab-" + tab);
+      const top = anchor.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).scrollPaddingTop) || 80) - 14;
+      if (Math.abs(window.scrollY - top) > 40) window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
+  root.querySelectorAll("[data-tab]").forEach((t) => t.addEventListener("click", () => go(t.dataset.tab)));
+  document.addEventListener("click", (e) => {
+    const g = e.target.closest("[data-go]");
+    if (!g) return;
+    e.preventDefault();
+    go(g.dataset.go);
+  });
 
-  /* ---------- Gráfica SVG (línea) ---------- */
   const ICONS = {
     scale: '<svg viewBox="0 0 24 24"><path d="M5 20h14l-2-12H7L5 20zM9 8a3 3 0 0 1 6 0"/></svg>',
     photo: '<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg>',
@@ -594,6 +613,7 @@
     d.meals = [{ id: uid(), date: t, type: "Desayuno", desc: "Bowl de yogur griego con avena", kcal: 340 }, { id: uid(), date: t, type: "Comida", desc: "Pollo al horno con boniato", kcal: 480 }];
     d.water[t] = 1250;
     d.shop = [{ id: uid(), text: "Yogur griego natural 0 %", done: true }, { id: uid(), text: "Copos de avena", done: false }];
+    (window.PVApp.demoExtras || []).forEach((fn) => fn(d));
     S = d; save(); render();
   };
   $("appDemo").addEventListener("click", () => {
@@ -604,10 +624,22 @@
   $("demoClear").addEventListener("click", () => { S = empty(); save(); render(); });
 
   /* ---------- Render ---------- */
+  const hooks = [];
   function render() {
     $("demoBanner").hidden = !S.demo;
     renderDash(); renderEvo(); renderNutri(); renderBackup();
     if (!$("sendForm").hidden) updatePreview();
+    hooks.forEach((h) => { try { h(current); } catch (err) { console.error(err); } });
   }
+
+  /* API compartida con los módulos de studio.js */
+  window.PVApp = {
+    get S() { return S; },
+    save, render, go, hasReal,
+    get current() { return current; },
+    onRender: (fn) => { hooks.push(fn); fn(current); },
+    demoExtras: [],
+    u: { $, esc, pad, iso, today, addDays, fmtDate, fmt, num, uid, sorted, setRing, formData, weekDates, streak, epley, latestWeight, lineChart, resizePhoto, doBackup },
+  };
   render();
 })();

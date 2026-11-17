@@ -2,14 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#100D12" />
-  <title>PowerVane & Wellness · Tu fuerza. Tu evolución. Tu mejor versión.</title>
-  <meta name="description" content="Entrenamiento online personalizado para mujeres que quieren transformar su forma de entrenar y sentirse más fuertes. 10 años de experiencia." />
-  <meta property="og:title" content="PowerVane & Wellness" />
-  <meta property="og:description" content="Tu fuerza. Tu evolución. Tu mejor versión." />
-  <meta property="og:image" content="https://jose23andres-bit.github.io/powervane/assets/img/hero.jpg" />
-  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
+  <script>if(/[?&]app=1/.test(location.search)||matchMedia("(display-mode: standalone)").matches||navigator.standalone)document.documentElement.classList.add("app-mode")</script>
+  <title>PowerVane & Wellness · Strong is beautiful · Entrenamiento online para mujeres</title>
+  <meta name="description" content="PowerVane & Wellness: entrenamiento online personalizado para mujeres. Programas especializados (69 €), PowerStart (220 €), Power Transformation (300 € + nutrición), LIVE Training y Power App gratuita. 10 años de experiencia." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="PowerVane & Wellness" />
+  <meta property="og:title" content="PowerVane & Wellness · Strong is beautiful" />
+  <meta property="og:description" content="Your body. Your power. Your evolution. Entrenamiento online personalizado para mujeres." />
+  <meta property="og:image" content="https://jose23andres-bit.github.io/powervane/assets/img/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="assets/icons/icon-192.png" type="image/png" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"PowerVane & Wellness","description":"Entrenamiento online personalizado para mujeres.","telephone":"+34607745308","image":"https://jose23andres-bit.github.io/powervane/assets/img/og.jpg","sameAs":["https://instagram.com/powervaneandwellness","https://youtube.com/@yourpoweryourwellness"],"makesOffer":[{"@type":"Offer","name":"Programas especializados","price":"69","priceCurrency":"EUR"},{"@type":"Offer","name":"PowerStart","price":"220","priceCurrency":"EUR"},{"@type":"Offer","name":"Power Transformation","price":"300","priceCurrency":"EUR","description":"300 € + nutrición"}]}
+  </script>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -19,15 +30,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500&family=Cormorant+Garamond:wght@500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261126" />
+  <link rel="stylesheet" href="styles.css?v=20261129" />
+  <link rel="stylesheet" href="design.css?v=20261129" />
 </head>
 <body>
 
   <!-- Intro: logo y línea champagne, se retira sola -->
-  <div class="intro" id="intro" aria-hidden="true">
-    <svg class="intro__logo"><use href="#logo" /></svg>
-    <span class="intro__line"></span>
-    <p class="intro__claim">Tu fuerza. Tu evolución. Tu mejor versión.</p>
+  <!-- ===================== INTRO: se entra tocando el logo ===================== -->
+  <div class="gate" id="gate">
+    <div class="gate__stage" aria-hidden="true">
+      <figure class="gate__panel"><img src="assets/img/sobre-mi.jpg" alt="" /></figure>
+      <figure class="gate__panel gate__panel--main"><img src="assets/img/hero.jpg" alt="" fetchpriority="high" /></figure>
+      <figure class="gate__panel"><img src="assets/img/galeria-4.jpg" alt="" /></figure>
+    </div>
+    <div class="gate__veil" aria-hidden="true"></div>
+    <div class="gate__center">
+      <p class="gate__kicker">Fitness · Wellness · Mujer</p>
+      <button type="button" class="gate__logo" id="gateEnter" aria-label="Entrar en PowerVane & Wellness">
+        <svg class="gate__ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="96" pathLength="1" /><circle class="gate__ring2" cx="100" cy="100" r="88" pathLength="1" /></svg>
+        <span class="mono mono--xl" aria-hidden="true">PV</span>
+        <span class="gate__ripple" aria-hidden="true"></span>
+      </button>
+      <p class="gate__word">PowerVane<span>&amp; Wellness</span></p>
+      <p class="gate__claim">Strong is <em>beautiful.</em></p>
+      <p class="gate__hint" aria-hidden="true"><i></i>Toca el logo para entrar</p>
+    </div>
   </div>
   <div class="progress" id="progress" aria-hidden="true"></div>
 
@@ -35,20 +62,24 @@
   <header class="header" id="header">
     <div class="container header__inner">
       <a href="#inicio" class="brand" aria-label="PowerVane & Wellness, inicio">
-        <svg class="brand__logo" aria-hidden="true"><use href="#logo" /></svg>
+        <span class="mono" aria-hidden="true">PV</span>
         <span class="brand__name">PowerVane<span>&amp; Wellness</span></span>
       </a>
       <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
       </button>
-      <nav class="nav" id="nav">
-        <a href="#sobre-mi">Sobre mí</a>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="#inicio">Inicio</a>
         <a href="#programas">Programas</a>
         <a href="#live" class="nav__live">Live</a>
         <a href="#power-app">Power App</a>
-        <a href="#galeria">Galería</a>
-        <a href="#youtube">Vídeos</a>
-        <a href="#" class="btn btn--small btn--pink" data-wa="general">Escríbeme</a>
+        <a href="#transformacion">Transformación</a>
+        <a href="#comunidad">Comunidad</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#power-app" class="btn btn--small btn--pink" data-go="dash">
+          <svg class="icon" aria-hidden="true"><use href="#i-phone2" /></svg>
+          Acceso App
+        </a>
       </nav>
     </div>
   </header>
@@ -57,37 +88,67 @@
 
     <!-- ===================== 1 · PORTADA ===================== -->
     <section class="hero" id="inicio">
-
       <figure class="hero__media cine cine--rim-left">
-        <img src="assets/img/hero.jpg" alt="Entrenadora de PowerVane & Wellness en estudio" fetchpriority="high" onerror="this.parentNode.classList.add('is-missing')" />
+        <img src="assets/img/hero.jpg" alt="Vanessa, entrenadora de PowerVane & Wellness, en estudio" fetchpriority="high" width="1467" height="2200" />
       </figure>
+      <a href="#power-app" class="hero__badge" data-go="evo" aria-label="Tu evolución 360°: abrir Body Evolution">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" pathLength="1" /></svg>
+        <span>Tu evolución<strong>360°</strong></span>
+      </a>
 
       <div class="container hero__inner">
         <div class="hero__content">
-          <p class="eyebrow reveal">Entrenamiento online personalizado</p>
-          <h1 class="hero__title reveal">
-            <span class="hero__brand" data-split>PowerVane</span>
-            <span class="hero__amp">&amp; Wellness</span>
-          </h1>
-          <span class="rule reveal" aria-hidden="true"></span>
-          <p class="hero__claim reveal">Tu fuerza. Tu evolución. <em>Tu mejor versión.</em></p>
+          <p class="eyebrow reveal">Fitness · Wellness · Mujer</p>
+          <h1 class="hero__title split reveal"><span class="sr-only">PowerVane &amp; Wellness · </span>Strong is <em>beautiful.</em></h1>
+          <p class="hero__tag reveal">Your body. Your power. Your evolution.</p>
           <p class="hero__lead reveal">Entrenamiento online personalizado para mujeres que quieren transformar su forma de entrenar y sentirse más fuertes.</p>
           <div class="hero__actions reveal">
-            <a href="#programas" class="btn btn--pink btn--large">Descubre tu programa</a>
-            <a href="#" class="btn btn--line" data-wa="general">
-              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>
-              WhatsApp
+            <a href="#programas" class="btn btn--pink btn--large">Descubre tu programa <svg class="icon" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <a href="#power-app" class="btn btn--line btn--large" data-go="dash">
+              <svg class="icon" aria-hidden="true"><use href="#i-phone2" /></svg>
+              Acceder a Power App
             </a>
           </div>
+          <ul class="hero__pillars reveal" data-stagger>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-dumbbell" /></svg>Entrenamiento personalizado</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-apple" /></svg>Nutrición flexible</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-lotus" /></svg>Bienestar integral</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-chart" /></svg>Seguimiento y evolución</li>
+          </ul>
         </div>
-        <ul class="hero__meta reveal">
-          <li><strong>10</strong><span>años de experiencia</span></li>
-          <li><strong>3</strong><span>formas de entrenar</span></li>
-          <li><a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener"><strong>@</strong><span>powervaneandwellness</span></a></li>
-        </ul>
       </div>
-      <a href="#sobre-mi" class="hero__scroll" aria-label="Bajar"><span></span></a>
+      <a href="#accesos" class="hero__scroll" aria-label="Bajar"><span></span></a>
     </section>
+
+    <!-- ===================== ACCESOS RÁPIDOS ===================== -->
+    <nav class="quick" id="accesos" aria-label="Accesos rápidos">
+      <div class="container quick__grid" data-stagger>
+        <a href="#programas" class="quick__card reveal">
+          <img src="assets/img/galeria-1.jpg" alt="" loading="lazy" />
+          <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-dumbbell" /></svg></span>
+          <span class="quick__text"><strong>Programas</strong><small>Desde 69 €. Elige tu punto de partida.</small></span>
+          <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
+        </a>
+        <a href="#live" class="quick__card reveal">
+          <img src="assets/video/glute-focus.jpg" alt="" loading="lazy" />
+          <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-live" /></svg></span>
+          <span class="quick__text"><strong>Live Training</strong><small>Clases en directo para clientas.</small></span>
+          <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
+        </a>
+        <a href="#power-app" class="quick__card reveal" data-go="dash">
+          <img src="assets/img/galeria-3.jpg" alt="" loading="lazy" />
+          <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-phone2" /></svg></span>
+          <span class="quick__text"><strong>Power App</strong><small>Rutinas, progreso, nutrición y retos.</small></span>
+          <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
+        </a>
+        <a href="#transformacion" class="quick__card reveal">
+          <img src="assets/img/galeria-2.jpg" alt="" loading="lazy" />
+          <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-chart" /></svg></span>
+          <span class="quick__text"><strong>Transformación</strong><small>Mide, compara y evoluciona.</small></span>
+          <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
+        </a>
+      </div>
+    </nav>
 
     <!-- ===================== CINTA ===================== -->
     <div class="ticker" aria-hidden="true">
@@ -177,10 +238,12 @@
 
         <div class="cards" data-stagger>
           <article class="card reveal">
+            <figure class="card__media"><img src="assets/img/galeria-1.jpg" alt="" loading="lazy" /><span class="card__tag">Objetivo concreto</span></figure>
             <p class="card__index">I</p>
             <h3 class="card__title">Programas especializados</h3>
             <p class="card__price"><span class="card__amount">69</span><span class="card__cur">€</span></p>
             <p class="card__desc">Un plan concreto para trabajar un objetivo específico.</p>
+            <p class="card__inc">Qué incluye</p>
             <ul class="card__list">
               <li>Programa de entrenamiento enfocado en una zona, capacidad u objetivo concreto.</li>
               <li>Estructura clara de ejercicios, series y repeticiones.</li>
@@ -191,10 +254,12 @@
           </article>
 
           <article class="card reveal">
+            <figure class="card__media"><img src="assets/img/galeria-3.jpg" alt="" loading="lazy" /><span class="card__tag">Punto de partida</span></figure>
             <p class="card__index">II</p>
             <h3 class="card__title">PowerStart</h3>
             <p class="card__price"><span class="card__amount">220</span><span class="card__cur">€</span></p>
             <p class="card__desc">Tu punto de partida para entrenar con dirección.</p>
+            <p class="card__inc">Qué incluye</p>
             <ul class="card__list">
               <li>Plan de entrenamiento personalizado según tu objetivo y nivel.</li>
               <li>Organización de tus sesiones y progresión del trabajo.</li>
@@ -206,11 +271,12 @@
           </article>
 
           <article class="card card--featured reveal">
-            <span class="card__ribbon">La más completa</span>
+            <figure class="card__media"><img src="assets/img/galeria-2.jpg" alt="" loading="lazy" /><span class="card__tag card__tag--hot">La más completa</span></figure>
             <p class="card__index">III</p>
             <h3 class="card__title">Power Transformation</h3>
             <p class="card__price"><span class="card__amount">300</span><span class="card__cur">€</span><span class="card__plus">+ nutrición</span></p>
             <p class="card__desc">Un proceso más completo para trabajar tu cambio de composición corporal.</p>
+            <p class="card__inc">Qué incluye</p>
             <ul class="card__list">
               <li>Entrenamiento personalizado y adaptado a tu evolución.</li>
               <li>Orientación nutricional y ajuste de pautas de alimentación según tus necesidades.</li>
@@ -221,6 +287,18 @@
             <a href="#" class="btn btn--pink btn--block" data-wa="transformation">Quiero transformarme</a>
           </article>
         </div>
+
+        <ol class="steps reveal" data-stagger aria-label="Cómo se contrata">
+          <li><span>1</span><div><strong>Elige tu plan</strong><p>Pulsa el botón del programa que quieres.</p></div></li>
+          <li><span>2</span><div><strong>Escríbeme por WhatsApp</strong><p>Se abre con tu mensaje listo. Te respondo yo personalmente y te explico el pago.</p></div></li>
+          <li><span>3</span><div><strong>Empieza</strong><p>Recibes tu plan y tu código personal para LIVE Training.</p></div></li>
+        </ol>
+        <ul class="trust reveal" data-stagger>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-diamond" /></svg><div><strong>10 años de experiencia</strong><span>Entrenando a mujeres</span></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-phone2" /></svg><div><strong>100 % online</strong><span>En el gimnasio o en casa</span></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-chart" /></svg><div><strong>Power App gratis</strong><span>Tu progreso, siempre contigo</span></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-heart" /></svg><div><strong>Acompañamiento</strong><span>Estoy contigo en cada paso</span></div></li>
+        </ul>
 
         <p class="programs__note reveal"><strong>Nota:</strong> la duración, el alcance exacto del seguimiento y las condiciones de la parte nutricional se concretan antes de comenzar, según el programa contratado. La orientación nutricional no sustituye la atención de un dietista-nutricionista cuando sea necesaria.</p>
       </div>
@@ -255,6 +333,23 @@
           <div class="live__board-head"><span class="live__rec"><i></i>Próximas clases</span></div>
           <ul class="live__list" id="liveList"><li class="live__empty"><p>Cargando…</p></li></ul>
         </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRANSFORMATION ===================== -->
+    <section class="section transform bg-black" id="transformacion" data-lit>
+      <div class="container transform__grid">
+        <div class="transform__intro">
+          <p class="eyebrow reveal">Transformation</p>
+          <h2 class="title split reveal">Tu evolución, <em>medida y visible</em></h2>
+          <p class="reveal">La transformación no se adivina: se mide. Con Body Evolution 360° registras tu peso, tus medidas, tu fuerza y tus fotos de progreso, y ves en gráficas cómo cambia tu cuerpo semana a semana.</p>
+          <a href="#power-app" class="btn btn--pink reveal" data-go="evo">Abrir Body Evolution 360°</a>
+        </div>
+        <ol class="transform__steps" data-stagger>
+          <li class="reveal"><span class="transform__num">01</span><div><h3>Mide</h3><p>Peso, cintura, cadera, muslo y brazo. Tu fuerza en cada ejercicio.</p></div></li>
+          <li class="reveal"><span class="transform__num">02</span><div><h3>Compara</h3><p>Fotos privadas mes a mes con deslizador antes / después. Solo las ves tú.</p></div></li>
+          <li class="reveal"><span class="transform__num">03</span><div><h3>Comparte con tu entrenadora</h3><p>Con un botón le envías tu resumen por WhatsApp para ajustar tu plan.</p></div></li>
+        </ol>
       </div>
     </section>
 
@@ -329,43 +424,61 @@
         </div>
 
         <div class="app__bar reveal">
-          <div class="tabs" role="tablist" aria-label="Secciones de la Power App">
-            <button class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-dash" id="t-dash" data-tab="dash">Dashboard</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-evo" id="t-evo" data-tab="evo">Body Evolution 360°</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-nutri" id="t-nutri" data-tab="nutri">Nutrición</button>
-          </div>
-          <div class="app__tools">
-            <button type="button" class="link-btn" id="appDemo">Ver con datos de ejemplo</button>
-            <button type="button" class="link-btn" id="appExport">Guardar copia</button>
-            <label class="link-btn">Cargar copia<input type="file" id="appImport" accept="application/json" hidden /></label>
-            <button type="button" class="link-btn link-btn--dim" id="appReset">Borrar todo</button>
-          </div>
+          <div class="tabs" role="tablist" aria-label="Módulos de la Power App">
+            <button class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-dash" id="t-dash" data-tab="dash"><svg class="icon" aria-hidden="true"><use href="#i-home" /></svg>Inicio</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-train" id="t-train" data-tab="train"><svg class="icon" aria-hidden="true"><use href="#i-dumbbell" /></svg>Workout Studio</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-evo" id="t-evo" data-tab="evo"><svg class="icon" aria-hidden="true"><use href="#i-chart" /></svg>Body Evolution 360°</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-nutri" id="t-nutri" data-tab="nutri"><svg class="icon" aria-hidden="true"><use href="#i-apple" /></svg>My Nutrition</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-cal" id="t-cal" data-tab="cal"><svg class="icon" aria-hidden="true"><use href="#i-cal" /></svg>My Calendar</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-goals" id="t-goals" data-tab="goals"><svg class="icon" aria-hidden="true"><use href="#i-trophy" /></svg>Challenges</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="tab-coach" id="t-coach" data-tab="coach"><svg class="icon" aria-hidden="true"><use href="#i-chat" /></svg>My Coach</button>
+            </div>
         </div>
-        <div class="app__actions reveal">
-          <button type="button" class="btn btn--pink btn--small" id="appSend">
-            <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>
-            Enviar mi progreso a mi entrenadora
-          </button>
-          <button type="button" class="btn btn--line btn--small" id="appInstall" hidden>Instalar la app en mi móvil</button>
-        </div>
-        <div class="app__panel" id="installHelp" hidden>
-          <p><strong>Instala PowerVane en tu iPhone:</strong> pulsa <span class="app__share" aria-label="Compartir"></span> <em>Compartir</em> en Safari y después <em>Añadir a pantalla de inicio</em>. Se abrirá como una app, con su icono y a pantalla completa.</p>
-          <p class="app__fine">Ojo: en iPhone, la app instalada guarda sus datos aparte de Safari. Si ya tenías registros, pulsa antes <em>Guardar copia</em> y luego <em>Cargar copia</em> dentro de la app.</p>
-        </div>
-        <form class="app__panel" id="sendForm" hidden>
-          <p class="app__panel-title">Tu resumen para la entrenadora</p>
-          <label>Tu nombre<input name="name" id="sendName" maxlength="40" placeholder="Para que sepa quién eres" autocomplete="given-name" required /></label>
-          <pre class="app__preview" id="sendPreview"></pre>
-          <div class="app__panel-actions">
-            <button type="submit" class="btn btn--pink btn--small">Enviar por WhatsApp</button>
-            <button type="button" class="link-btn link-btn--dim" id="sendCancel">Cancelar</button>
-          </div>
-        </form>
         <p class="app__notice" id="backupBanner" hidden><span id="backupText"></span> <button type="button" class="btn btn--line btn--small" id="backupNow">Guardar copia ahora</button> <button type="button" class="link-btn link-btn--dim" id="backupLater">Más tarde</button></p>
         <p class="app__demo-banner" id="demoBanner" hidden>Estás viendo <strong>datos de ejemplo</strong>. <button type="button" class="link-btn" id="demoClear">Quitar ejemplo y empezar con los míos</button></p>
 
+
         <!-- ============ DASHBOARD ============ -->
         <div class="tabpanel is-active" id="tab-dash" role="tabpanel" aria-labelledby="t-dash">
+          <div class="ahome">
+            <article class="ahome__hello">
+              <label class="avatar" title="Cambiar tu foto de perfil">
+                <img id="avatarImg" alt="" hidden />
+                <svg class="icon" id="avatarIcon" aria-hidden="true"><use href="#i-user" /></svg>
+                <input type="file" id="avatarInput" accept="image/*" hidden />
+                <span class="sr-only">Cambiar foto de perfil</span>
+              </label>
+              <div>
+                <p class="ahome__hi">Hola, <strong id="helloName">bienvenida</strong> <svg class="icon" aria-hidden="true"><use href="#i-heart" /></svg></p>
+                <p class="ahome__sub" id="helloSub">¿Lista para tu entrenamiento de hoy?</p>
+                <ul class="ahome__chips" id="helloChips"></ul>
+              </div>
+            </article>
+            <article class="ahome__today" id="todayCard">
+              <img src="assets/video/glute-focus.jpg" alt="" loading="lazy" />
+              <div class="ahome__today-body">
+                <p class="ahome__label"><svg class="icon" aria-hidden="true"><use href="#i-cal" /></svg>Entrenamiento de hoy</p>
+                <h3 id="todayName">Elige tu rutina</h3>
+                <ul class="ahome__meta" id="todayMeta"></ul>
+                <button type="button" class="btn btn--pink btn--small" id="todayStart"><svg class="icon" aria-hidden="true"><use href="#i-play" /></svg><span>Empezar entrenamiento</span></button>
+              </div>
+            </article>
+            <article class="ahome__week">
+              <div class="ring-big">
+                <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring__bg" cx="60" cy="60" r="52"/><circle class="ring__fg" id="weekRing" cx="60" cy="60" r="52"/></svg>
+                <span><strong id="weekPct">0%</strong>semana</span>
+              </div>
+              <ul class="ahome__bars" id="weekBars"></ul>
+            </article>
+            <nav class="ahome__quick" aria-label="Accesos rápidos de la app">
+              <button type="button" data-go="train"><svg class="icon" aria-hidden="true"><use href="#i-dumbbell" /></svg><strong>Workout Studio</strong><small>Rutinas · Ejercicios · Vídeos</small></button>
+              <button type="button" data-go="evo"><svg class="icon" aria-hidden="true"><use href="#i-ruler" /></svg><strong>Body Evolution 360°</strong><small>Peso · Medidas · Fotos</small></button>
+              <button type="button" data-go="nutri"><svg class="icon" aria-hidden="true"><use href="#i-apple" /></svg><strong>My Nutrition</strong><small>Plan · Recetas · Hábitos</small></button>
+              <button type="button" data-go="cal"><svg class="icon" aria-hidden="true"><use href="#i-cal" /></svg><strong>My Calendar</strong><small>Entrenos · Clases LIVE</small></button>
+              <button type="button" data-go="goals"><svg class="icon" aria-hidden="true"><use href="#i-trophy" /></svg><strong>Power Challenges</strong><small>Retos · Puntos · Insignias</small></button>
+              <button type="button" data-go="coach"><svg class="icon" aria-hidden="true"><use href="#i-chat" /></svg><strong>My Coach</strong><small>Mensajes · Seguimiento</small></button>
+            </nav>
+          </div>
           <div class="kpis">
             <article class="kpi kpi--ring">
               <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="ring__bg" cx="60" cy="60" r="52"/><circle class="ring__fg" id="ringProgress" cx="60" cy="60" r="52"/></svg>
@@ -390,30 +503,6 @@
           </div>
 
           <div class="panels">
-            <!-- Perfil + registro -->
-            <article class="panel">
-              <h3 class="panel__title">Peso, medidas y evolución</h3>
-              <form class="form" id="profileForm">
-                <div class="form__row">
-                  <label>Peso inicial (kg)<input type="number" step="0.1" min="30" max="250" name="startWeight" /></label>
-                  <label>Peso objetivo (kg)<input type="number" step="0.1" min="30" max="250" name="goalWeight" /></label>
-                </div>
-                <button class="btn btn--line btn--small" type="submit">Guardar objetivo</button>
-              </form>
-              <form class="form" id="measureForm">
-                <div class="form__row">
-                  <label>Fecha<input type="date" name="date" required /></label>
-                  <label>Peso (kg)<input type="number" step="0.1" min="30" max="250" name="weight" /></label>
-                </div>
-                <div class="form__row form__row--4">
-                  <label>Cintura (cm)<input type="number" step="0.1" min="30" max="200" name="waist" /></label>
-                  <label>Cadera (cm)<input type="number" step="0.1" min="30" max="200" name="hip" /></label>
-                  <label>Muslo (cm)<input type="number" step="0.1" min="20" max="120" name="thigh" /></label>
-                  <label>Brazo (cm)<input type="number" step="0.1" min="10" max="80" name="arm" /></label>
-                </div>
-                <button class="btn btn--pink btn--small" type="submit">Añadir registro</button>
-              </form>
-            </article>
 
             <!-- Objetivos semanales -->
             <article class="panel">
@@ -469,7 +558,32 @@
 
         <!-- ============ BODY EVOLUTION 360° ============ -->
         <div class="tabpanel" id="tab-evo" role="tabpanel" aria-labelledby="t-evo" hidden>
+          <div class="evosum" id="evoSummary"></div>
           <div class="panels panels--evo">
+            <!-- Perfil + registro -->
+            <article class="panel panel--wide" id="measurePanel">
+              <h3 class="panel__title">Peso, medidas y evolución</h3>
+              <form class="form" id="profileForm">
+                <div class="form__row">
+                  <label>Peso inicial (kg)<input type="number" step="0.1" min="30" max="250" name="startWeight" /></label>
+                  <label>Peso objetivo (kg)<input type="number" step="0.1" min="30" max="250" name="goalWeight" /></label>
+                </div>
+                <button class="btn btn--line btn--small" type="submit">Guardar objetivo</button>
+              </form>
+              <form class="form" id="measureForm">
+                <div class="form__row">
+                  <label>Fecha<input type="date" name="date" required /></label>
+                  <label>Peso (kg)<input type="number" step="0.1" min="30" max="250" name="weight" /></label>
+                </div>
+                <div class="form__row form__row--4">
+                  <label>Cintura (cm)<input type="number" step="0.1" min="30" max="200" name="waist" /></label>
+                  <label>Cadera (cm)<input type="number" step="0.1" min="30" max="200" name="hip" /></label>
+                  <label>Muslo (cm)<input type="number" step="0.1" min="20" max="120" name="thigh" /></label>
+                  <label>Brazo (cm)<input type="number" step="0.1" min="10" max="80" name="arm" /></label>
+                </div>
+                <button class="btn btn--pink btn--small" type="submit">Añadir registro</button>
+              </form>
+            </article>
             <!-- Antes / después -->
             <article class="panel panel--wide">
               <h3 class="panel__title">Antes / después</h3>
@@ -545,6 +659,11 @@
 
         <!-- ============ NUTRICIÓN INTELIGENTE ============ -->
         <div class="tabpanel" id="tab-nutri" role="tabpanel" aria-labelledby="t-nutri" hidden>
+          <article class="panel habits">
+            <div class="panel__head"><h3 class="panel__title">Mis hábitos · hoy</h3><span class="panel__note" id="habitsNote"></span></div>
+            <div class="habits__grid" id="habits"></div>
+            <div class="habits__week" id="habitsWeek" aria-label="Hábitos de los últimos 7 días"></div>
+          </article>
           <div class="panels">
             <!-- Calculadora + preferencias -->
             <article class="panel panel--wide">
@@ -635,6 +754,210 @@
               <ul class="shop" id="shop"></ul>
             </article>
           </div>
+        </div>
+
+        <!-- ============ WORKOUT STUDIO ============ -->
+        <div class="tabpanel" id="tab-train" role="tabpanel" aria-labelledby="t-train" hidden>
+          <div class="subtabs" role="tablist" aria-label="Workout Studio">
+            <button type="button" class="subtab is-active" data-sub="routines">Mis rutinas</button>
+            <button type="button" class="subtab" data-sub="library">Biblioteca</button>
+            <button type="button" class="subtab" data-sub="history">Historial</button>
+          </div>
+          <div class="sub" data-subpanel="routines">
+            <div class="panel__head"><h3 class="panel__title">Mis rutinas</h3><button type="button" class="btn btn--pink btn--small" id="newRoutine"><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>Nueva rutina</button></div>
+            <div class="routines" id="routines"></div>
+            <div id="templates"></div>
+          </div>
+          <div class="sub" data-subpanel="library" hidden>
+            <div class="chipsel" id="libFilter" role="group" aria-label="Filtrar por grupo muscular"></div>
+            <ul class="library" id="library"></ul>
+          </div>
+          <div class="sub" data-subpanel="history" hidden>
+            <div class="hist__stats" id="histStats"></div>
+            <ul class="history" id="history"></ul>
+          </div>
+        </div>
+
+        <!-- ============ MY CALENDAR ============ -->
+        <div class="tabpanel" id="tab-cal" role="tabpanel" aria-labelledby="t-cal" hidden>
+          <div class="panels">
+            <article class="panel panel--wide">
+              <div class="cal__head">
+                <button type="button" class="iconbtn" id="calPrev" aria-label="Mes anterior"><svg class="icon"><use href="#i-back" /></svg></button>
+                <h3 class="panel__title" id="calTitle"></h3>
+                <button type="button" class="iconbtn iconbtn--flip" id="calNext" aria-label="Mes siguiente"><svg class="icon"><use href="#i-back" /></svg></button>
+              </div>
+              <div class="cal__dow" aria-hidden="true"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+              <div class="cal__grid" id="calGrid"></div>
+              <p class="cal__legend"><span class="dot dot--done"></span>Entrenado <span class="dot dot--plan"></span>Programado <span class="dot dot--live"></span>Clase LIVE</p>
+            </article>
+            <article class="panel">
+              <h3 class="panel__title" id="dayTitle">Hoy</h3>
+              <ul class="dayitems" id="dayItems"></ul>
+              <form class="form" id="planForm">
+                <div class="form__row">
+                  <label>Rutina<select name="routine" id="planRoutine"></select></label>
+                  <label>Hora<input type="time" name="time" value="18:00" required /></label>
+                </div>
+                <button class="btn btn--pink btn--small" type="submit">Programar este día</button>
+              </form>
+            </article>
+            <article class="panel">
+              <h3 class="panel__title">Próximos 7 días</h3>
+              <ul class="dayitems" id="upcoming"></ul>
+              <p class="panel__note">Pulsa <strong>Recordatorio</strong> y se añade al calendario de tu móvil, con aviso 30 minutos antes.</p>
+            </article>
+          </div>
+        </div>
+
+        <!-- ============ POWER CHALLENGES + MY ACHIEVEMENTS ============ -->
+        <div class="tabpanel" id="tab-goals" role="tabpanel" aria-labelledby="t-goals" hidden>
+          <article class="points" id="pointsCard"></article>
+          <div class="panels">
+            <article class="panel"><h3 class="panel__title">Retos de la semana</h3><ul class="challenges" id="chWeek"></ul></article>
+            <article class="panel"><h3 class="panel__title">Retos del mes</h3><ul class="challenges" id="chMonth"></ul></article>
+            <article class="panel panel--wide">
+              <div class="panel__head"><h3 class="panel__title">My Achievements</h3><span class="panel__note" id="badgeCount"></span></div>
+              <ul class="badges" id="badges"></ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- ============ MY COACH + PERFIL ============ -->
+        <div class="tabpanel" id="tab-coach" role="tabpanel" aria-labelledby="t-coach" hidden>
+          <article class="coach">
+            <img src="assets/img/sobre-mi.jpg" alt="Vanessa, tu entrenadora" loading="lazy" />
+            <div>
+              <p class="ahome__label">Tu entrenadora</p>
+              <h3>Vanessa · PowerVane &amp; Wellness</h3>
+              <p>Escríbeme cuando lo necesites. Te respondo personalmente por WhatsApp.</p>
+            </div>
+          </article>
+          <div class="panels">
+            <article class="panel panel--wide">
+              <h3 class="panel__title">Mensajes rápidos</h3>
+              <div class="quickmsg" id="quickMsgs">
+                <button type="button" class="btn btn--line btn--small" data-qm="tecnica">Tengo una duda técnica</button>
+                <button type="button" class="btn btn--line btn--small" data-qm="rutina">Quiero ajustar mi rutina</button>
+                <button type="button" class="btn btn--line btn--small" data-qm="nutri">Duda de alimentación</button>
+                <button type="button" class="btn btn--line btn--small" data-qm="live">Pregunta sobre LIVE</button>
+              </div>
+        <div class="app__actions">
+          <button type="button" class="btn btn--pink btn--small" id="appSend">
+            <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>
+            Enviar mi progreso a mi entrenadora
+          </button>
+          <button type="button" class="btn btn--line btn--small" id="appInstall" hidden>Instalar la app en mi móvil</button>
+        </div>
+        <div class="app__panel" id="installHelp" hidden>
+          <p><strong>Instala PowerVane en tu iPhone:</strong> pulsa <span class="app__share" aria-label="Compartir"></span> <em>Compartir</em> en Safari y después <em>Añadir a pantalla de inicio</em>. Se abrirá como una app, con su icono y a pantalla completa.</p>
+          <p class="app__fine">Ojo: en iPhone, la app instalada guarda sus datos aparte de Safari. Si ya tenías registros, pulsa antes <em>Guardar copia</em> y luego <em>Cargar copia</em> dentro de la app.</p>
+        </div>
+        <form class="app__panel" id="sendForm" hidden>
+          <p class="app__panel-title">Tu resumen para la entrenadora</p>
+          <label>Tu nombre<input name="name" id="sendName" maxlength="40" placeholder="Para que sepa quién eres" autocomplete="given-name" required /></label>
+          <pre class="app__preview" id="sendPreview"></pre>
+          <div class="app__panel-actions">
+            <button type="submit" class="btn btn--pink btn--small">Enviar por WhatsApp</button>
+            <button type="button" class="link-btn link-btn--dim" id="sendCancel">Cancelar</button>
+          </div>
+        </form>
+            </article>
+            <article class="panel">
+              <h3 class="panel__title">Revisión semanal</h3>
+              <form class="form" id="checkinForm">
+                <div class="form__row">
+                  <label>Energía (1-5)<input type="number" name="energy" min="1" max="5" required /></label>
+                  <label>Horas de sueño<input type="number" name="sleep" min="0" max="14" step="0.5" required /></label>
+                </div>
+                <label>¿Cómo te has sentido entrenando?<select name="feel"><option>Muy bien, con fuerza</option><option>Bien</option><option>Normal</option><option>Cansada</option><option>Con molestias</option></select></label>
+                <label>Comentario para tu entrenadora<input type="text" name="note" maxlength="200" placeholder="Opcional" /></label>
+                <button class="btn btn--pink btn--small" type="submit">Enviar revisión por WhatsApp</button>
+              </form>
+            </article>
+            <article class="panel">
+              <h3 class="panel__title">Mi perfil</h3>
+              <form class="form" id="meForm">
+                <label>Tu nombre<input name="name" id="meName" maxlength="40" autocomplete="given-name" /></label>
+                <label>Tu objetivo<input name="goalText" id="meGoal" maxlength="60" placeholder="Ej.: definición y tono" /></label>
+                <button class="btn btn--line btn--small" type="submit">Guardar perfil</button>
+              </form>
+              <div class="app__tools">
+                <button type="button" class="link-btn" id="appDemo">Ver con datos de ejemplo</button>
+                <button type="button" class="link-btn" id="appExport">Guardar copia</button>
+                <label class="link-btn">Cargar copia<input type="file" id="appImport" accept="application/json" hidden /></label>
+                <button type="button" class="link-btn link-btn--dim" id="appReset">Borrar todo</button>
+                <a class="link-btn app__site" href="./">Ver la web completa</a>
+              </div>
+              <p class="panel__note">Tus datos y fotos se guardan solo en este dispositivo. Guarda una copia de vez en cuando.</p>
+            </article>
+          </div>
+        </div>
+
+        <nav class="appnav" id="appnav" aria-label="Navegación de la Power App"><button class="tab is-active" data-tab="dash"><svg class="icon" aria-hidden="true"><use href="#i-home" /></svg><span>Inicio</span></button><button class="tab" data-tab="train"><svg class="icon" aria-hidden="true"><use href="#i-dumbbell" /></svg><span>Entrenos</span></button><button class="tab" data-tab="evo"><svg class="icon" aria-hidden="true"><use href="#i-chart" /></svg><span>Evolución</span></button><button class="tab" data-tab="nutri"><svg class="icon" aria-hidden="true"><use href="#i-apple" /></svg><span>Nutrición</span></button><button class="tab" data-tab="cal"><svg class="icon" aria-hidden="true"><use href="#i-cal" /></svg><span>Agenda</span></button><button class="tab" data-tab="goals"><svg class="icon" aria-hidden="true"><use href="#i-trophy" /></svg><span>Retos</span></button><button class="tab" data-tab="coach"><svg class="icon" aria-hidden="true"><use href="#i-chat" /></svg><span>Coach</span></button></nav>
+      </div>
+    </section>
+
+    <!-- ============ VENTANAS DE LA APP ============ -->
+    <dialog class="modal" id="routineModal" aria-labelledby="rmTitle">
+      <form method="dialog" class="modal__box" id="routineForm">
+        <div class="modal__head"><h3 id="rmTitle">Nueva rutina</h3><button type="button" class="iconbtn" data-close aria-label="Cerrar">×</button></div>
+        <div class="form__row">
+          <label>Nombre<input name="name" maxlength="40" required placeholder="Ej.: Glúteo y pierna" /></label>
+          <label>Grupo<select name="group"></select></label>
+        </div>
+        <ul class="rex" id="rexList"></ul>
+        <div class="rex__add">
+          <select id="rexPick" aria-label="Ejercicio de la biblioteca"></select>
+          <button type="button" class="btn btn--line btn--small" id="rexAdd"><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>Añadir ejercicio</button>
+        </div>
+        <div class="modal__foot"><button type="button" class="link-btn link-btn--dim" data-close>Cancelar</button><button type="submit" class="btn btn--pink btn--small" value="save">Guardar rutina</button></div>
+      </form>
+    </dialog>
+
+    <dialog class="modal modal--player" id="playerModal" aria-labelledby="plTitle">
+      <div class="modal__box player">
+        <div class="modal__head"><div><p class="ahome__label" id="plTimer">00:00</p><h3 id="plTitle">Entrenamiento</h3></div><button type="button" class="iconbtn" id="plClose" aria-label="Salir del entrenamiento">×</button></div>
+        <div class="bar"><span id="plBar"></span></div>
+        <div class="player__stage" id="plStage"></div>
+        <div class="player__rest" id="plRest" hidden>
+          <div class="ring-big"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring__bg" cx="60" cy="60" r="52"/><circle class="ring__fg" id="restRing" cx="60" cy="60" r="52"/></svg><span><strong id="restLeft">60</strong>descanso</span></div>
+          <div class="player__restbtns"><button type="button" class="btn btn--line btn--small" id="restPlus">+15 s</button><button type="button" class="btn btn--pink btn--small" id="restSkip">Saltar descanso</button></div>
+        </div>
+        <p class="player__next" id="plNext"></p>
+      </div>
+    </dialog>
+
+    <dialog class="modal" id="videoModal" aria-labelledby="vmTitle">
+      <div class="modal__box">
+        <div class="modal__head"><h3 id="vmTitle">Vídeo</h3><button type="button" class="iconbtn" data-close aria-label="Cerrar">×</button></div>
+        <video id="vmVideo" class="modal__video" controls playsinline muted loop></video>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- ===================== COMMUNITY ===================== -->
+    <section class="section community bg-burgundy" id="comunidad" data-lit>
+      <div class="container">
+        <div class="head">
+          <p class="eyebrow reveal">Community</p>
+          <h2 class="title split reveal">Strong girls <em>club</em></h2>
+          <p class="head__sub reveal">Entrenar acompañada se nota. Únete a la comunidad, aprende con mis vídeos y supera los Power Challenges de la app.</p>
+        </div>
+        <div class="community__grid" data-stagger>
+          <a class="ccard reveal" href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener">
+            <img src="assets/img/galeria-4.jpg" alt="" loading="lazy" />
+            <span class="ccard__body"><svg class="icon" aria-hidden="true"><use href="#i-instagram" /></svg><strong>Instagram</strong><small>@powervaneandwellness · día a día, consejos y motivación</small></span>
+          </a>
+          <a class="ccard reveal" href="#youtube">
+            <img src="https://i.ytimg.com/vi/SIYDoohyzHc/maxresdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/SIYDoohyzHc/hqdefault.jpg'" />
+            <span class="ccard__body"><svg class="icon" aria-hidden="true"><use href="#i-youtube" /></svg><strong>Entrena con mis vídeos</strong><small>Rutinas y consejos en YouTube</small></span>
+          </a>
+          <a class="ccard reveal" href="#power-app" data-go="goals">
+            <img src="assets/video/strong-feminine.jpg" alt="" loading="lazy" />
+            <span class="ccard__body"><svg class="icon" aria-hidden="true"><use href="#i-trophy" /></svg><strong>Power Challenges</strong><small>Retos semanales y mensuales, puntos e insignias</small></span>
+          </a>
         </div>
       </div>
     </section>
@@ -737,6 +1060,10 @@
             <p>Glute Focus y Strong &amp; Feminine duran 8 semanas. En el resto, la duración y el alcance del seguimiento se concretan antes de comenzar, según el programa contratado.</p>
           </details>
           <details class="faq__item">
+            <summary>¿Quién ve mis datos de la Power App?</summary>
+            <p>Nadie más que tú. La app guarda tus registros y fotos solo en tu móvil. Si quieres que tu entrenadora vea tu progreso, se lo envías tú con el botón de WhatsApp.</p>
+          </details>
+          <details class="faq__item">
             <summary>¿Cómo empiezo?</summary>
             <p>Escríbeme por WhatsApp o por mensaje directo en Instagram y te explico todo personalmente.</p>
           </details>
@@ -752,7 +1079,7 @@
       <div class="led led--cta" aria-hidden="true"><span></span><span></span></div>
       <div class="container cta__grid" data-lit>
         <div class="cta__inner">
-          <svg class="cta__logo reveal" aria-hidden="true"><use href="#logo" /></svg>
+          <span class="mono mono--lg cta__logo reveal" aria-hidden="true">PV</span>
           <h2 class="cta__title reveal split">Entrena <span class="script">conmigo</span></h2>
           <p class="cta__text reveal">Tu fuerza. Tu evolución. Tu mejor versión. Escríbeme para más información.</p>
           <div class="cta__actions reveal">
@@ -765,6 +1092,24 @@
               Info al DM
             </a>
           </div>
+          <form class="cform reveal" id="contactForm">
+            <p class="cform__title">O cuéntame qué buscas</p>
+            <div class="cform__row">
+              <label>Tu nombre<input name="name" maxlength="40" required autocomplete="given-name" /></label>
+              <label>Me interesa<select name="topic">
+                <option>Programas especializados (69 €)</option>
+                <option>PowerStart (220 €)</option>
+                <option>Power Transformation (300 € + nutrición)</option>
+                <option>Glute Focus Workout</option>
+                <option>Strong &amp; Feminine Workout</option>
+                <option>LIVE Training</option>
+                <option>Otra consulta</option>
+              </select></label>
+            </div>
+            <label>Tu objetivo o tu duda<textarea name="msg" rows="3" maxlength="500" required placeholder="Ej.: quiero ganar fuerza y entrenar 3 días en casa"></textarea></label>
+            <button class="btn btn--pink" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>Enviar por WhatsApp</button>
+            <p class="cform__note">Se abre WhatsApp con tu mensaje escrito. No guardo tus datos en esta web.</p>
+          </form>
           <ul class="contact reveal">
             <li><a href="tel:+34607745308"><svg class="icon" aria-hidden="true"><use href="#i-phone" /></svg>+34 607 745 308</a></li>
             <li><a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-instagram" /></svg>@powervaneandwellness</a></li>
@@ -784,13 +1129,15 @@
   <footer class="footer">
     <div class="container footer__inner">
       <a href="#inicio" class="brand" aria-label="Volver al inicio">
-        <svg class="brand__logo" aria-hidden="true"><use href="#logo" /></svg>
+        <span class="mono" aria-hidden="true">PV</span>
         <span class="brand__name">PowerVane<span>&amp; Wellness</span></span>
       </a>
       <nav class="footer__nav" aria-label="Pie de página">
         <a href="#sobre-mi">Sobre mí</a>
         <a href="#programas">Programas</a>
-        <a href="#best-body-ever">Best Body Ever</a>
+        <a href="#transformacion">Transformación</a>
+        <a href="#comunidad">Comunidad</a>
+        <a href="#contacto">Contacto</a>
         <a href="#galeria">Galería</a>
         <a href="#live">Live Training</a>
         <a href="#power-app">Power App</a>
@@ -811,14 +1158,29 @@
 
   <!-- ===================== LOGO E ICONOS ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <!-- Logo original adaptado a fondo oscuro: mismo diseño, aro rosa champagne y texto blanco -->
-    <symbol id="logo" viewBox="0 0 400 400">
-      <circle cx="200" cy="200" r="196" fill="#1a1219" />
-      <circle cx="200" cy="200" r="178" fill="none" stroke="#E9A6C2" stroke-width="7" />
-      <text x="200" y="188" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-weight="500" font-size="42" letter-spacing="6" fill="#F5F0F2">POWERVANE</text>
-      <line x1="135" y1="210" x2="265" y2="210" stroke="#E9A6C2" stroke-width="3" />
-      <text x="203" y="252" text-anchor="middle" font-family="Montserrat, Helvetica, Arial, sans-serif" font-weight="300" font-size="25" letter-spacing="7" fill="#E9A6C2">&amp; WELLNESS</text>
-    </symbol>
+    <symbol id="i-phone2" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></g></symbol>
+    <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8 8a5.6 5.6 0 0 0 0 8M16 8a5.6 5.6 0 0 1 0 8M5 5a9.9 9.9 0 0 0 0 14M19 5a9.9 9.9 0 0 1 0 14"/></g></symbol>
+    <symbol id="i-lotus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20c-4 0-8-2.5-9-6 3 0 6 1.5 9 6zM12 20c4 0 8-2.5 9-6-3 0-6 1.5-9 6zM12 20c-2.5-2.5-3.5-6-2.5-10 1-1.8 1.8-3 2.5-4 .7 1 1.5 2.2 2.5 4 1 4 0 7.5-2.5 10z"/></g></symbol>
+    <symbol id="i-diamond" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l3.5 5L12 20.5 2.5 9z"/><path d="M2.5 9h19M9 4l3 16.5L15 4"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.4-9-9.3C2 7.3 4.2 4.5 7.3 4.5c2 0 3.6 1.2 4.7 2.8 1.1-1.6 2.7-2.8 4.7-2.8 3.1 0 5.3 2.8 4.3 6.2-1.5 4.9-9 9.3-9 9.3z"/></g></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M9.5 17h5"/></g></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5M10 20v-5.5h4V20"/></g></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></g></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20.5c1.2-4 4.3-6 8-6s6.8 2 8 6"/></g></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5v13l10.5-6.5z"/></g></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4 0-6.5-2.8-6.5-6.2 0-3.6 2.8-5.6 3.6-9.3 2.2 1.4 3.3 3.6 3.2 5.6 1-.6 1.8-1.8 2-3.2 2.3 1.9 4.2 4.4 4.2 7.1C18.5 18.3 16 21 12 21z"/></g></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5S6 10 6 14.5a6 6 0 0 0 12 0C18 10 12 3.5 12 3.5z"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
+    <symbol id="i-steps" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3.5c2 0 3 2 3 4.5S10 13 8 13s-3-2.5-3-5 1-4.5 3-4.5zM16 9c2 0 3 2 3 4.5s-1 5-3 5-3-2.5-3-5 1-4.5 3-4.5zM6 15.5h4M14 20.5h4"/></g></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5 16.5 3 21 7.5 7.5 21z"/><path d="M7 12.5l2 2M10 9.5l2 2M13 6.5l2 2"/></g></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6.5" width="18" height="13.5" rx="2.5"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6.5 10 4h4l1.5 2.5"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></g></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></g></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></g></symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="15" r="5.5"/><path d="M8.5 10.5 6 3h4l2 4 2-4h4l-2.5 7.5M12 12.8l.8 1.6 1.7.2-1.2 1.2.3 1.7-1.6-.8-1.6.8.3-1.7-1.2-1.2 1.7-.2z"/></g></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></g></symbol>
     <symbol id="i-dumbbell" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="2.5" y="8" width="3" height="8" rx="1"/><rect x="18.5" y="8" width="3" height="8" rx="1"/><rect x="5.5" y="6" width="3" height="12" rx="1"/><rect x="15.5" y="6" width="3" height="12" rx="1"/><path d="M8.5 12h7"/></g></symbol>
     <symbol id="i-apple" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7.5c-1.6-1.2-5.5-1.6-7 1.6-1.6 3.4.4 8.6 3 10.6 1.3 1 2.6.6 4 0 1.4.6 2.7 1 4 0 2.6-2 4.6-7.2 3-10.6-1.5-3.2-5.4-2.8-7-1.6z"/><path d="M12 7.5c0-2 1-3.6 3-4.5"/></g></symbol>
     <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V14M9.3 20v-6M14.6 20v-9M20 20V8"/><path d="M3.5 10.5l5-4 4 3 7-6M15.5 3.5h4v4"/></g></symbol>
@@ -829,9 +1191,10 @@
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.57.94.95-3.48-.22-.36a9.42 9.42 0 0 1-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.99 6.67 2.77a9.37 9.37 0 0 1 2.76 6.68c0 5.2-4.24 9.43-9.45 9.43zm8.04-17.47A11.3 11.3 0 0 0 12.05.7C5.78.7.68 5.8.68 12.06c0 2 .52 3.96 1.52 5.68L.6 23.3l5.7-1.5a11.33 11.33 0 0 0 5.75 1.47h.01c6.26 0 11.36-5.1 11.36-11.37 0-3.03-1.18-5.89-3.33-8.03z"/></symbol>
   </svg>
 
-  <script src="script.js?v=20261126"></script>
-  <script src="app.js?v=20261126"></script>
-  <script src="live-data.js?v=20261126"></script>
-  <script src="live.js?v=20261126"></script>
+  <script src="script.js?v=20261129"></script>
+  <script src="app.js?v=20261129"></script>
+  <script src="live-data.js?v=20261129"></script>
+  <script src="live.js?v=20261129"></script>
+  <script src="studio.js?v=20261129"></script>
 </body>
 </html>

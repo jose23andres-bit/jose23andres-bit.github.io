@@ -49,31 +49,40 @@ nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMe
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* Titular de portada letra a letra */
-document.querySelectorAll("[data-split]").forEach((el) => {
-  const text = el.textContent;
-  el.setAttribute("aria-label", text);
-  el.innerHTML = [...text].map((c, i) => `<span class="char" aria-hidden="true" style="--i:${i}">${c}</span>`).join("");
-});
-
-/* Intro: se retira cuando la portada está lista (máx. 2,2 s) */
-const intro = document.getElementById("intro");
-const heroImg = document.querySelector(".hero__media img");
-let introClosed = false;
-const closeIntro = () => {
-  if (introClosed) return;
-  introClosed = true;
-  intro && intro.classList.add("is-done");
-  setTimeout(() => document.body.classList.add("is-ready"), 150);
+/* =========================================================
+   INTRO · se entra en la web tocando el logo
+   (ese mismo toque arranca la radio, porque cuenta como interacción)
+   ========================================================= */
+const root = document.documentElement;
+const appMode = root.classList.contains("app-mode");
+const gate = document.getElementById("gate");
+const gateBtn = document.getElementById("gateEnter");
+const ready = () => document.body.classList.add("is-ready");
+const goHash = () => {
+  const t = location.hash && location.hash.length > 1 && document.querySelector(location.hash);
+  if (t) t.scrollIntoView({ block: "start" });
 };
-const minIntro = new Promise((r) => setTimeout(r, reducedMotion ? 0 : 1500));
-const heroLoaded = new Promise((resolve) => {
-  if (!heroImg || heroImg.complete) return resolve();
-  heroImg.addEventListener("load", resolve, { once: true });
-  heroImg.addEventListener("error", resolve, { once: true });
-});
-Promise.all([minIntro, heroLoaded]).then(closeIntro);
-setTimeout(closeIntro, 2200);
+if (!gate || appMode) {
+  if (gate) gate.remove();
+  ready();
+  if (appMode) requestAnimationFrame(() => document.getElementById("power-app")?.scrollIntoView({ block: "start" }));
+} else {
+  root.classList.add("gate-open");
+  const imgs = [...gate.querySelectorAll("img")];
+  const loaded = Promise.all(imgs.map((i) => (i.complete ? null : new Promise((r) => { i.addEventListener("load", r, { once: true }); i.addEventListener("error", r, { once: true }); }))));
+  Promise.race([loaded, new Promise((r) => setTimeout(r, 1800))]).then(() => {
+    gate.classList.add("is-in");
+    setTimeout(() => gateBtn.focus({ preventScroll: true }), reducedMotion ? 0 : 1600);
+  });
+  let opened = false;
+  gateBtn.addEventListener("click", () => {
+    if (opened) return;
+    opened = true;
+    gate.classList.add("is-opening");
+    setTimeout(() => { root.classList.remove("gate-open"); ready(); goHash(); }, reducedMotion ? 0 : 650);
+    setTimeout(() => gate.remove(), reducedMotion ? 0 : 1500);
+  });
+}
 
 /* Manifiesto: las palabras se encienden al hacer scroll */
 const manifesto = document.getElementById("manifesto");
@@ -264,15 +273,6 @@ onView("[data-lit]", (el, inView, io) => {
   io && io.unobserve(el);
 }, { threshold: 0.2 });
 
-/* Portada: un único destello glitch suave al entrar (nada más en toda la web) */
-const heroBrand = document.querySelector(".hero__brand");
-if (heroBrand && !reducedMotion) {
-  setTimeout(() => {
-    heroBrand.classList.add("is-glitching");
-    setTimeout(() => heroBrand.classList.remove("is-glitching"), 450);
-  }, 3000);
-}
-
 /* Vídeos: se reproducen solos (en silencio) solo mientras se ven */
 onView("video.bgvideo", (v, inView) => {
   if (inView) {
@@ -299,6 +299,22 @@ document.querySelectorAll("[data-yt]").forEach((btn) => {
     ytPlaying = true;
     setTimeout(() => { radio.pause(); radioOn = true; }, 50); /* silencia la radio mientras ve el vídeo */
   });
+});
+
+/* Power App: barra inferior tipo app mientras se ve la app en el móvil */
+const appSec = document.getElementById("power-app");
+if (appSec && "IntersectionObserver" in window) {
+  new IntersectionObserver(([e]) => root.classList.toggle("app-in-view", e.isIntersecting), { rootMargin: "-35% 0px -35% 0px" }).observe(appSec);
+}
+
+/* Formulario de contacto: abre WhatsApp con el mensaje escrito (no se guarda nada) */
+const contactForm = document.getElementById("contactForm");
+if (contactForm) contactForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(contactForm).entries());
+  const text = `¡Hola! 💗 Soy ${f.name.trim()}. Me interesa: ${f.topic}.\n\n${f.msg.trim()}`;
+  const a = Object.assign(document.createElement("a"), { href: window.PVwaText(text), target: "_blank", rel: "noopener" });
+  document.body.appendChild(a); a.click(); a.remove();
 });
 
 /* App instalable y disponible sin conexión */
