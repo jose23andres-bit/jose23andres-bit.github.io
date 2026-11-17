@@ -466,9 +466,10 @@
     const unlocked = BADGES.filter((b) => b[4]() >= b[5]).length;
     return new Set(s.trainings).size * 10 + s.sessions.length * 20 + s.measures.length * 5 + s.photos.length * 15 + s.meals.length * 2 + s.level.length * 10 + habitDays * 5 + waterDays() * 3 + unlocked * 25;
   };
-  const challenge = (title, sub, cur, goal, pts) => {
+  const svg = (id) => `<svg class="icon" aria-hidden="true"><use href="#${id}"/></svg>`;
+  const challenge = (title, sub, cur, goal, pts, ic) => {
     const p = Math.min(1, cur / goal), ok = cur >= goal;
-    return `<li class="challenge${ok ? " is-done" : ""}"><div class="challenge__top"><strong>${title}</strong><span>${ok ? "¡Conseguido!" : `+${pts} pts`}</span></div><small>${sub}</small><div class="bar"><span style="width:${p * 100}%"></span></div><small class="challenge__n">${fmt(Math.min(cur, goal), 0)} / ${goal}</small></li>`;
+    return `<li class="challenge${ok ? " is-done" : ""}"><span class="challenge__ic">${svg(ok ? "i-check" : ic)}</span><div class="challenge__main"><div class="challenge__top"><strong>${title}</strong><span class="chip-pts">${ok ? `${svg("i-check")}Conseguido` : `${svg("i-flame")}+${pts}`}</span></div><small>${sub}</small><div class="challenge__prog"><div class="bar"><span style="width:${p * 100}%"></span></div><small class="challenge__n"><b>${fmt(Math.min(cur, goal), 0)}</b>/${goal}</small></div></div></li>`;
   };
   const renderGoals = () => {
     const s = S(), wk = weekDates(), month = today().slice(0, 7);
@@ -476,28 +477,30 @@
     const wWeek = wk.filter((d) => (s.water[d] || 0) >= waterGoal()).length;
     const mWeek = wk.filter((d) => s.meals.some((m) => m.date === d)).length;
     const hWeek = wk.filter((d) => habitsOf(d).length >= 4).length;
-    $("chWeek").innerHTML = challenge("Objetivo semanal de entrenos", "Cumple los entrenos que te has marcado", tWeek, s.weekTarget || 4, 50)
-      + challenge("Semana hidratada", "Llega a tu objetivo de agua 5 días", wWeek, 5, 30)
-      + challenge("Diario de comidas", "Registra lo que comes 5 días", mWeek, 5, 30)
-      + challenge("Hábitos Power", "Completa al menos 4 hábitos, 4 días", hWeek, 4, 40);
+    $("chWeek").innerHTML = challenge("Objetivo semanal de entrenos", "Cumple los entrenos que te has marcado", tWeek, s.weekTarget || 4, 50, "i-dumbbell")
+      + challenge("Semana hidratada", "Llega a tu objetivo de agua 5 días", wWeek, 5, 30, "i-drop")
+      + challenge("Diario de comidas", "Registra lo que comes 5 días", mWeek, 5, 30, "i-apple")
+      + challenge("Hábitos Power", "Completa al menos 4 hábitos, 4 días", hWeek, 4, 40, "i-lotus");
     const tMonth = new Set(s.trainings.filter((d) => d.startsWith(month))).size;
-    $("chMonth").innerHTML = challenge("12 entrenos este mes", "La constancia construye tu mejor versión", tMonth, 12, 100)
-      + challenge("Foto del mes", "Sube tu foto de evolución de este mes", s.photos.some((p) => p.month === month) ? 1 : 0, 1, 50)
-      + challenge("Medidas al día", "Registra tus medidas 2 veces este mes", s.measures.filter((m) => m.date.startsWith(month)).length, 2, 50)
-      + challenge("8 sesiones guiadas", "Entrena con Workout Studio 8 veces este mes", s.sessions.filter((x) => x.date.startsWith(month)).length, 8, 100);
+    $("chMonth").innerHTML = challenge("12 entrenos este mes", "La constancia construye tu mejor versión", tMonth, 12, 100, "i-cal")
+      + challenge("Foto del mes", "Sube tu foto de evolución de este mes", s.photos.some((p) => p.month === month) ? 1 : 0, 1, 50, "i-camera")
+      + challenge("Medidas al día", "Registra tus medidas 2 veces este mes", s.measures.filter((m) => m.date.startsWith(month)).length, 2, 50, "i-ruler")
+      + challenge("8 sesiones guiadas", "Entrena con Workout Studio 8 veces este mes", s.sessions.filter((x) => x.date.startsWith(month)).length, 8, 100, "i-play");
 
     const pts = points();
     const ti = TIERS.reduce((a, t, i) => (pts >= t[0] ? i : a), 0), next = TIERS[ti + 1];
-    $("pointsCard").innerHTML = `<div class="points__medal"><svg class="icon"><use href="#i-medal"/></svg></div>
+    const tierP = next ? (pts - TIERS[ti][0]) / (next[0] - TIERS[ti][0]) : 1;
+    $("pointsCard").innerHTML = `<div class="points__medal" style="--p:${tierP.toFixed(3)}"><span class="points__hex">${svg("i-medal")}</span><small>Nivel ${ti + 1}</small></div>
       <div class="points__body"><p class="ahome__label">Tu nivel</p><h3>${TIERS[ti][1]}</h3><p><strong>${fmt(pts, 0)}</strong> puntos${next ? ` · te faltan ${fmt(next[0] - pts, 0)} para ${next[1]}` : " · nivel máximo"}</p>
-      <div class="bar"><span style="width:${next ? ((pts - TIERS[ti][0]) / (next[0] - TIERS[ti][0])) * 100 : 100}%"></span></div></div>
-      <ul class="points__stats"><li><strong>${streak()}</strong><span>racha</span></li><li><strong>${maxStreak()}</strong><span>mejor racha</span></li><li><strong>${new Set(s.trainings).size}</strong><span>entrenos</span></li></ul>`;
+      <div class="bar"><span style="width:${tierP * 100}%"></span></div></div>
+      <ul class="points__stats"><li>${svg("i-flame")}<strong>${streak()}</strong><span>racha</span></li><li>${svg("i-trophy")}<strong>${maxStreak()}</strong><span>mejor racha</span></li><li>${svg("i-dumbbell")}<strong>${new Set(s.trainings).size}</strong><span>entrenos</span></li></ul>`;
 
     const un = BADGES.filter((b) => b[4]() >= b[5]);
     $("badgeCount").textContent = `${un.length} de ${BADGES.length}`;
     $("badges").innerHTML = BADGES.map(([id, name, desc, ic, f, goal]) => {
       const v = f(), ok = v >= goal;
-      return `<li class="badge${ok ? " is-on" : ""}"><span class="badge__ic"><svg class="icon"><use href="#${ic}"/></svg></span><strong>${name}</strong><small>${desc}</small>${ok ? "" : `<small class="badge__p">${fmt(Math.min(v, goal), 0)}/${goal}</small>`}</li>`;
+      const pr = Math.min(1, v / goal);
+      return `<li class="badge${ok ? " is-on" : ""}" title="${desc}"><span class="badge__ic" style="--p:${pr.toFixed(3)}"><span class="badge__hex">${svg(ic)}</span>${ok ? `<i class="badge__ok">${svg("i-check")}</i>` : ""}</span><strong>${name}</strong><small>${desc}</small><small class="badge__p">${ok ? "Desbloqueada" : `${fmt(Math.min(v, goal), 0)} / ${goal}`}</small></li>`;
     }).join("");
     // Aviso de insignia nueva (con datos de ejemplo no se avisa)
     const fresh = un.filter((b) => !s.badgesSeen.includes(b[0]));

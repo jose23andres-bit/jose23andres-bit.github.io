@@ -61,12 +61,19 @@ const goHash = () => {
   const t = location.hash && location.hash.length > 1 && document.querySelector(location.hash);
   if (t) t.scrollIntoView({ block: "start" });
 };
-if (!gate || appMode || reducedMotion) {
+const toApp = () => { if (appMode) document.getElementById("power-app")?.scrollIntoView({ block: "start" }); };
+if (!gate || reducedMotion) {
   if (gate) gate.remove();
   ready();
-  if (appMode) requestAnimationFrame(() => document.getElementById("power-app")?.scrollIntoView({ block: "start" }));
+  requestAnimationFrame(toApp);
 } else {
   root.classList.add("gate-open");
+  if (appMode) {
+    // En la app instalada la intro presenta Power App
+    const k = gate.querySelector(".gate__kicker");
+    if (k) k.textContent = "Power App · PowerVane";
+    requestAnimationFrame(toApp);
+  }
   let opened = false;
   const SKIP = ["pointerdown", "keydown", "wheel", "touchstart"];
   const open = () => {
@@ -74,7 +81,7 @@ if (!gate || appMode || reducedMotion) {
     opened = true;
     SKIP.forEach((ev) => window.removeEventListener(ev, open));
     gate.classList.add("is-in", "is-opening");
-    setTimeout(() => { root.classList.remove("gate-open"); ready(); goHash(); }, 700);
+    setTimeout(() => { root.classList.remove("gate-open"); ready(); if (appMode) toApp(); else goHash(); }, 700);
     setTimeout(() => gate.remove(), 1500);
   };
   requestAnimationFrame(() => gate.classList.add("is-in"));
