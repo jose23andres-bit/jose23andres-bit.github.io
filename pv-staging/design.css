@@ -617,3 +617,10 @@ body:not(.is-ready) .hero__badge { opacity: 0; }
 .ccard:has(.ccard__banner) { background: radial-gradient(circle at 50% 20%, rgba(244, 195, 207, .18), transparent 60%), linear-gradient(160deg, #3a1430, #140c12); }
 .install__btns .btn { padding: .72em 1.15em; letter-spacing: .12em; }
 @media (max-width: 880px) { .install__btns { gap: 6px; } .install__btns .btn { font-size: .6rem; } }
+@media (min-width: 761px) {
+  .quick__card { grid-template-columns: 1fr auto; grid-template-rows: 1fr auto; align-items: end; min-height: 200px; }
+  .quick__icon { grid-column: 1; grid-row: 1; align-self: start; }
+  .quick__text { grid-column: 1; grid-row: 2; }
+  .quick__go { grid-column: 2; grid-row: 2; }
+  .quick__text strong { font-size: clamp(1.05rem, 1.35vw, 1.25rem); white-space: nowrap; }
+}
