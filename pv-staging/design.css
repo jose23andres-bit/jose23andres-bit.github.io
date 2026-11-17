@@ -548,3 +548,12 @@ body:not(.is-ready) .hero__badge { opacity: 0; }
 .hero__title, .title, .quick__text strong { font-variation-settings: "opsz" 28; }
 .hero__actions .btn--large { padding: 1.15em 2em; font-size: .72rem; }
 .quick__go .icon { width: 16px; height: 16px; }
+.cal__dow, .cal__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.cal__day { aspect-ratio: auto; height: 58px; min-width: 0; }
+.habit strong { overflow-wrap: anywhere; hyphens: auto; }
+@media (max-width: 880px) {
+  .hero__badge { top: calc(var(--header-h) + 24vh); bottom: auto; }
+  .cal__dow, .cal__grid { gap: 4px; }
+  .cal__day { height: 46px; padding-top: 6px; font-size: .82rem; }
+  .habit strong { font-size: .56rem; line-height: 1.2; }
+}

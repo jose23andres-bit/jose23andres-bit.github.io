@@ -65,7 +65,9 @@
     root.querySelectorAll(".tabpanel").forEach((p) => { const on = p.id === "tab-" + tab; p.hidden = !on; p.classList.toggle("is-active", on); });
     render();
     if (scroll) {
-      const top = root.querySelector(".app__bar").getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).scrollPaddingTop) || 80) - 10;
+      const bar = root.querySelector(".app__bar");
+      const anchor = bar && bar.offsetParent ? bar : $("tab-" + tab);
+      const top = anchor.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).scrollPaddingTop) || 80) - 14;
       if (Math.abs(window.scrollY - top) > 40) window.scrollTo({ top, behavior: "smooth" });
     }
   };
