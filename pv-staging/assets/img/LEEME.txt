@@ -14,11 +14,14 @@ Origen (carpeta de Google Drive):
   best-body.webp      foto recortada de perfil (fondo eliminado)
   glute-focus.jpg     foto en casa, conjunto negro, pierna levantada
   galeria-1.jpg       conjunto rojo (recortada para quitar el texto de la story)
-  galeria-2.jpg       detalle de la foto de estudio con top blanco
-  galeria-3.jpg       detalle de la foto de estudio con top negro
-  contacto.jpg        fondo de la sección final
   galeria-4.jpg       conjunto rojo en estudio
   contacto-cutout.webp foto de cuerpo entero, conjunto negro (fondo eliminado)
   og.jpg              imagen al compartir el enlace (WhatsApp, redes)
 
 Para cambiar una foto, sustituye el archivo manteniendo el mismo nombre.
+
+  power-wellness.webp banner original "Power & Wellness" (logo secundario)
+  logo.svg            logo original circular
+
+Cada foto aparece una sola vez en la web. Los vídeos de fondo (assets/video/fondo-*.mp4)
+son tramos distintos de los dos vídeos originales, a cámara lenta y oscurecidos.
