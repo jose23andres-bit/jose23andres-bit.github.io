@@ -18,10 +18,18 @@ Origen (carpeta de Google Drive):
   contacto-cutout.webp foto de cuerpo entero, conjunto negro (fondo eliminado)
   og.jpg              imagen al compartir el enlace (WhatsApp, redes)
 
+Tarjetas (cada una distinta, solo color y luz, sin tocar cara ni cuerpo):
+  q-programas, q-live, q-app, q-transform   accesos rápidos de la portada
+  p-especializados, p-powerstart            tarjetas de programas (fotogramas de sus vídeos)
+  p-transformation    foto del espejo con top negro (Power Transformation)
+  c-challenges        tarjeta Power Challenges
+  a-today             tarjeta "Entrenamiento de hoy" de la app
+  Se generan con tools/grade-cards.js.
+
 Para cambiar una foto, sustituye el archivo manteniendo el mismo nombre.
 
   power-wellness.webp banner original "Power & Wellness" (logo secundario)
   logo.svg            logo original circular
 
-Cada foto aparece una sola vez en la web. Los vídeos de fondo (assets/video/fondo-*.mp4)
+Cada imagen aparece una sola vez en la web. Los vídeos de fondo (assets/video/fondo-*.mp4)
 son tramos distintos de los dos vídeos originales, a cámara lenta y oscurecidos.

@@ -580,12 +580,15 @@
   guide.querySelectorAll("[data-os]").forEach((b) => b.addEventListener("click", () => setOS(b.dataset.os)));
   setOS(isAndroid ? "android" : "ios");
   const showGuide = (on) => { guide.hidden = !on; done.hidden = on; };
+  const body = $("installBody"), toggle = $("installToggle");
+  const openSteps = (on) => { body.hidden = !on; toggle.setAttribute("aria-expanded", on); guide.classList.toggle("is-open", on); };
+  toggle.addEventListener("click", () => openSteps(body.hidden));
   let hidden = false; try { hidden = localStorage.getItem(HIDE) === "1"; } catch { /* sin almacenamiento */ }
   showGuide(!(standalone || hidden));
   if (standalone) done.firstChild.textContent = "Estás usando Power App instalada ";
   $("installHide").addEventListener("click", () => { try { localStorage.setItem(HIDE, "1"); } catch { /* */ } showGuide(false); });
-  $("installShow").addEventListener("click", () => { try { localStorage.removeItem(HIDE); } catch { /* */ } showGuide(true); guide.scrollIntoView({ behavior: "smooth", block: "start" }); });
-  $("appInstall").addEventListener("click", (e) => { e.preventDefault(); showGuide(true); guide.scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("installShow").addEventListener("click", () => { try { localStorage.removeItem(HIDE); } catch { /* */ } showGuide(true); openSteps(true); guide.scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("appInstall").addEventListener("click", (e) => { e.preventDefault(); showGuide(true); openSteps(true); guide.scrollIntoView({ behavior: "smooth", block: "start" }); });
   const appUrl = new URL("./?app=1", location.href).href;
   const send = $("installSend");
   send.href = `https://api.whatsapp.com/send?text=${encodeURIComponent("Mi Power App de PowerVane & Wellness 💗 Ábrela en el móvil y añádela a la pantalla de inicio: " + appUrl)}`;
