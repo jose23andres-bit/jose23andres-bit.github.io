@@ -50,38 +50,36 @@ nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMe
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* =========================================================
-   INTRO · se entra en la web tocando el logo
-   (ese mismo toque arranca la radio, porque cuenta como interacción)
+   INTRO · se abre sola (unos 3 s) y da paso a la web.
+   Un toque, una tecla o la rueda la adelantan.
    ========================================================= */
 const root = document.documentElement;
 const appMode = root.classList.contains("app-mode");
 const gate = document.getElementById("gate");
-const gateBtn = document.getElementById("gateEnter");
 const ready = () => document.body.classList.add("is-ready");
 const goHash = () => {
   const t = location.hash && location.hash.length > 1 && document.querySelector(location.hash);
   if (t) t.scrollIntoView({ block: "start" });
 };
-if (!gate || appMode) {
+if (!gate || appMode || reducedMotion) {
   if (gate) gate.remove();
   ready();
   if (appMode) requestAnimationFrame(() => document.getElementById("power-app")?.scrollIntoView({ block: "start" }));
 } else {
   root.classList.add("gate-open");
-  const imgs = [...gate.querySelectorAll("img")];
-  const loaded = Promise.all(imgs.map((i) => (i.complete ? null : new Promise((r) => { i.addEventListener("load", r, { once: true }); i.addEventListener("error", r, { once: true }); }))));
-  Promise.race([loaded, new Promise((r) => setTimeout(r, 1800))]).then(() => {
-    gate.classList.add("is-in");
-    setTimeout(() => gateBtn.focus({ preventScroll: true }), reducedMotion ? 0 : 1600);
-  });
   let opened = false;
-  gateBtn.addEventListener("click", () => {
+  const SKIP = ["pointerdown", "keydown", "wheel", "touchstart"];
+  const open = () => {
     if (opened) return;
     opened = true;
-    gate.classList.add("is-opening");
-    setTimeout(() => { root.classList.remove("gate-open"); ready(); goHash(); }, reducedMotion ? 0 : 650);
-    setTimeout(() => gate.remove(), reducedMotion ? 0 : 1500);
-  });
+    SKIP.forEach((ev) => window.removeEventListener(ev, open));
+    gate.classList.add("is-in", "is-opening");
+    setTimeout(() => { root.classList.remove("gate-open"); ready(); goHash(); }, 700);
+    setTimeout(() => gate.remove(), 1500);
+  };
+  requestAnimationFrame(() => gate.classList.add("is-in"));
+  SKIP.forEach((ev) => window.addEventListener(ev, open, { passive: true }));
+  setTimeout(open, 3200);
 }
 
 /* Manifiesto: las palabras se encienden al hacer scroll */

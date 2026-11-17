@@ -545,7 +545,6 @@
   };
   $("appSend").addEventListener("click", () => {
     sendForm.hidden = !sendForm.hidden;
-    $("installHelp").hidden = true;
     if (sendForm.hidden) return;
     sendName.value = S.profile.name || "";
     updatePreview();
@@ -566,24 +565,39 @@
     sendForm.hidden = true;
   });
 
-  /* Instalar como app (Android/Chrome: botón directo · iPhone: instrucciones) */
-  const installBtn = $("appInstall"), installHelp = $("installHelp");
+  /* Guía para instalar la app en la pantalla del móvil */
+  const guide = $("installGuide"), done = $("installDone"), nowBtn = $("installNow");
   const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
-  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(ua);
+  const HIDE = "powervane-install-hidden";
   let installEvt = null;
-  if (!standalone && isIOS) installBtn.hidden = false;
-  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; if (!standalone) installBtn.hidden = false; });
-  window.addEventListener("appinstalled", () => { installBtn.hidden = true; installHelp.hidden = true; installEvt = null; });
-  installBtn.addEventListener("click", async () => {
-    if (installEvt) {
-      installEvt.prompt();
-      const { outcome } = await installEvt.userChoice;
-      installEvt = null;
-      if (outcome === "accepted") installBtn.hidden = true;
-      return;
-    }
-    installHelp.hidden = !installHelp.hidden;
-    sendForm.hidden = true;
+  const setOS = (os) => {
+    guide.querySelectorAll("[data-os]").forEach((b) => { const on = b.dataset.os === os; b.classList.toggle("is-active", on); b.setAttribute("aria-selected", on); });
+    guide.querySelectorAll("[data-steps]").forEach((l) => (l.hidden = l.dataset.steps !== os));
+  };
+  guide.querySelectorAll("[data-os]").forEach((b) => b.addEventListener("click", () => setOS(b.dataset.os)));
+  setOS(isAndroid ? "android" : "ios");
+  const showGuide = (on) => { guide.hidden = !on; done.hidden = on; };
+  let hidden = false; try { hidden = localStorage.getItem(HIDE) === "1"; } catch { /* sin almacenamiento */ }
+  showGuide(!(standalone || hidden));
+  if (standalone) done.firstChild.textContent = "Estás usando Power App instalada ";
+  $("installHide").addEventListener("click", () => { try { localStorage.setItem(HIDE, "1"); } catch { /* */ } showGuide(false); });
+  $("installShow").addEventListener("click", () => { try { localStorage.removeItem(HIDE); } catch { /* */ } showGuide(true); guide.scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("appInstall").addEventListener("click", (e) => { e.preventDefault(); showGuide(true); guide.scrollIntoView({ behavior: "smooth", block: "start" }); });
+  const appUrl = new URL("./?app=1", location.href).href;
+  const send = $("installSend");
+  send.href = `https://api.whatsapp.com/send?text=${encodeURIComponent("Mi Power App de PowerVane & Wellness 💗 Ábrela en el móvil y añádela a la pantalla de inicio: " + appUrl)}`;
+  if (isIOS || isAndroid) send.hidden = true; // ya está en el móvil
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; if (!standalone) nowBtn.hidden = false; });
+  window.addEventListener("appinstalled", () => { installEvt = null; nowBtn.hidden = true; showGuide(false); });
+  nowBtn.addEventListener("click", async () => {
+    if (!installEvt) return;
+    installEvt.prompt();
+    const { outcome } = await installEvt.userChoice;
+    installEvt = null;
+    if (outcome === "accepted") { nowBtn.hidden = true; showGuide(false); }
   });
 
   $("appReset").addEventListener("click", () => { if (confirm("¿Borrar todos tus datos de este dispositivo? No se puede deshacer.")) { S = empty(); save(); render(); } });

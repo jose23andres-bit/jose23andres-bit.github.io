@@ -30,30 +30,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500&family=Cormorant+Garamond:wght@500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261129" />
-  <link rel="stylesheet" href="design.css?v=20261129" />
+  <link rel="stylesheet" href="styles.css?v=20261133" />
+  <link rel="stylesheet" href="design.css?v=20261133" />
 </head>
 <body>
 
   <!-- Intro: logo y línea champagne, se retira sola -->
   <!-- ===================== INTRO: se entra tocando el logo ===================== -->
-  <div class="gate" id="gate">
-    <div class="gate__stage" aria-hidden="true">
-      <figure class="gate__panel"><img src="assets/img/sobre-mi.jpg" alt="" /></figure>
-      <figure class="gate__panel gate__panel--main"><img src="assets/img/hero.jpg" alt="" fetchpriority="high" /></figure>
-      <figure class="gate__panel"><img src="assets/img/galeria-4.jpg" alt="" /></figure>
-    </div>
-    <div class="gate__veil" aria-hidden="true"></div>
+  <div class="gate" id="gate" aria-hidden="true">
+    <video class="gate__video" src="assets/video/fondo-intro.mp4" poster="assets/video/fondo-intro.jpg" muted playsinline autoplay loop preload="auto"></video>
+    <div class="gate__veil"></div>
     <div class="gate__center">
       <p class="gate__kicker">Fitness · Wellness · Mujer</p>
-      <button type="button" class="gate__logo" id="gateEnter" aria-label="Entrar en PowerVane & Wellness">
-        <svg class="gate__ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="96" pathLength="1" /><circle class="gate__ring2" cx="100" cy="100" r="88" pathLength="1" /></svg>
-        <span class="mono mono--xl" aria-hidden="true">PV</span>
-        <span class="gate__ripple" aria-hidden="true"></span>
-      </button>
-      <p class="gate__word">PowerVane<span>&amp; Wellness</span></p>
+      <div class="gate__logo">
+        <svg class="gate__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="96" pathLength="1" /><circle class="gate__ring2" cx="100" cy="100" r="88" pathLength="1" /></svg>
+        <svg class="gate__mark"><use href="#logo" /></svg>
+      </div>
       <p class="gate__claim">Strong is <em>beautiful.</em></p>
-      <p class="gate__hint" aria-hidden="true"><i></i>Toca el logo para entrar</p>
+      <span class="gate__line"></span>
     </div>
   </div>
   <div class="progress" id="progress" aria-hidden="true"></div>
@@ -62,7 +56,7 @@
   <header class="header" id="header">
     <div class="container header__inner">
       <a href="#inicio" class="brand" aria-label="PowerVane & Wellness, inicio">
-        <span class="mono" aria-hidden="true">PV</span>
+        <svg class="brand__logo" aria-hidden="true"><use href="#logo" /></svg>
         <span class="brand__name">PowerVane<span>&amp; Wellness</span></span>
       </a>
       <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
@@ -124,25 +118,21 @@
     <nav class="quick" id="accesos" aria-label="Accesos rápidos">
       <div class="container quick__grid" data-stagger>
         <a href="#programas" class="quick__card reveal">
-          <img src="assets/img/galeria-1.jpg" alt="" loading="lazy" />
           <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-dumbbell" /></svg></span>
           <span class="quick__text"><strong>Programas</strong><small>Desde 69 €. Elige tu punto de partida.</small></span>
           <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
         </a>
         <a href="#live" class="quick__card reveal">
-          <img src="assets/video/glute-focus.jpg" alt="" loading="lazy" />
           <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-live" /></svg></span>
           <span class="quick__text"><strong>Live Training</strong><small>Clases en directo para clientas.</small></span>
           <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
         </a>
         <a href="#power-app" class="quick__card reveal" data-go="dash">
-          <img src="assets/img/galeria-3.jpg" alt="" loading="lazy" />
           <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-phone2" /></svg></span>
           <span class="quick__text"><strong>Power App</strong><small>Rutinas, progreso, nutrición y retos.</small></span>
           <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
         </a>
         <a href="#transformacion" class="quick__card reveal">
-          <img src="assets/img/galeria-2.jpg" alt="" loading="lazy" />
           <span class="quick__icon"><svg class="icon" aria-hidden="true"><use href="#i-chart" /></svg></span>
           <span class="quick__text"><strong>Transformación</strong><small>Mide, compara y evoluciona.</small></span>
           <span class="quick__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow" /></svg></span>
@@ -160,7 +150,7 @@
 
     <!-- ===================== MANIFIESTO ===================== -->
     <section class="manifesto bg-black" aria-label="Manifiesto PowerVane" data-lit>
-      <video class="manifesto__video bgvideo" src="assets/video/strong-feminine.mp4" poster="assets/video/strong-feminine.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+      <video class="manifesto__video bgvideo" src="assets/video/fondo-manifiesto.mp4" poster="assets/video/fondo-manifiesto.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
       <div class="container">
         <p class="eyebrow reveal">La esencia</p>
         <p class="manifesto__text" id="manifesto">No vendo solo entrenamientos. Te acompaño en un proceso para que desarrolles <em>fuerza</em>, <em>seguridad</em>, <em>disciplina</em> y <em>confianza</em> en ti misma, sin renunciar a tu <em>feminidad</em>.</p>
@@ -238,7 +228,6 @@
 
         <div class="cards" data-stagger>
           <article class="card reveal">
-            <figure class="card__media"><img src="assets/img/galeria-1.jpg" alt="" loading="lazy" /><span class="card__tag">Objetivo concreto</span></figure>
             <p class="card__index">I</p>
             <h3 class="card__title">Programas especializados</h3>
             <p class="card__price"><span class="card__amount">69</span><span class="card__cur">€</span></p>
@@ -254,7 +243,6 @@
           </article>
 
           <article class="card reveal">
-            <figure class="card__media"><img src="assets/img/galeria-3.jpg" alt="" loading="lazy" /><span class="card__tag">Punto de partida</span></figure>
             <p class="card__index">II</p>
             <h3 class="card__title">PowerStart</h3>
             <p class="card__price"><span class="card__amount">220</span><span class="card__cur">€</span></p>
@@ -271,7 +259,7 @@
           </article>
 
           <article class="card card--featured reveal">
-            <figure class="card__media"><img src="assets/img/galeria-2.jpg" alt="" loading="lazy" /><span class="card__tag card__tag--hot">La más completa</span></figure>
+            <span class="card__ribbon">La más completa</span>
             <p class="card__index">III</p>
             <h3 class="card__title">Power Transformation</h3>
             <p class="card__price"><span class="card__amount">300</span><span class="card__cur">€</span><span class="card__plus">+ nutrición</span></p>
@@ -306,7 +294,7 @@
 
     <!-- ===================== LIVE TRAINING ===================== -->
     <section class="live bg-black" id="live" data-lit>
-      <video class="live__video bgvideo" src="assets/video/glute-focus.mp4" poster="assets/video/glute-focus.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+      <video class="live__video bgvideo" src="assets/video/fondo-live.mp4" poster="assets/video/fondo-live.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
       <div class="led led--bbe" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="container live__grid">
         <div class="live__intro">
@@ -338,6 +326,7 @@
 
     <!-- ===================== TRANSFORMATION ===================== -->
     <section class="section transform bg-black" id="transformacion" data-lit>
+      <video class="transform__video bgvideo" src="assets/video/fondo-transformacion.mp4" poster="assets/video/fondo-transformacion.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
       <div class="container transform__grid">
         <div class="transform__intro">
           <p class="eyebrow reveal">Transformation</p>
@@ -423,6 +412,40 @@
           <p class="head__sub reveal">Tu panel personal para ver tu evolución semana a semana. Tus datos y fotos se guardan solo en tu dispositivo: nadie más los ve.</p>
         </div>
 
+        <section class="install" id="installGuide" aria-labelledby="installTitle">
+          <div class="install__intro">
+            <div class="install__icon"><img src="assets/icons/icon-192.png" alt="" width="64" height="64" /><span>PowerVane</span></div>
+            <div>
+              <p class="ahome__label">Gratis · sin tiendas de apps</p>
+              <h3 id="installTitle">Pon Power App en la pantalla de tu móvil</h3>
+              <p>Se instala desde el navegador en 3 toques. Tendrás el icono de PowerVane junto a tus apps, se abre a pantalla completa y funciona sin conexión.</p>
+              <div class="install__btns">
+                <button type="button" class="btn btn--pink btn--small" id="installNow" hidden><svg class="icon" aria-hidden="true"><use href="#i-plus" /></svg>Instalar ahora</button>
+                <a class="btn btn--line btn--small" id="installSend" href="#" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>Enviarme el enlace al móvil</a>
+                <button type="button" class="link-btn link-btn--dim" id="installHide">Ya la tengo instalada</button>
+              </div>
+            </div>
+          </div>
+          <div class="install__os" role="tablist" aria-label="Tu móvil">
+            <button type="button" class="chipbtn is-active" data-os="ios" role="tab" aria-selected="true">iPhone</button>
+            <button type="button" class="chipbtn" data-os="android" role="tab" aria-selected="false">Android</button>
+          </div>
+          <ol class="install__steps" data-steps="ios">
+            <li><span>1</span><div><strong>Abre esta web en Safari</strong><p>Si la abriste desde Instagram o WhatsApp, toca <em>···</em> y elige <em>Abrir en Safari</em>.</p></div></li>
+            <li><span>2</span><div><strong>Toca Compartir <i class="app__share" aria-hidden="true"></i></strong><p>Es el cuadrado con la flecha hacia arriba, abajo en el centro de la pantalla.</p></div></li>
+            <li><span>3</span><div><strong>Elige «Añadir a pantalla de inicio»</strong><p>Desliza hacia abajo en el menú si no lo ves a la primera.</p></div></li>
+            <li><span>4</span><div><strong>Toca «Añadir»</strong><p>Listo: el logo de PowerVane aparece en tu pantalla de inicio.</p></div></li>
+          </ol>
+          <ol class="install__steps" data-steps="android" hidden>
+            <li><span>1</span><div><strong>Abre esta web en Chrome</strong><p>Si la abriste desde Instagram o WhatsApp, toca <em>⋮</em> y elige <em>Abrir en Chrome</em>.</p></div></li>
+            <li><span>2</span><div><strong>Toca el menú ⋮</strong><p>Los tres puntos arriba a la derecha.</p></div></li>
+            <li><span>3</span><div><strong>Elige «Instalar aplicación»</strong><p>En algunos móviles pone <em>Añadir a pantalla de inicio</em>.</p></div></li>
+            <li><span>4</span><div><strong>Confirma con «Instalar»</strong><p>Listo: el logo de PowerVane aparece junto a tus apps.</p></div></li>
+          </ol>
+          <p class="install__note">Tus datos se guardan en tu móvil. En iPhone, la app instalada guarda sus datos aparte de Safari: si ya tenías registros, usa <em>Guardar copia</em> y luego <em>Cargar copia</em> dentro de la app (en My Coach).</p>
+        </section>
+        <p class="install__done" id="installDone" hidden>Power App instalada en tu móvil <button type="button" class="link-btn" id="installShow">Ver cómo instalarla</button></p>
+
         <div class="app__bar reveal">
           <div class="tabs" role="tablist" aria-label="Módulos de la Power App">
             <button class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-dash" id="t-dash" data-tab="dash"><svg class="icon" aria-hidden="true"><use href="#i-home" /></svg>Inicio</button>
@@ -455,7 +478,7 @@
               </div>
             </article>
             <article class="ahome__today" id="todayCard">
-              <img src="assets/video/glute-focus.jpg" alt="" loading="lazy" />
+              <svg class="ahome__today-art icon" aria-hidden="true"><use href="#i-dumbbell" /></svg>
               <div class="ahome__today-body">
                 <p class="ahome__label"><svg class="icon" aria-hidden="true"><use href="#i-cal" /></svg>Entrenamiento de hoy</p>
                 <h3 id="todayName">Elige tu rutina</h3>
@@ -847,11 +870,7 @@
             <svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg>
             Enviar mi progreso a mi entrenadora
           </button>
-          <button type="button" class="btn btn--line btn--small" id="appInstall" hidden>Instalar la app en mi móvil</button>
-        </div>
-        <div class="app__panel" id="installHelp" hidden>
-          <p><strong>Instala PowerVane en tu iPhone:</strong> pulsa <span class="app__share" aria-label="Compartir"></span> <em>Compartir</em> en Safari y después <em>Añadir a pantalla de inicio</em>. Se abrirá como una app, con su icono y a pantalla completa.</p>
-          <p class="app__fine">Ojo: en iPhone, la app instalada guarda sus datos aparte de Safari. Si ya tenías registros, pulsa antes <em>Guardar copia</em> y luego <em>Cargar copia</em> dentro de la app.</p>
+          <a href="#installGuide" class="btn btn--line btn--small" id="appInstall">Cómo instalar la app en mi móvil</a>
         </div>
         <form class="app__panel" id="sendForm" hidden>
           <p class="app__panel-title">Tu resumen para la entrenadora</p>
@@ -947,7 +966,7 @@
         </div>
         <div class="community__grid" data-stagger>
           <a class="ccard reveal" href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener">
-            <img src="assets/img/galeria-4.jpg" alt="" loading="lazy" />
+            <img class="ccard__banner" src="assets/img/power-wellness.webp" alt="" loading="lazy" />
             <span class="ccard__body"><svg class="icon" aria-hidden="true"><use href="#i-instagram" /></svg><strong>Instagram</strong><small>@powervaneandwellness · día a día, consejos y motivación</small></span>
           </a>
           <a class="ccard reveal" href="#youtube">
@@ -955,7 +974,7 @@
             <span class="ccard__body"><svg class="icon" aria-hidden="true"><use href="#i-youtube" /></svg><strong>Entrena con mis vídeos</strong><small>Rutinas y consejos en YouTube</small></span>
           </a>
           <a class="ccard reveal" href="#power-app" data-go="goals">
-            <img src="assets/video/strong-feminine.jpg" alt="" loading="lazy" />
+            <span class="ccard__art" aria-hidden="true"><svg class="icon"><use href="#i-trophy" /></svg></span>
             <span class="ccard__body"><svg class="icon" aria-hidden="true"><use href="#i-trophy" /></svg><strong>Power Challenges</strong><small>Retos semanales y mensuales, puntos e insignias</small></span>
           </a>
         </div>
@@ -975,21 +994,15 @@
             @powervaneandwellness
           </a>
         </div>
-        <div class="gallery__grid" data-stagger>
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item g1 cine wipe" aria-label="Ver en Instagram">
-            <img src="assets/img/galeria-4.jpg" alt="Entrenadora con conjunto rojo en estudio oscuro" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
+        <div class="gallery__grid gallery__grid--3" data-stagger>
+          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item cine wipe" aria-label="Ver en Instagram">
+            <img src="assets/img/galeria-4.jpg" alt="Vanessa con conjunto rojo en estudio" loading="lazy" />
           </a>
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item g2 cine wipe" aria-label="Ver en Instagram">
-            <img src="assets/img/galeria-2.jpg" alt="Entrenadora en estudio con top blanco" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
+          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item cine wipe" aria-label="Ver en Instagram">
+            <img src="assets/img/glute-focus.jpg" alt="Vanessa en casa con conjunto negro" loading="lazy" />
           </a>
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item g3 cine wipe" aria-label="Ver en Instagram">
-            <img src="assets/img/glute-focus.jpg" alt="Entrenadora en casa con conjunto negro" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
-          </a>
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item g4 cine wipe" aria-label="Ver en Instagram">
-            <img src="assets/img/galeria-1.jpg" alt="Entrenadora sonriendo con conjunto rojo" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
-          </a>
-          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item g5 cine wipe" aria-label="Ver en Instagram">
-            <img src="assets/img/galeria-3.jpg" alt="Entrenadora en estudio con top negro" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
+          <a href="https://instagram.com/powervaneandwellness" target="_blank" rel="noopener" class="gallery__item cine wipe" aria-label="Ver en Instagram">
+            <img src="assets/img/galeria-1.jpg" alt="Vanessa sonriendo con conjunto rojo" loading="lazy" />
           </a>
         </div>
       </div>
@@ -1073,13 +1086,10 @@
 
     <!-- ===================== 9 · CONTACTO ===================== -->
     <section class="cta bg-burgundy is-lit" id="contacto">
-      <figure class="cta__bg cine" aria-hidden="true">
-        <img src="assets/img/contacto.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-missing')" />
-      </figure>
       <div class="led led--cta" aria-hidden="true"><span></span><span></span></div>
       <div class="container cta__grid" data-lit>
         <div class="cta__inner">
-          <span class="mono mono--lg cta__logo reveal" aria-hidden="true">PV</span>
+          <svg class="cta__logo reveal" aria-hidden="true"><use href="#logo" /></svg>
           <h2 class="cta__title reveal split">Entrena <span class="script">conmigo</span></h2>
           <p class="cta__text reveal">Tu fuerza. Tu evolución. Tu mejor versión. Escríbeme para más información.</p>
           <div class="cta__actions reveal">
@@ -1129,7 +1139,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <a href="#inicio" class="brand" aria-label="Volver al inicio">
-        <span class="mono" aria-hidden="true">PV</span>
+        <svg class="brand__logo" aria-hidden="true"><use href="#logo" /></svg>
         <span class="brand__name">PowerVane<span>&amp; Wellness</span></span>
       </a>
       <nav class="footer__nav" aria-label="Pie de página">
@@ -1148,6 +1158,7 @@
         <a href="https://youtube.com/@yourpoweryourwellness" target="_blank" rel="noopener" aria-label="YouTube @yourpoweryourwellness"><svg class="icon" aria-hidden="true"><use href="#i-youtube" /></svg></a>
         <a href="#" data-wa="general" aria-label="WhatsApp +34 607 745 308"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp" /></svg></a>
       </div>
+      <img class="footer__banner" src="assets/img/power-wellness.webp" alt="Power &amp; Wellness by @powervaneandwellness" width="1295" height="183" loading="lazy" />
       <p class="footer__copy">© <span id="year"></span> PowerVane &amp; Wellness · <a href="tel:+34607745308">+34 607 745 308</a></p>
     </div>
   </footer>
@@ -1158,6 +1169,13 @@
 
   <!-- ===================== LOGO E ICONOS ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="logo" viewBox="0 0 400 400">
+      <circle cx="200" cy="200" r="196" fill="#6e6c70" />
+      <circle cx="200" cy="200" r="178" fill="none" stroke="#f4c3cf" stroke-width="7" />
+      <text x="200" y="188" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-weight="500" font-size="40" letter-spacing="6" fill="#ffffff">POWERVANE</text>
+      <line x1="135" y1="210" x2="265" y2="210" stroke="#f4c3cf" stroke-width="3" />
+      <text x="203" y="252" text-anchor="middle" font-family="Montserrat, Helvetica, Arial, sans-serif" font-weight="300" font-size="25" letter-spacing="7" fill="#f4c3cf">&amp; WELLNESS</text>
+    </symbol>
     <symbol id="i-phone2" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></g></symbol>
     <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8 8a5.6 5.6 0 0 0 0 8M16 8a5.6 5.6 0 0 1 0 8M5 5a9.9 9.9 0 0 0 0 14M19 5a9.9 9.9 0 0 1 0 14"/></g></symbol>
     <symbol id="i-lotus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20c-4 0-8-2.5-9-6 3 0 6 1.5 9 6zM12 20c4 0 8-2.5 9-6-3 0-6 1.5-9 6zM12 20c-2.5-2.5-3.5-6-2.5-10 1-1.8 1.8-3 2.5-4 .7 1 1.5 2.2 2.5 4 1 4 0 7.5-2.5 10z"/></g></symbol>
@@ -1191,10 +1209,10 @@
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.57.94.95-3.48-.22-.36a9.42 9.42 0 0 1-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.99 6.67 2.77a9.37 9.37 0 0 1 2.76 6.68c0 5.2-4.24 9.43-9.45 9.43zm8.04-17.47A11.3 11.3 0 0 0 12.05.7C5.78.7.68 5.8.68 12.06c0 2 .52 3.96 1.52 5.68L.6 23.3l5.7-1.5a11.33 11.33 0 0 0 5.75 1.47h.01c6.26 0 11.36-5.1 11.36-11.37 0-3.03-1.18-5.89-3.33-8.03z"/></symbol>
   </svg>
 
-  <script src="script.js?v=20261129"></script>
-  <script src="app.js?v=20261129"></script>
-  <script src="live-data.js?v=20261129"></script>
-  <script src="live.js?v=20261129"></script>
-  <script src="studio.js?v=20261129"></script>
+  <script src="script.js?v=20261133"></script>
+  <script src="app.js?v=20261133"></script>
+  <script src="live-data.js?v=20261133"></script>
+  <script src="live.js?v=20261133"></script>
+  <script src="studio.js?v=20261133"></script>
 </body>
 </html>
