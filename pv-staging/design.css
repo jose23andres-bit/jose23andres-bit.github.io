@@ -543,3 +543,8 @@ body:not(.is-ready) .hero__badge { opacity: 0; }
   .gate .gate__panel, .gate .gate__logo .mono, .gate__word, .gate__claim, .gate__hint, .gate__kicker { opacity: 1; transform: none; filter: none; }
   .gate__ring circle { stroke-dashoffset: 0; }
 }
+
+/* Ajustes finos */
+.hero__title, .title, .quick__text strong { font-variation-settings: "opsz" 28; }
+.hero__actions .btn--large { padding: 1.15em 2em; font-size: .72rem; }
+.quick__go .icon { width: 16px; height: 16px; }

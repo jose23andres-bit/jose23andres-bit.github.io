@@ -586,10 +586,10 @@
     const rows = [["waist", "Cintura"], ["hip", "Cadera"], ["thigh", "Muslo"], ["arm", "Brazo"]].map(([k, l]) => {
       const v = ms.filter((m) => m[k] != null); if (!v.length) return "";
       const a = v[0][k], b = v[v.length - 1][k], dd = b - a;
-      return `<tr><th>${l}</th><td>${fmt(b)} cm</td><td class="${dd < 0 ? "down" : dd > 0 ? "up" : ""}">${v.length > 1 && dd ? `${dd > 0 ? "↑ +" : "↓ "}${fmt(dd)} cm` : "—"}</td></tr>`;
+      return `<tr><th>${l}</th><td>${fmt(b)} cm</td><td class="${dd < 0 ? "down" : dd > 0 ? "up" : ""}">${v.length > 1 && dd ? `${dd > 0 ? "+" : ""}${fmt(dd)} cm` : "—"}</td></tr>`;
     }).join("");
     $("evoSummary").innerHTML = `
-      <article class="evosum__card"><p class="ahome__label">Peso actual</p><p class="evosum__big">${cur != null ? `${fmt(cur)}<small> kg</small>` : "—"}</p><p class="evosum__d">${diff != null ? `${diff <= 0 ? "↓" : "↑"} ${fmt(Math.abs(diff))} kg en ${weeks} ${weeks === 1 ? "semana" : "semanas"}` : "Añade tu primer registro abajo"}</p></article>
+      <article class="evosum__card"><p class="ahome__label">Peso actual</p><p class="evosum__big">${cur != null ? `${fmt(cur)}<small> kg</small>` : "—"}</p><p class="evosum__d">${diff != null ? `${diff > 0 ? "+" : diff < 0 ? "-" : ""}${fmt(Math.abs(diff))} kg en ${weeks} ${weeks === 1 ? "semana" : "semanas"}` : "Añade tu primer registro abajo"}</p></article>
       <article class="evosum__card evosum__ring"><div class="ring-big"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring__bg" cx="60" cy="60" r="52"/><circle class="ring__fg" id="evoRing" cx="60" cy="60" r="52"/></svg><span><strong>${Math.round(g * 100)}%</strong>objetivo</span></div><p>${p.goalWeight ? `Objetivo: <strong>${fmt(p.goalWeight)} kg</strong>` : "Define tu objetivo abajo"}${p.goalText ? `<br><small>${esc(p.goalText)}</small>` : ""}</p></article>
       <article class="evosum__card evosum__table"><p class="ahome__label">Medidas corporales</p>${rows ? `<table>${rows}</table>` : `<p class="evosum__d">Aún no hay medidas</p>`}</article>`;
     setRing($("evoRing"), g);
