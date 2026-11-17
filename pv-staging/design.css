@@ -615,3 +615,5 @@ body:not(.is-ready) .hero__badge { opacity: 0; }
 .ccard:hover img.ccard__banner { transform: scale(1.03); }
 .hero__title { font-variation-settings: "opsz" 11; font-weight: 500; }
 .ccard:has(.ccard__banner) { background: radial-gradient(circle at 50% 20%, rgba(244, 195, 207, .18), transparent 60%), linear-gradient(160deg, #3a1430, #140c12); }
+.install__btns .btn { padding: .72em 1.15em; letter-spacing: .12em; }
+@media (max-width: 880px) { .install__btns { gap: 6px; } .install__btns .btn { font-size: .6rem; } }
