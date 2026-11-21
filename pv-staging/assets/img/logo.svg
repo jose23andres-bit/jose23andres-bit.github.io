@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="PowerVane & Wellness">
-  <circle cx="200" cy="200" r="196" fill="#6e6c70"/>
-  <circle cx="200" cy="200" r="178" fill="none" stroke="#f4c3cf" stroke-width="7"/>
-  <text x="200" y="188" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="40" letter-spacing="6" fill="#ffffff">POWERVANE</text>
-  <line x1="135" y1="210" x2="265" y2="210" stroke="#f4c3cf" stroke-width="3"/>
-  <text x="203" y="252" text-anchor="middle" font-family="Montserrat, Helvetica, Arial, sans-serif" font-size="25" font-weight="300" letter-spacing="7" fill="#f4c3cf">&amp; WELLNESS</text>
-</svg>
