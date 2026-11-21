@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffaf8"/><stop offset="1" stop-color="#ffe8e8"/></linearGradient><linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff4545"/><stop offset="1" stop-color="#d71920"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<circle cx="1080" cy="80" r="240" fill="#ffd5d5" opacity=".55"/><circle cx="1080" cy="80" r="165" fill="none" stroke="#ff3333" stroke-width="3" opacity=".3"/>
+<rect x="72" y="68" width="1056" height="494" rx="42" fill="#fff" opacity=".94"/>
+<rect x="105" y="105" width="16" height="420" rx="8" fill="url(#red)"/>
+<text x="160" y="190" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" letter-spacing="3" fill="#e02424">PROGRAMA DE COLABORACIÓN</text>
+<text x="155" y="295" font-family="Arial,Helvetica,sans-serif" font-size="78" font-weight="800" fill="#141414">ImpulsaTuClínica</text>
+<text x="160" y="385" font-family="Arial,Helvetica,sans-serif" font-size="62" font-weight="800" fill="#ff3333">con Pepper</text>
+<text x="160" y="455" font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#5e5e66">Financiación para clínicas dentales, estética,</text>
+<text x="160" y="495" font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#5e5e66">ópticas y centros de audiología.</text>
+<rect x="830" y="430" width="235" height="68" rx="34" fill="#ff3333"/>
+<text x="947" y="474" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" fill="#fff">Solicita tu alta</text>
+</svg>
