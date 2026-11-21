@@ -244,7 +244,14 @@
     /* Contact / form */
     .contact { background: var(--cream); overflow: hidden; }
     .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 50px; align-items: start; position: relative; z-index: 1; }
-    .contact-info .channels { display: grid; gap: 14px; margin-top: 28px; }
+    .contact-info .channels { display: grid; gap: 14px; margin-top: 14px; }
+    .agent { display: flex; align-items: center; gap: 14px; margin-top: 28px; background: #fff; border-radius: 18px; padding: 16px 20px; border: 1.5px solid var(--pink-2); }
+    .agent-av { width: 52px; height: 52px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; font-weight: 700; flex: none; }
+    .agent small { display: block; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .8px; }
+    .agent b { font-size: 1.15rem; font-weight: 600; margin-right: 6px; }
+    .agent span { color: var(--red); font-weight: 600; }
+    .hero-agent { margin-top: 18px; color: var(--muted); font-size: .98rem; }
+    .hero-agent strong { color: var(--ink); }
     .channel {
       display: flex; align-items: center; gap: 16px; background: #fff; border-radius: 18px; padding: 18px 20px;
       text-decoration: none; border: 1.5px solid transparent; transition: border-color .15s, transform .15s;
@@ -437,6 +444,7 @@
             <svg aria-hidden="true"><use href="#i-wa"/></svg> 679 510 923
           </a>
         </div>
+        <p class="hero-agent">Te atiende <strong>José Gómez, comercial de Pepper</strong>.</p>
         <div class="hero-trust">
           <span>Solo el DNI</span>
           <span>100% digital</span>
@@ -628,7 +636,7 @@
         <span class="kicker">FAQ <b>/ 05</b></span>
         <h2>Preguntas <span class="red">frecuentes</span></h2>
         <div class="contact-mini">
-          <p>¿Tienes otra duda? Te respondemos personalmente.</p>
+          <p>¿Tienes otra duda? Escribe a <strong>José Gómez, comercial de Pepper</strong>.</p>
           <a class="btn btn-wa js-wa" href="https://wa.me/34679510923" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg> Escríbenos</a>
         </div>
       </div>
@@ -677,6 +685,10 @@
         <h2>Haz que tu clínica forme parte de <span class="red">Pepper</span></h2>
         <p class="lead" style="margin-bottom:0">Déjanos tus datos y te contactamos para activar la financiación en tu clínica.</p>
 
+        <div class="agent">
+          <span class="agent-av">JG</span>
+          <div><small>Tu contacto</small><b>José Gómez</b><span>Comercial de Pepper</span></div>
+        </div>
         <div class="channels">
           <a class="channel js-wa" href="https://wa.me/34679510923" target="_blank" rel="noopener">
             <span class="ci" style="background:var(--wa)"><svg aria-hidden="true"><use href="#i-wa"/></svg></span>
@@ -848,6 +860,7 @@
       <div class="foot">
         <img src="assets/pepper-logo-white.svg" alt="pepper" width="108" height="26" />
         <div>
+          José Gómez, comercial de Pepper &nbsp;·&nbsp;
           <a href="tel:+34679510923">679 510 923</a> &nbsp;·&nbsp;
           <a href="mailto:jose.gomez@peppergroup.es">jose.gomez@peppergroup.es</a>
         </div>
@@ -877,7 +890,7 @@
       var EMAIL = 'jose.gomez@peppergroup.es';
       // Envío del formulario al email mediante FormSubmit (sin servidor propio).
       var FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
-      var WA_TEXT = 'Hola, tengo una clínica y quiero colaborar con Pepper.';
+      var WA_TEXT = 'Hola José, tengo una clínica y quiero colaborar con Pepper.';
 
       document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -978,7 +991,7 @@
       function waMessage() {
         var who = lead ? (lead['Nombre'] + ' de ' + lead['Clínica'] + ' (' + lead['Sector'] + (lead['Ciudad'] ? ', ' + lead['Ciudad'] : '') + ')') : 'una clínica';
         return [
-          'Hola, soy ' + who + '.',
+          'Hola José, soy ' + who + '.',
           '',
           'Ya he enviado el alta en afiliacion.pepperfinance.es con:',
           '✅ Contrato firmado',
