@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="img/denim.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="app.css?v=8" />
+  <link rel="stylesheet" href="app.css?v=9" />
   <script>
     (function () {
       var seen = false; try { seen = !!sessionStorage.getItem('goIntro'); } catch (e) {}
@@ -88,27 +88,8 @@
       <i class="lb t"></i><i class="lb b"></i>
       <div class="vf"><i></i><i></i><i></i><i></i></div>
       <span class="rec"><b></b>REC</span><span class="tc" id="eyeTc">00:00:00:00</span>
-      <span class="cam">CAM 01 · LA CASA</span>
-      <svg class="eye" viewBox="0 0 400 220">
-        <defs>
-          <clipPath id="eyeClip"><path class="lid" d="M14 110 Q200 -34 386 110 Q200 254 14 110Z"/></clipPath>
-          <radialGradient id="irisG" cx="50%" cy="50%" r="50%">
-            <stop offset="0" stop-color="#05070d"/><stop offset=".3" stop-color="#0d1c3d"/><stop offset=".62" stop-color="#8a6a33"/><stop offset=".86" stop-color="#e9cf92"/><stop offset="1" stop-color="#3a2a10"/>
-          </radialGradient>
-          <radialGradient id="scleraG" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#1b2340"/><stop offset="1" stop-color="#05060b"/></radialGradient>
-        </defs>
-        <g clip-path="url(#eyeClip)">
-          <rect width="400" height="220" fill="url(#scleraG)"/>
-          <g class="iris">
-            <circle cx="200" cy="110" r="70" fill="url(#irisG)"/>
-            <circle cx="200" cy="110" r="48" fill="none" stroke="#f3dfa8" stroke-opacity=".35" stroke-width="38" stroke-dasharray="1.2 3.4"/>
-            <circle cx="200" cy="110" r="70" fill="none" stroke="#d6b77a" stroke-width="2"/>
-            <circle class="pupil" cx="200" cy="110" r="27" fill="#000"/>
-            <circle cx="184" cy="94" r="8" fill="#fff" fill-opacity=".85"/><circle cx="216" cy="124" r="3" fill="#fff" fill-opacity=".5"/>
-          </g>
-        </g>
-        <path class="lid-line" d="M14 110 Q200 -34 386 110 Q200 254 14 110Z" fill="none" stroke="#d6b77a" stroke-width="2.2"/>
-      </svg>
+      <span class="cam">CAM 01 · LA CASA · GH VIP 9</span>
+      <div class="eye-img"><img src="img/gh-ojo.webp" alt="" fetchpriority="high" /><i class="glow"></i><i class="sweep"></i><i class="scan"></i></div>
       <p class="eye-cap">Todo empieza<br><em>cuando se abre la casa</em></p>
     </div>
   </div>
@@ -140,7 +121,7 @@
           <img data-src="img/retrato.webp" alt="Retrato de Gianmarco Onestini" />
         </div>
         <div class="wrap hero-in">
-          <span class="live">Ahora en GH VIP 9 · Telecinco</span>
+          <a class="live" href="#enDirecto" id="goLive">Ahora en GH VIP 9 · Ver en directo</a>
           <h1><span>Gianmarco</span><span class="gold">Onestini</span></h1>
           <p class="role">DJ · Modelo · Televisión · Creador de contenido</p>
           <div class="stats">
@@ -163,6 +144,22 @@
       </div></div>
 
       <div class="wrap">
+        <section class="sec rv ghlive" id="enDirecto">
+          <div class="sec-head"><h2>En directo <span class="gold">GH VIP 9</span></h2><span class="live">24 h</span></div>
+          <a class="ghl-card" href="https://www.mediasetinfinity.es/directo/gh-24h-1/" target="_blank" rel="noopener">
+            <img src="img/gh-ojo-s.webp" alt="Gran Hermano VIP 9 en directo" loading="lazy" />
+            <span class="ghl-hud"><span class="rec"><b></b>EN VIVO</span><span>LA CASA · 24 H</span></span>
+            <span class="ghl-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            <span class="ghl-cap"><b>Sigue a Gianmarco dentro de la casa</b><small>Directo gratis en Mediaset Infinity, las 24 horas</small></span>
+          </a>
+          <div class="ghl-btns">
+            <a href="https://www.mediasetinfinity.es/directo/gh-24h-1/" target="_blank" rel="noopener"><i></i>Señal 1 · 24 h</a>
+            <a href="https://www.mediasetinfinity.es/directo/gh-24h-2/" target="_blank" rel="noopener"><i></i>Señal 2 · 24 h</a>
+            <a href="https://www.mediasetinfinity.es/directo/telecinco/" target="_blank" rel="noopener"><i></i>Galas en Telecinco</a>
+            <a href="https://www.mediasetinfinity.es/programas-tv/gran-hermano-vip/" target="_blank" rel="noopener"><i></i>Web oficial</a>
+          </div>
+          <p class="ghl-note">Se abre en Mediaset Infinity, la plataforma oficial de Telecinco.</p>
+        </section>
         <section class="sec rv">
           <div class="sec-head"><h2>¿Qué <em class="s">necesitas?</em></h2></div>
           <div class="svc">
@@ -442,6 +439,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=5" defer></script>
+  <script src="app.js?v=6" defer></script>
 </body>
 </html>

@@ -127,6 +127,10 @@
     if (document.startViewTransition && !reduce && current) document.startViewTransition(function () { paint(v); }); else paint(v);
   }
   $$('[data-nav]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); buzz(); go(a.dataset.nav, true); }); });
+  $('#goLive').addEventListener('click', function (e) {
+    e.preventDefault(); buzz();
+    var el = $('#enDirecto'); if (el) scrollTo({ top: el.getBoundingClientRect().top + scrollY - 80, behavior: reduce ? 'auto' : 'smooth' });
+  });
   function onScroll() { bar.classList.toggle('solid', current !== 'inicio' || scrollY > 40); }
   addEventListener('scroll', onScroll, { passive: true });
   paint(viewFromHash());
