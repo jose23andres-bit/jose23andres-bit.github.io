@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="img/denim.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="app.css?v=7" />
+  <link rel="stylesheet" href="app.css?v=8" />
   <script>
     (function () {
       var seen = false; try { seen = !!sessionStorage.getItem('goIntro'); } catch (e) {}
@@ -203,7 +203,7 @@
 
         <section class="sec rv">
           <div class="mgr">
-            <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose.webp" alt="Community manager de Gianmarco Onestini" width="600" height="600" loading="lazy" /></a>
+            <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose-full.webp" alt="Community manager de Gianmarco Onestini" width="600" height="600" loading="lazy" /></a>
             <div><small>Community manager · Eventos y colaboraciones</small><a class="igh" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener"><svg class="f"><use href="#i-ig"/></svg>@joseandresxxiii</a><span class="muted" style="font-size:.8rem">Gestiona las propuestas de eventos, DJ y marcas para Gianmarco.</span></div>
             <div class="acts">
               <a class="w js-wa" href="https://wa.me/34722705922" target="_blank" rel="noopener"><svg class="f"><use href="#i-wa"/></svg>WhatsApp</a>
@@ -292,7 +292,7 @@
         <div class="cols">
           <section>
             <div class="mgr">
-              <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose.webp" alt="Community manager de Gianmarco Onestini" width="600" height="600" loading="lazy" /></a>
+              <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose-full.webp" alt="Community manager de Gianmarco Onestini" width="600" height="600" loading="lazy" /></a>
               <div><small>Community manager · Eventos y colaboraciones</small><a class="igh" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener"><svg class="f"><use href="#i-ig"/></svg>@joseandresxxiii</a><span class="muted" style="font-size:.8rem">Respuesta habitual en menos de 24 horas.</span></div>
               <div class="acts">
                 <a class="w js-wa" href="https://wa.me/34722705922" target="_blank" rel="noopener"><svg class="f"><use href="#i-wa"/></svg>WhatsApp</a>
@@ -315,9 +315,8 @@
             <details name="faq" open><summary>¿Qué tipo de eventos hace?</summary><p>Sesiones DJ en clubs y festivales, presencia en galas, inauguraciones y photocalls, campañas y contenido para marcas, y apariciones en televisión, prensa y formatos digitales.</p></details>
             <details name="faq"><summary>¿Cuándo se puede contratar?</summary><p>Ahora mismo está concursando en GH VIP 9, así que las contrataciones son a partir de su salida de la casa. Ya se aceptan propuestas para esas fechas: escríbenos y te reservamos la fecha.</p></details>
             <details name="faq"><summary>¿Trabaja fuera de España?</summary><p>Sí. Habla español, italiano, francés e inglés y tiene comunidad en España, Italia, Francia y Latinoamérica.</p></details>
-            <details name="faq"><summary>¿Cuánto cuesta?</summary><p>Depende del tipo de acción, la fecha, el lugar y los contenidos que se pidan. Envía la propuesta con tu presupuesto aproximado y te respondemos con una oferta.</p></details>
-            <details name="faq"><summary>¿Se pueden hacer colaboraciones en especie?</summary><p>Sí, se valoran colaboraciones a cambio de producto o experiencias con un plan de contenidos acordado y medición posterior.</p></details>
-            <details name="faq"><summary>¿Tenéis dossier de prensa?</summary><p>Sí. Pídelo por WhatsApp o email y te enviamos el press kit con cifras de redes y estadísticas actualizadas.</p></details>
+            <details name="faq"><summary>¿Cuánto cuesta?</summary><p>Depende del tipo de acción, la fecha, el lugar y los contenidos que se pidan. Envía la propuesta con el presupuesto que tengas pensado y te respondemos.</p></details>
+                        <details name="faq"><summary>¿Tenéis dossier de prensa?</summary><p>Sí. Pídelo por WhatsApp o email y te enviamos el press kit con cifras de redes y estadísticas actualizadas.</p></details>
           </section>
         </div>
       </div>
@@ -392,15 +391,8 @@
 
         <div class="step" data-step="2" data-title="Presupuesto">
           <h3>Presupuesto</h3>
-          <p>Orientativo. Nos ayuda a preparar la mejor oferta.</p>
-          <div class="opts" id="budget">
-            <label><input type="radio" name="budget" value="Hasta 1.500 €" /><span>Hasta 1.500 €</span></label>
-            <label><input type="radio" name="budget" value="1.500 – 3.000 €" /><span>1.500 – 3.000 €</span></label>
-            <label><input type="radio" name="budget" value="3.000 – 6.000 €" /><span>3.000 – 6.000 €</span></label>
-            <label><input type="radio" name="budget" value="Más de 6.000 €" /><span>+6.000 €</span></label>
-            <label><input type="radio" name="budget" value="Colaboración en especie" /><span>En especie</span></label>
-            <label><input type="radio" name="budget" value="A consultar" /><span>A consultar</span></label>
-          </div>
+          <p>Indica el presupuesto que tienes pensado para esta colaboración.</p>
+          <div class="field" id="fBudget"><label for="budget">Tu presupuesto</label><input id="budget" maxlength="80" autocomplete="off" placeholder="Escribe la cantidad o cómo lo planteas" /><span class="em">Indica tu presupuesto.</span></div>
           <p class="lbl">Incluye (opcional)</p>
           <div class="opts" id="extras">
             <label><input type="checkbox" value="Publicaciones en redes" /><span>Posts en redes</span></label>
@@ -450,6 +442,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=4" defer></script>
+  <script src="app.js?v=5" defer></script>
 </body>
 </html>

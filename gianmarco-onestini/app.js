@@ -205,7 +205,7 @@
   var book = $('#book'), form = $('#bookForm'), steps = $$('.step', book), body = $('#bkBody');
   var S = { step: 0 };
   var NEXT = ['Continuar', 'Continuar', 'Continuar', 'Revisar propuesta', 'Enviar por WhatsApp', 'Cerrar'];
-  var F = { fecha: $('#fecha'), flex: $('#flex'), ciudad: $('#ciudad'), pais: $('#pais'), nombre: $('#nombre'), empresa: $('#empresa'), telefono: $('#telefono'), email: $('#email'), mensaje: $('#mensaje'), priv: $('#privacidad') };
+  var F = { fecha: $('#fecha'), flex: $('#flex'), ciudad: $('#ciudad'), pais: $('#pais'), nombre: $('#nombre'), empresa: $('#empresa'), telefono: $('#telefono'), email: $('#email'), budget: $('#budget'), mensaje: $('#mensaje'), priv: $('#privacidad') };
   var today = new Date(); today.setHours(0, 0, 0, 0);
   function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
   F.fecha.min = iso(today);
@@ -257,6 +257,7 @@
       set(F.fecha, !F.flex.checked && (!F.fecha.value || F.fecha.value < iso(today)));
       set(F.ciudad, F.ciudad.value.trim().length < 2);
     }
+    if (step === 2) set(F.budget, F.budget.value.trim().length < 1);
     if (step === 3) {
       set(F.nombre, F.nombre.value.trim().length < 2);
       set(F.empresa, F.empresa.value.trim().length < 2);
@@ -270,7 +271,7 @@
   function data() {
     var d = {
       'Tipo': TYPES[radio('tipo')] || '', 'Fecha': fechaTxt(), 'Lugar': F.ciudad.value.trim() + ' (' + F.pais.value + ')',
-      'Tamaño': radio('aforo') || 'Sin indicar', 'Presupuesto': radio('budget') || 'A consultar',
+      'Tamaño': radio('aforo') || 'Sin indicar', 'Presupuesto': F.budget.value.trim(),
       'Nombre': F.nombre.value.trim(), 'Empresa': F.empresa.value.trim(), 'Teléfono': F.telefono.value.trim(), 'Email': F.email.value.trim()
     };
     var ex = checks('extras'); if (ex.length) d['Incluye'] = ex.join(', ');
