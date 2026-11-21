@@ -13,12 +13,13 @@
   $('#year').textContent = new Date().getFullYear();
   $$('.js-wa').forEach(function (a) { a.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(WA_TEXT); });
 
-  /* ---------- Música (arranca con el primer toque o al pulsar "Entrar") ---------- */
+  /* ---------- Música: Ibiza Global Radio en directo (respaldo: pista propia). Arranca con el primer toque o al pulsar "Entrar" ---------- */
   var Music = (function () {
-    var a = $('#music'), btn = $('#soundBtn'), VOL = 0.42, off = false, fadeT;
+    var RADIO = 'https://listenssl.ibizaglobalradio.com:8024/ibizaglobalradio.mp3', LOCAL = 'musica.mp3';
+    var a = $('#music'), btn = $('#soundBtn'), VOL = 0.45, off = false, fadeT, usingLocal = false, wd;
     try { off = localStorage.getItem('goMute') === '1'; } catch (e) {}
     a.volume = 0;
-    function ui(on) { btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+    function ui(on) { btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.title = on ? 'Ibiza Global Radio · silenciar' : 'Activar música'; }
     function fade(to) {
       clearInterval(fadeT);
       fadeT = setInterval(function () {
@@ -27,18 +28,31 @@
         try { a.volume = Math.max(0, Math.min(1, v)); } catch (e) {}
       }, 80);
     }
+    function useLocal() { if (usingLocal) return; usingLocal = true; a.loop = true; a.src = LOCAL; if (!off) play(); }
+    function load() { if (usingLocal) return; a.loop = false; a.src = RADIO + '?t=' + Date.now(); a.load(); }
+    a.addEventListener('error', function () { if (!usingLocal) useLocal(); });
+    a.addEventListener('playing', function () { clearTimeout(wd); });
     var evs = ['pointerdown', 'touchend', 'keydown', 'click'];
     function disarm() { evs.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
-    function play() { var p = a.play(); if (p && p.then) p.then(function () { ui(true); fade(VOL); disarm(); }).catch(function () { ui(false); }); }
+    function play() {
+      if (!a.getAttribute('src')) load();
+      a.volume = 0;
+      var p = a.play();
+      clearTimeout(wd);
+      if (!usingLocal) wd = setTimeout(function () { if (a.paused || a.readyState < 3) useLocal(); }, 9000);
+      if (p && p.then) p.then(function () { ui(true); fade(VOL); disarm(); }).catch(function (e) { if (e && e.name === 'NotAllowedError') ui(false); else useLocal(); });
+    }
     function start() { if (!off && a.paused) play(); }
     function onGesture(e) { if (e.target.closest && e.target.closest('#soundBtn')) return; start(); }
     evs.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
     btn.addEventListener('click', function () {
-      if (!a.paused && a.volume > 0) { off = true; fade(0); ui(false); } else { off = false; play(); }
+      if (!a.paused && a.volume > 0) { off = true; clearTimeout(wd); fade(0); ui(false); }
+      else { off = false; if (!usingLocal) load(); play(); }
       try { localStorage.setItem('goMute', off ? '1' : '0'); } catch (e) {}
     });
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { if (!a.paused) a.pause(); } else if (!off && btn.classList.contains('on')) a.play().catch(function () {});
+      if (document.hidden) { if (!a.paused) a.pause(); }
+      else if (!off && btn.classList.contains('on')) { if (!usingLocal) load(); play(); }
     });
     ui(false);
     return { start: start };

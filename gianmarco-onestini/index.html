@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="img/denim.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="app.css?v=1" />
+  <link rel="stylesheet" href="app.css?v=2" />
   <script>
     (function () {
       var seen = false; try { seen = !!sessionStorage.getItem('goIntro'); } catch (e) {}
@@ -81,12 +81,12 @@
       <p class="itag">Eventos · DJ · Colaboraciones</p>
       <p class="roles"><span>DJ en grandes festivales</span><span>Ganador de El tiempo del descuento</span><span>Modelo internacional</span><span>+2,6 M de seguidores</span></p>
       <button type="button" class="enter" id="enterBtn"><i></i>Entrar</button>
-      <p class="ihint">♫ Con sonido</p>
+      <p class="ihint">Con Ibiza Global Radio en directo</p>
     </div>
   </div>
 
   <div class="grain" aria-hidden="true"></div>
-  <audio id="music" src="musica.mp3" loop preload="auto" playsinline></audio>
+  <audio id="music" preload="none" playsinline></audio>
 
   <header class="appbar" id="appbar">
     <div class="wrap">
@@ -420,6 +420,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=1" defer></script>
+  <script src="app.js?v=2" defer></script>
 </body>
 </html>

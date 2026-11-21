@@ -29,6 +29,7 @@
     function useLocal() { if (usingLocal) return; usingLocal = true; a.loop = true; a.src = LOCAL; if (!off) play(); }
     function load() { if (usingLocal) return; a.src = RADIO + (RADIO.indexOf('?') < 0 ? '?t=' : '&t=') + Date.now(); a.load(); }
     a.addEventListener('error', function () { if (!usingLocal) useLocal(); });
+    a.addEventListener('playing', function () { clearTimeout(wd); });
     var evs = ['pointerdown', 'touchend', 'keydown', 'click'];
     function disarm() { evs.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
     function play() {
@@ -43,7 +44,7 @@
     function onGesture(e) { if (e.target.closest && e.target.closest('#soundBtn')) return; start(); }
     evs.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
     btn.addEventListener('click', function () {
-      if (!a.paused && a.volume > 0) { off = true; fade(0); ui(false); }
+      if (!a.paused && a.volume > 0) { off = true; clearTimeout(wd); fade(0); ui(false); }
       else { off = false; if (!usingLocal) load(); play(); }
       try { localStorage.setItem('aureonMute', off ? '1' : '0'); } catch (e) {}
     });
