@@ -119,6 +119,11 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; color: v
 .feature .btn { margin-top: 16px; }
 .mgr { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; padding: 16px; border-radius: var(--r); background: linear-gradient(135deg, #18213A, var(--card)); border: 1px solid var(--line); }
 .mgr .av { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-family: var(--disp); font-size: 1.6rem; color: #0A0A0A; background: linear-gradient(135deg, #F3E2B4, var(--gold)); }
+.mgr .av { position: relative; width: 64px; height: 64px; padding: 3px; background: conic-gradient(from 210deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5, #FEDA75); }
+.mgr .av span { width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #F3E2B4, var(--gold)); border: 2px solid var(--card); }
+.mgr .av img { position: absolute; inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); border-radius: 50%; object-fit: cover; }
+.mgr .igh { display: flex; width: fit-content; align-items: center; gap: 5px; margin: 2px 0 4px; font-size: .8rem; color: var(--gold2, #EED9A4); }
+.mgr .igh svg { width: 15px; height: 15px; fill: currentColor; }
 .mgr b { display: block; font-weight: 500; font-size: 1rem; }
 .mgr small { display: block; font-size: .72rem; color: var(--gold); letter-spacing: .12em; text-transform: uppercase; }
 .mgr .acts { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
@@ -369,3 +374,4 @@ html.show-intro .hero-in { opacity: 0; transform: translateY(30px); }
   .types { grid-template-columns: 1fr; }
   .tcard .box { min-height: 0; }
 }
+.mgr .igh + .muted { display: block; line-height: 1.45; }
