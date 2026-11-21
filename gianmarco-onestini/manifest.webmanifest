@@ -1,0 +1,12 @@
+{
+  "name": "Gianmarco Onestini · Eventos y colaboraciones",
+  "short_name": "Gianmarco",
+  "description": "DJ, modelo y personalidad de televisión. Contrataciones y colaboraciones.",
+  "lang": "es", "start_url": "./", "scope": "./", "display": "standalone", "orientation": "portrait",
+  "background_color": "#06070B", "theme_color": "#06070B",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "img/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
