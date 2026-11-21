@@ -276,12 +276,15 @@
     @keyframes t1 { 0% { opacity: 0; letter-spacing: .2em; } 30%, 70% { opacity: 1; } 100% { opacity: 0; letter-spacing: .55em; } }
     #intro .t1 div { font-family: var(--sans); font-size: clamp(.8rem, 1.6vw, 1rem); letter-spacing: inherit; text-transform: uppercase; color: var(--gold); font-weight: 500; }
     #intro .t1 div em { display: block; font-family: var(--serif); text-transform: none; letter-spacing: .05em; font-size: clamp(1.1rem, 2.4vw, 1.5rem); color: var(--sand); margin-top: 10px; }
-    #intro .t2 { opacity: 0; animation: fadeIn 1.4s 2.6s ease forwards; }
+    #intro .t2 { opacity: 0; animation: fadeIn 1.4s 2.9s ease forwards; }
+    #intro .t1, #intro .t2, #intro .skip, #intro .sound-hint { transition: opacity .45s ease; }
+    #intro.leaving .t1, #intro.leaving .t2, #intro.leaving .skip, #intro.leaving .sound-hint { opacity: 0 !important; animation: none; }
+    html.show-intro .hero .reveal { opacity: 0 !important; transform: translateY(34px) !important; transition: none !important; }
     @keyframes fadeIn { to { opacity: 1; } }
     #intro .t2 small { display: block; font-size: clamp(.72rem, 1.4vw, .9rem); letter-spacing: .5em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
     #intro .t2 strong { display: block; font-family: var(--serif); font-weight: 300; font-size: clamp(3.4rem, 12vw, 9rem); line-height: .9; color: var(--cream); letter-spacing: .02em; }
     #intro .t2 span { display: block; margin-top: 16px; font-family: var(--serif); font-style: italic; font-size: clamp(1rem, 2.2vw, 1.4rem); color: var(--sand); }
-    #intro .rule { width: 0; height: 1px; background: var(--gold); margin: 18px auto 0; animation: rule 1.2s 3.4s ease forwards; }
+    #intro .rule { width: 0; height: 1px; background: var(--gold); margin: 18px auto 0; animation: rule 1.2s 3.7s ease forwards; }
     @keyframes rule { to { width: 120px; } }
     #intro.open .bar.t { transform: translateY(-100%); } #intro.open .bar.b { transform: translateY(100%); }
     #intro.out { opacity: 0; transition: opacity .9s ease; }
@@ -382,7 +385,7 @@
       <img data-src="img/noche.webp" alt="Noche estrellada en la casa rural" />
     </div>
     <div class="wrap hero-content">
-      <p class="eyebrow reveal">Escapada Rural · by Aureon Project</p>
+      <p class="eyebrow reveal">Casa entera · Hasta 12 personas</p>
       <h1 class="reveal d1">Escapada rural <em>en Ciudad Real</em></h1>
       <p class="lead reveal d2">Una casa rural entera para hasta 12 personas, con piscina, jacuzzi acristalado y pista de pádel, en una finca privada de 12.000 m² a un paso del Parque Nacional de Cabañeros.</p>
       <div class="hero-cta reveal d3">
@@ -737,11 +740,12 @@
       function finish() {
         if (done) return; done = true; timers.forEach(clearTimeout);
         try { localStorage.setItem('aureonIntro', '1'); } catch (e) {}
-        intro.classList.add('open');
-        setTimeout(function () { intro.classList.add('out'); }, 500);
-        setTimeout(function () { root.classList.remove('show-intro'); intro.remove(); window.scrollTo(0, 0); }, 1400);
+        intro.classList.add('leaving');
+        setTimeout(function () { intro.classList.add('open'); }, 450);
+        setTimeout(function () { intro.classList.add('out'); }, 900);
+        setTimeout(function () { root.classList.remove('show-intro'); intro.remove(); window.scrollTo(0, 0); }, 1800);
       }
-      timers.push(setTimeout(finish, 5600));
+      timers.push(setTimeout(finish, 6200));
       intro.addEventListener('click', finish);
     })();
   </script>
