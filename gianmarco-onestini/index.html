@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="img/denim.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="app.css?v=5" />
+  <link rel="stylesheet" href="app.css?v=7" />
   <script>
     (function () {
       var seen = false; try { seen = !!sessionStorage.getItem('goIntro'); } catch (e) {}
@@ -82,6 +82,34 @@
       <p class="roles"><span>DJ en grandes festivales</span><span>Ganador de El tiempo del descuento</span><span>Modelo internacional</span><span>+2,6 M de seguidores</span></p>
       <button type="button" class="enter" id="enterBtn"><i></i>Entrar</button>
       <p class="ihint">Con Ibiza Global Radio en directo</p>
+    </div>
+    <!-- Apertura de cine: visor de cámara y ojo que se abre -->
+    <div class="eye-open" id="eyeOpen" aria-hidden="true">
+      <i class="lb t"></i><i class="lb b"></i>
+      <div class="vf"><i></i><i></i><i></i><i></i></div>
+      <span class="rec"><b></b>REC</span><span class="tc" id="eyeTc">00:00:00:00</span>
+      <span class="cam">CAM 01 · LA CASA</span>
+      <svg class="eye" viewBox="0 0 400 220">
+        <defs>
+          <clipPath id="eyeClip"><path class="lid" d="M14 110 Q200 -34 386 110 Q200 254 14 110Z"/></clipPath>
+          <radialGradient id="irisG" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#05070d"/><stop offset=".3" stop-color="#0d1c3d"/><stop offset=".62" stop-color="#8a6a33"/><stop offset=".86" stop-color="#e9cf92"/><stop offset="1" stop-color="#3a2a10"/>
+          </radialGradient>
+          <radialGradient id="scleraG" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#1b2340"/><stop offset="1" stop-color="#05060b"/></radialGradient>
+        </defs>
+        <g clip-path="url(#eyeClip)">
+          <rect width="400" height="220" fill="url(#scleraG)"/>
+          <g class="iris">
+            <circle cx="200" cy="110" r="70" fill="url(#irisG)"/>
+            <circle cx="200" cy="110" r="48" fill="none" stroke="#f3dfa8" stroke-opacity=".35" stroke-width="38" stroke-dasharray="1.2 3.4"/>
+            <circle cx="200" cy="110" r="70" fill="none" stroke="#d6b77a" stroke-width="2"/>
+            <circle class="pupil" cx="200" cy="110" r="27" fill="#000"/>
+            <circle cx="184" cy="94" r="8" fill="#fff" fill-opacity=".85"/><circle cx="216" cy="124" r="3" fill="#fff" fill-opacity=".5"/>
+          </g>
+        </g>
+        <path class="lid-line" d="M14 110 Q200 -34 386 110 Q200 254 14 110Z" fill="none" stroke="#d6b77a" stroke-width="2.2"/>
+      </svg>
+      <p class="eye-cap">Todo empieza<br><em>cuando se abre la casa</em></p>
     </div>
   </div>
 
@@ -175,7 +203,7 @@
 
         <section class="sec rv">
           <div class="mgr">
-            <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose.webp" alt="Community manager de Gianmarco Onestini" width="80" height="80" loading="lazy" /></a>
+            <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose.webp" alt="Community manager de Gianmarco Onestini" width="600" height="600" loading="lazy" /></a>
             <div><small>Community manager · Eventos y colaboraciones</small><a class="igh" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener"><svg class="f"><use href="#i-ig"/></svg>@joseandresxxiii</a><span class="muted" style="font-size:.8rem">Gestiona las propuestas de eventos, DJ y marcas para Gianmarco.</span></div>
             <div class="acts">
               <a class="w js-wa" href="https://wa.me/34722705922" target="_blank" rel="noopener"><svg class="f"><use href="#i-wa"/></svg>WhatsApp</a>
@@ -264,7 +292,7 @@
         <div class="cols">
           <section>
             <div class="mgr">
-              <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose.webp" alt="Community manager de Gianmarco Onestini" width="80" height="80" loading="lazy" /></a>
+              <a class="av" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener" aria-label="Instagram del community manager"><img src="img/jose.webp" alt="Community manager de Gianmarco Onestini" width="600" height="600" loading="lazy" /></a>
               <div><small>Community manager · Eventos y colaboraciones</small><a class="igh" href="https://www.instagram.com/joseandresxxiii/" target="_blank" rel="noopener"><svg class="f"><use href="#i-ig"/></svg>@joseandresxxiii</a><span class="muted" style="font-size:.8rem">Respuesta habitual en menos de 24 horas.</span></div>
               <div class="acts">
                 <a class="w js-wa" href="https://wa.me/34722705922" target="_blank" rel="noopener"><svg class="f"><use href="#i-wa"/></svg>WhatsApp</a>
@@ -422,6 +450,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=3" defer></script>
+  <script src="app.js?v=4" defer></script>
 </body>
 </html>

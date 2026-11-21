@@ -58,7 +58,7 @@
     return { start: start };
   })();
 
-  /* ---------- Intro: monograma dorado, focos de escenario y botón "Entrar" ---------- */
+  /* ---------- Intro: apertura de cine con ojo, monograma dorado, focos de escenario y botón "Entrar" ---------- */
   (function () {
     if (!root.classList.contains('show-intro')) return;
     var intro = $('#intro'), done = false;
@@ -67,8 +67,13 @@
     size(); addEventListener('resize', size);
     for (var i = 0; i < (innerWidth < 600 ? 45 : 80); i++) P.push({ x: Math.random(), y: Math.random(), r: .4 + Math.random() * 1.4, s: .0002 + Math.random() * .0008, ph: Math.random() * 6.28 });
     var beams = [{ x: .12, c: '214,183,122', sp: .55, ph: 0 }, { x: .88, c: '214,183,122', sp: .48, ph: 2 }, { x: .5, c: '120,150,255', sp: .38, ph: 4 }, { x: .3, c: '229,25,58', sp: .62, ph: 1 }, { x: .7, c: '120,150,255', sp: .5, ph: 3 }];
-    var t0 = performance.now();
+    var t0 = performance.now() + 3000, tStart = performance.now(), tc = $('#eyeTc'), eye = $('#eyeOpen');
+    function go() { intro.classList.add('go'); }
+    if (reduce) { go(); t0 = performance.now(); if (eye) eye.remove(); }
+    else { setTimeout(go, 3000); setTimeout(function () { if (eye) eye.remove(); eye = null; }, 4200); }
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
     function frame(now) {
+      if (eye && tc) { var s = (now - tStart) / 1000; tc.textContent = '21:00:' + pad(Math.floor(s)) + ':' + pad(Math.floor((s % 1) * 25)); }
       var t = (now - t0) / 1000, e = Math.min(1, Math.max(0, (t - .5) / 2));
       cx.clearRect(0, 0, W, H);
       beams.forEach(function (b, k) {
@@ -103,7 +108,7 @@
     }
     intro.addEventListener('click', enter);
     intro.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); enter(); } });
-    setTimeout(function () { try { $('#enterBtn').focus({ preventScroll: true }); } catch (e) {} }, 3400);
+    setTimeout(function () { try { $('#enterBtn').focus({ preventScroll: true }); } catch (e) {} }, 6400);
   })();
 
   /* ---------- Pestañas ---------- */
