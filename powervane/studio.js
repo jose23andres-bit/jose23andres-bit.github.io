@@ -450,14 +450,9 @@
     ["streak7", "Racha de 7 días", "Entrena 7 días seguidos", "i-flame", maxStreak, 7],
     ["t10", "10 entrenos", "Marca 10 días entrenados", "i-dumbbell", () => new Set(S().trainings).size, 10],
     ["t50", "Imparable", "50 días entrenados", "i-medal", () => new Set(S().trainings).size, 50],
-    ["s1", "Primera sesión guiada", "Completa un entreno en Workout Studio", "i-play", () => S().sessions.length, 1],
-    ["s10", "Studio lover", "10 sesiones en Workout Studio", "i-trophy", () => S().sessions.length, 10],
     ["pr", "Récord personal", "Supera tu fuerza máxima estimada", "i-chart", () => (hadPR() ? 1 : 0), 1],
     ["photo2", "Evolución visual", "Sube 2 fotos de progreso", "i-camera", () => S().photos.length, 2],
     ["goal", "Objetivo conseguido", "Llega a tu peso objetivo", "i-target", () => (goalProgress() >= 1 ? 1 : 0), 1],
-    ["water7", "Hidratada", "7 días cumpliendo tu agua", "i-drop", waterDays, 7],
-    ["meals20", "Chef saludable", "Registra 20 comidas", "i-apple", () => S().meals.length, 20],
-    ["plan5", "Planificadora", "Programa 5 entrenos en tu agenda", "i-cal", planCount, 5],
   ];
   const TIERS = [[0, "Power Starter"], [300, "Power Rising"], [800, "Power Strong"], [1600, "Power Queen"], [3000, "Power Legend"]];
   const points = () => {
@@ -478,14 +473,12 @@
     const mWeek = wk.filter((d) => s.meals.some((m) => m.date === d)).length;
     const hWeek = wk.filter((d) => habitsOf(d).length >= 4).length;
     $("chWeek").innerHTML = challenge("Objetivo semanal de entrenos", "Cumple los entrenos que te has marcado", tWeek, s.weekTarget || 4, 50, "i-dumbbell")
-      + challenge("Semana hidratada", "Llega a tu objetivo de agua 5 días", wWeek, 5, 30, "i-drop")
-      + challenge("Diario de comidas", "Registra lo que comes 5 días", mWeek, 5, 30, "i-apple")
-      + challenge("Hábitos Power", "Completa al menos 4 hábitos, 4 días", hWeek, 4, 40, "i-lotus");
+      + challenge("Racha de 3 días", "Entrena 3 días seguidos", Math.min(streak(), 3), 3, 30, "i-flame");
     const tMonth = new Set(s.trainings.filter((d) => d.startsWith(month))).size;
     $("chMonth").innerHTML = challenge("12 entrenos este mes", "La constancia construye tu mejor versión", tMonth, 12, 100, "i-cal")
       + challenge("Foto del mes", "Sube tu foto de evolución de este mes", s.photos.some((p) => p.month === month) ? 1 : 0, 1, 50, "i-camera")
       + challenge("Medidas al día", "Registra tus medidas 2 veces este mes", s.measures.filter((m) => m.date.startsWith(month)).length, 2, 50, "i-ruler")
-      + challenge("8 sesiones guiadas", "Entrena con Workout Studio 8 veces este mes", s.sessions.filter((x) => x.date.startsWith(month)).length, 8, 100, "i-play");
+;
 
     const pts = points();
     const ti = TIERS.reduce((a, t, i) => (pts >= t[0] ? i : a), 0), next = TIERS[ti + 1];
@@ -552,14 +545,13 @@
     const tW = wk.filter((x) => s.trainings.includes(x)).length;
     const hW = wk.reduce((t, x) => t + habitsOf(x).length, 0);
     const water = s.water[d] || 0, act = s.activity[d] || {}, goals = s.activityGoals || {};
-    const parts = [Math.min(1, tW / target), Math.min(1, hW / 35), Math.min(1, water / waterGoal())];
-    const pct = Math.round((parts.reduce((a, b) => a + b, 0) / parts.length) * 100);
+    const pct = Math.round(Math.min(1, tW / target) * 100);
     $("weekPct").textContent = pct + "%"; setRing($("weekRing"), pct / 100);
     const bar = (ic, label, v, g, txt) => `<li><svg class="icon"><use href="#${ic}"/></svg><div><p><strong>${txt}</strong> ${label}</p><div class="bar"><span style="width:${Math.min(100, (v / (g || 1)) * 100)}%"></span></div></div></li>`;
-    $("weekBars").innerHTML = bar("i-dumbbell", "entrenos", tW, target, `${tW} / ${target}`)
-      + bar("i-heart", "hábitos esta semana", hW, 35, `${hW} / 35`)
-      + bar("i-drop", "de agua hoy", water, waterGoal(), `${fmt(water / 1000, 2)} / ${fmt(waterGoal() / 1000, 1)} L`)
-      + bar("i-steps", "pasos hoy", act.steps || 0, goals.steps || 8000, fmt(act.steps || 0, 0));
+    const tM = new Set(s.trainings.filter((x) => x.startsWith(d.slice(0, 7)))).size;
+    $("weekBars").innerHTML = bar("i-dumbbell", "entrenos esta semana", tW, target, `${tW} / ${target}`)
+      + bar("i-cal", "entrenos este mes", tM, 12, `${tM} / 12`)
+      + bar("i-flame", "días de racha", streak(), 7, String(streak()));
   };
   $("todayStart").addEventListener("click", (e) => {
     const [k, v] = (e.currentTarget.dataset.action || "go:train").split(":");

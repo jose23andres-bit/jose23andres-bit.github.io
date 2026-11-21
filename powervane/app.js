@@ -55,6 +55,7 @@
   /* ---------- Módulos (barra superior, barra inferior tipo app y accesos desde la web) ---------- */
   let current = "dash";
   const go = (tab, { scroll = true } = {}) => {
+    if (tab === "train" || tab === "nutri") tab = "dash"; // versión sencilla: sin rutinas ni dietas
     if (!$("tab-" + tab)) return;
     current = tab;
     root.querySelectorAll("[data-tab]").forEach((x) => {

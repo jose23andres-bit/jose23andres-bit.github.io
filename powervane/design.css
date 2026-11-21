@@ -711,3 +711,11 @@ body:not(.is-ready) .hero__badge { opacity: 0; }
 .challenge__top { align-items: flex-start; }
 @media (min-width: 601px) { .badges { grid-template-columns: repeat(4, 1fr); } }
 @media (min-width: 1000px) { .badges { grid-template-columns: repeat(6, 1fr); } }
+
+/* ---------- v7 · Web sencilla · App ligera ---------- */
+html:not(.app-mode) #power-app { display: none !important; }
+#t-train, #t-nutri, .appnav [data-tab="train"], .appnav [data-tab="nutri"], #tab-train, #tab-nutri,
+#todayCard, #planForm, .kpi:has(#kLevel), .panel:has(#activityForm), .panel:has(#levelForm) { display: none !important; }
+.kpis { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 880px) { .kpis { grid-template-columns: 1fr 1fr; } .kpis > .kpi--ring { grid-column: 1 / -1; } }
+@media (min-width: 1100px) { .badges { grid-template-columns: repeat(7, 1fr); } }
