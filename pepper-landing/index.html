@@ -278,10 +278,41 @@
     .form-alt a { color: var(--red); font-weight: 600; }
     .msg { display: none; margin-top: 16px; padding: 14px 16px; border-radius: 14px; font-weight: 500; }
     .msg.err { display: block; background: var(--pink); color: var(--red-dark); }
-    .success { display: none; text-align: center; padding: 30px 10px; }
-    .success .check-big { width: 80px; height: 80px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; font-size: 2.4rem; margin: 0 auto 18px; }
-    .success h3 { margin-bottom: 8px; }
-    .success p { color: var(--muted); margin-bottom: 20px; }
+    /* Onboarding (after form) */
+    .onb[hidden], .final-ok[hidden] { display: none; }
+    .progress { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 24px; counter-reset: pg; }
+    .progress li { font-size: .78rem; font-weight: 600; color: var(--muted); text-align: center; padding-top: 12px; border-top: 4px solid var(--line); }
+    .progress li.done { border-color: var(--red); color: var(--red); }
+    .progress li.cur { border-color: var(--pink-2); color: var(--ink); }
+    .onb-ok { display: flex; gap: 14px; align-items: center; background: var(--pink); border-radius: 16px; padding: 16px 18px; margin-bottom: 26px; }
+    .onb-ok b { display: block; font-size: 1.05rem; }
+    .onb-ok span { color: var(--muted); font-size: .95rem; }
+    .ok-dot, .check-big {
+      flex: none; border-radius: 50%; background: var(--red) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") no-repeat center / 58%;
+    }
+    .ok-dot { width: 40px; height: 40px; }
+    .check-big { width: 72px; height: 72px; margin: 0 auto 16px; }
+    .docs { list-style: none; display: grid; gap: 12px; margin-bottom: 26px; }
+    .docs li { display: flex; gap: 14px; align-items: flex-start; border: 1.5px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+    .docs i { flex: none; width: 46px; height: 46px; border-radius: 12px; background: var(--pink); display: grid; place-items: center; }
+    .docs svg { width: 26px; height: 26px; fill: none; stroke: var(--red); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .docs b { display: block; font-weight: 600; }
+    .docs span { color: var(--muted); font-size: .95rem; }
+    .docs strong { color: var(--ink); }
+    .step-box { border-radius: 18px; background: var(--cream); padding: 22px; margin-bottom: 16px; }
+    .step-n { display: inline-block; background: var(--red); color: #fff; border-radius: 999px; padding: 2px 12px; font-size: .8rem; font-weight: 600; margin-bottom: 8px; }
+    .step-box h4 { font-size: 1.15rem; font-weight: 600; margin-bottom: 4px; }
+    .step-box > p { color: var(--muted); margin-bottom: 16px; font-size: .95rem; }
+    .confirm-list { display: grid; gap: 10px; margin-bottom: 18px; }
+    .confirm-list label { display: flex; gap: 12px; align-items: flex-start; background: #fff; border-radius: 12px; padding: 12px 14px; cursor: pointer; border: 1.5px solid transparent; }
+    .confirm-list label:has(input:checked) { border-color: var(--red); }
+    .confirm-list input { accent-color: var(--red); width: 20px; height: 20px; margin-top: 1px; flex: none; }
+    #notifyBtn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+    .hint { text-align: center; color: var(--muted); font-size: .88rem; margin-top: 10px; }
+    .final-ok { text-align: center; padding: 10px 0 6px; }
+    .final-ok h3 { margin-bottom: 6px; }
+    .final-ok p { color: var(--muted); }
+    .reset { display: block; margin: 18px auto 0; background: none; border: none; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; font-size: .9rem; }
 
     /* Final CTA */
     .final { background: var(--red); color: #fff; text-align: center; padding: 90px 0; overflow: hidden; }
@@ -617,7 +648,7 @@
         </details>
         <details>
           <summary><span class="tag">FAQ <b>/ 06</b></span>¿Cómo me doy de alta?</summary>
-          <div class="answer">Rellena el <a href="#alta" class="red">formulario de alta</a> o escríbenos al <strong>679 510 923</strong> o a <strong>jose.gomez@peppergroup.es</strong>. Te contactamos para explicarte todo y activar tu clínica.</div>
+          <div class="answer">Rellena el <a href="#alta" class="red">formulario de alta</a> o escríbenos al <strong>679 510 923</strong> o a <strong>jose.gomez@peppergroup.es</strong>. Al enviar la solicitud verás la documentación necesaria y el enlace a la <strong>afiliación online de Pepper</strong>.</div>
         </details>
       </div>
     </div>
@@ -700,11 +731,80 @@
             <div class="msg" id="formMsg" role="alert"></div>
           </div>
 
-          <div class="success" id="formSuccess">
-            <div class="check-big">✓</div>
-            <h3>¡Solicitud enviada!</h3>
-            <p>Gracias. Te contactaremos muy pronto para activar Pepper en tu clínica.</p>
-            <a class="btn btn-wa js-wa" href="https://wa.me/34679510923" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg> Adelantarlo por WhatsApp</a>
+          <div class="onb" id="onboarding" hidden>
+            <ol class="progress" aria-label="Progreso del alta">
+              <li class="done">Solicitud</li>
+              <li class="cur" id="pg2">Documentación</li>
+              <li id="pg3">Afiliación</li>
+              <li id="pg4">Aviso</li>
+            </ol>
+
+            <div class="onb-ok">
+              <span class="ok-dot"></span>
+              <div><b>¡Cumples los requisitos, <span id="onbName">bienvenido/a</span>!</b><span>Ya puedes completar el alta de <strong id="onbClinic">tu clínica</strong>.</span></div>
+            </div>
+
+            <h3>¿Qué necesito para tu alta?</h3>
+            <p class="sub">Ten preparada esta información:</p>
+
+            <ul class="docs">
+              <li>
+                <i><svg viewBox="0 0 24 24"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.8l1.7-2.5h6l1.7 2.5h2.8A1.5 1.5 0 0 1 21 8.5v10a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5Z"/><circle cx="12" cy="13" r="3.8"/></svg></i>
+                <div><b>1. Tres fotos</b><span>Fachada de la clínica, gabinete y sala de espera.</span></div>
+              </li>
+              <li>
+                <i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 8h4M3 12h4M3 16h4M17 8h4M17 12h4M17 16h4M10.5 9.5v5l4-2.5Z"/></svg></i>
+                <div><b>2. Vídeo de la clínica</b><span>Debe durar entre <strong class="red">10 y 15 segundos</strong>.</span></div>
+              </li>
+              <li>
+                <i><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="13" height="12" rx="2"/><path d="m15.5 10.5 6-3.5v10l-6-3.5"/></svg></i>
+                <div><b>3. Videollamada</b><span>Necesitamos realizar una videollamada contigo.</span></div>
+              </li>
+              <li>
+                <i><svg viewBox="0 0 24 24"><path d="M6 2.5h8l4.5 4.5v14.5H6Z"/><path d="M14 2.5V7h4.5M9 12h6M9 15h6M9 18h4"/></svg></i>
+                <div><b>4. Documento que demuestre la antigüedad en el sector</b>
+                  <span>Si el titular es profesional colegiado (odontólogo, óptico-optometrista, audioprotesista, médico…): <strong>carnet o certificado de colegiación</strong>.<br>Si no es colegiado: <strong>Modelo 036 o 037</strong>.</span></div>
+              </li>
+              <li>
+                <i><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"/><circle cx="8.5" cy="11" r="2.2"/><path d="M5 16c.6-1.7 2-2.5 3.5-2.5s2.9.8 3.5 2.5M14.5 10h4M14.5 13h4"/></svg></i>
+                <div><b>5. DNI del titular</b><span>Por ambas caras.</span></div>
+              </li>
+              <li>
+                <i><svg viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5M4.5 9.5h15M6 10v7M10 10v7M14 10v7M18 10v7M3.5 20h17M4.5 17.5h15"/></svg></i>
+                <div><b>6. Titularidad bancaria</b><span>Documento que acredite la titularidad de la cuenta bancaria.</span></div>
+              </li>
+            </ul>
+
+            <div class="step-box">
+              <span class="step-n">Paso 1</span>
+              <h4>Rellena primero la afiliación online de Pepper</h4>
+              <p>Completa el alta en el portal oficial de Pepper y firma el contrato.</p>
+              <a class="btn btn-primary" id="afilBtn" href="https://afiliacion.pepperfinance.es/" target="_blank" rel="noopener">Abrir afiliación de Pepper</a>
+            </div>
+
+            <div class="step-box" id="confirmBox">
+              <span class="step-n">Paso 2</span>
+              <h4>Cuando lo hayas enviado, confírmalo aquí</h4>
+              <p>Al marcar todo, se abrirá WhatsApp automáticamente para avisarnos.</p>
+              <div class="confirm-list">
+                <label><input type="checkbox" class="cf" /> <span>He enviado el <strong>alta en afiliacion.pepperfinance.es</strong></span></label>
+                <label><input type="checkbox" class="cf" /> <span>Con el <strong>contrato firmado</strong></span></label>
+                <label><input type="checkbox" class="cf" /> <span><strong>DNI</strong> del titular <strong>por ambas caras</strong></span></label>
+                <label><input type="checkbox" class="cf" /> <span>Copia del <strong>certificado de titularidad bancaria</strong> que <strong>coincide con el número de cuenta del contrato</strong></span></label>
+              </div>
+              <a class="btn btn-wa" id="notifyBtn" href="#" target="_blank" rel="noopener" aria-disabled="true">
+                <svg aria-hidden="true"><use href="#i-wa"/></svg> Avisar por WhatsApp que ya lo he enviado
+              </a>
+              <p class="hint" id="notifyHint">Marca las 4 casillas para continuar.</p>
+            </div>
+
+            <div class="final-ok" id="finalOk" hidden>
+              <div class="check-big"></div>
+              <h3>¡Perfecto, ya casi está!</h3>
+              <p>Envía el mensaje de WhatsApp y adjunta en ese chat las <strong>3 fotos</strong>, el <strong>vídeo</strong>, el <strong>documento de antigüedad</strong> y el <strong>DNI</strong>. Te contactaremos para la videollamada.</p>
+            </div>
+
+            <button type="button" class="reset" id="resetOnb">Empezar una nueva solicitud</button>
           </div>
         </form>
       </div>
@@ -823,19 +923,109 @@
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(data)
         }).then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
-          .then(function () {
-            document.getElementById('formBody').style.display = 'none';
-            document.getElementById('formSuccess').style.display = 'block';
-          })
+          .then(function () { startOnboarding(data); })
           .catch(function () {
-            // Respaldo: abrir el correo con los datos ya escritos
+            // Respaldo: abrir el correo con los datos ya escritos y continuar con el alta
             var body = Object.keys(data).filter(function (k) { return k[0] !== '_'; })
               .map(function (k) { return k + ': ' + data[k]; }).join('\n');
-            fail('No se pudo enviar automáticamente. Te abrimos tu correo con los datos listos para enviar.');
+            startOnboarding(data);
             window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(data._subject) + '&body=' + encodeURIComponent(body);
           })
           .finally(function () { btn.disabled = false; btn.textContent = 'Enviar solicitud de alta'; });
       });
+
+      /* ---------- Proceso de alta (tras la solicitud) ---------- */
+      var STORE = 'pepperAlta';
+      var onb = document.getElementById('onboarding');
+      var formBody = document.getElementById('formBody');
+      var boxes = document.querySelectorAll('.cf');
+      var notifyBtn = document.getElementById('notifyBtn');
+      var notifyHint = document.getElementById('notifyHint');
+      var lead = null;
+
+      function save(extra) {
+        try {
+          var s = JSON.parse(localStorage.getItem(STORE) || '{}');
+          Object.assign(s, extra);
+          localStorage.setItem(STORE, JSON.stringify(s));
+        } catch (err) { /* modo privado: sin persistencia */ }
+      }
+      function load() { try { return JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (err) { return null; } }
+
+      function waMessage() {
+        var who = lead ? (lead['Nombre'] + ' de ' + lead['Clínica'] + ' (' + lead['Sector'] + (lead['Ciudad'] ? ', ' + lead['Ciudad'] : '') + ')') : 'una clínica';
+        return [
+          'Hola, soy ' + who + '.',
+          '',
+          'Ya he enviado el alta en afiliacion.pepperfinance.es con:',
+          '✅ Contrato firmado',
+          '✅ DNI del titular por ambas caras',
+          '✅ Certificado de titularidad bancaria (coincide con el número de cuenta del contrato)',
+          '',
+          'Te adjunto por aquí las 3 fotos (fachada, gabinete y sala de espera), el vídeo de la clínica y el documento de antigüedad. ¿Cuándo hacemos la videollamada?'
+        ].join('\n');
+      }
+
+      function setProgress(step) {
+        ['pg2', 'pg3', 'pg4'].forEach(function (id, i) {
+          var el = document.getElementById(id), n = i + 2;
+          el.className = n < step ? 'done' : (n === step ? 'cur' : '');
+        });
+      }
+
+      function showOnboarding() {
+        formBody.style.display = 'none';
+        onb.hidden = false;
+        if (lead) {
+          document.getElementById('onbName').textContent = lead['Nombre'].split(' ')[0];
+          document.getElementById('onbClinic').textContent = lead['Clínica'];
+        }
+        var s = load() || {};
+        (s.checks || []).forEach(function (v, i) { if (boxes[i]) boxes[i].checked = v; });
+        setProgress(s.afil ? 3 : 2);
+        updateConfirm(false);
+      }
+
+      function startOnboarding(data) {
+        lead = data;
+        save({ lead: data, checks: [], afil: false });
+        showOnboarding();
+        document.getElementById('alta').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function updateConfirm(fromUser) {
+        var checks = Array.prototype.map.call(boxes, function (b) { return b.checked; });
+        var all = checks.every(Boolean);
+        save({ checks: checks });
+        notifyBtn.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(waMessage());
+        notifyBtn.setAttribute('aria-disabled', all ? 'false' : 'true');
+        notifyHint.textContent = all ? 'Si WhatsApp no se ha abierto, pulsa el botón.' : 'Marca las 4 casillas para continuar.';
+        if (all) setProgress(4);
+        if (all && fromUser) {
+          // Se abre WhatsApp automáticamente con el aviso ya escrito
+          window.open(notifyBtn.href, '_blank', 'noopener');
+          document.getElementById('finalOk').hidden = false;
+          save({ notified: true });
+        }
+      }
+
+      boxes.forEach(function (b) { b.addEventListener('change', function () { updateConfirm(true); }); });
+      notifyBtn.addEventListener('click', function () { document.getElementById('finalOk').hidden = false; });
+      document.getElementById('afilBtn').addEventListener('click', function () { save({ afil: true }); setProgress(3); });
+      document.getElementById('resetOnb').addEventListener('click', function () {
+        try { localStorage.removeItem(STORE); } catch (err) {}
+        lead = null; boxes.forEach(function (b) { b.checked = false; });
+        document.getElementById('finalOk').hidden = true;
+        onb.hidden = true; formBody.style.display = ''; form.reset();
+      });
+
+      // Si vuelve del portal de afiliación, continúa donde lo dejó
+      var saved = load();
+      if (saved && saved.lead) {
+        lead = saved.lead;
+        showOnboarding();
+        if (saved.notified) document.getElementById('finalOk').hidden = false;
+      }
     })();
   </script>
 </body>
