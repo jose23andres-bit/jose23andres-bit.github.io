@@ -1,8 +1,20 @@
 {
   "channelId": "UCTq2U_TT7BjBU3QTsp5ah0Q",
   "live": false,
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "videos": [
+    {
+      "id": "uzPBE0uCENE",
+      "title": "Lluvia Suave para Dormir Profundamente 🌧️ Ondas Delta · Sueño Reparador y Calma",
+      "published": "2026-11-21T02:13:08+00:00",
+      "series": "dormir"
+    },
+    {
+      "id": "EIEsft8s5KI",
+      "title": "Cómo dejar de sobrepensar 💜 #Shorts",
+      "published": "2026-11-20T22:57:19+00:00",
+      "series": "guiada"
+    },
     {
       "id": "R2ZStJo6ALI",
       "title": "Música 432 Hz para Calmar la Mente 🌲 Bosque al Amanecer · Deja de Pensar y Relájate",
@@ -62,18 +74,6 @@
       "title": "Cuando todo te supera 💜 #Shorts",
       "published": "2026-11-18T16:10:06+00:00",
       "series": "guiada"
-    },
-    {
-      "id": "NzD5buG5Wnk",
-      "title": "Música 432 Hz para Calmar la Mente 🌲 Bosque al Amanecer · Deja de Pensar y Relájate",
-      "published": "2026-11-18T03:04:54+00:00",
-      "series": "paz"
-    },
-    {
-      "id": "XRYVsAf9Vj4",
-      "title": "¿Insomnio? Escucha esto 🌧 Lluvia para dormir #Shorts",
-      "published": "2026-11-17T23:45:08+00:00",
-      "series": "dormir"
     }
   ]
 }
