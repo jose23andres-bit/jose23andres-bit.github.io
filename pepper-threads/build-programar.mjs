@@ -47,7 +47,7 @@ header{background:#FF3333;color:#fff;padding:22px 18px}header h1{margin:0 0 6px;
 .card{background:#fff;margin:14px 16px;border-radius:16px;padding:16px;border:2px solid transparent}
 .card.ok{border-color:#25D366;opacity:.6}.top{display:flex;justify-content:space-between;align-items:center}
 .tag{background:#FFEBEB;color:#FF3333;border-radius:999px;padding:3px 10px;font-size:.85rem;font-weight:600}
-.when{margin:8px 0;font-weight:600;text-transform:capitalize}
+.when{margin:8px 0;font-weight:600}.when::first-letter{text-transform:uppercase}
 pre{white-space:pre-wrap;font:inherit;background:#FBF7F3;border-radius:12px;padding:12px;margin:0 0 10px;font-size:.95rem}
 .topic{margin:0 0 12px;color:#5E5E66;font-size:.9rem}
 button{width:100%;background:#FF3333;color:#fff;border:0;border-radius:999px;padding:14px;font:inherit;font-weight:700;font-size:1rem}
