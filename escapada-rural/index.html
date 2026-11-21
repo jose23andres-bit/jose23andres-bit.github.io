@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Las Madroñas · Escapada Rural by Aureon Project | Casa rural para 12 junto a Cabañeros</title>
-  <meta name="description" content="Fin de semana completo en Las Madroñas: casa rural entera para hasta 12 personas con piscina, jacuzzi acristalado, pádel y barbacoa junto al río Bullaque y Cabañeros. 850 € o 1.050 € con jacuzzi. Reserva por WhatsApp 722 705 922." />
+  <title>Escapada Rural en Ciudad Real · by Aureon Project | Casa rural para 12 con piscina y jacuzzi</title>
+  <meta name="description" content="Escapada rural en Ciudad Real: casa rural entera para hasta 12 personas con piscina, jacuzzi acristalado, pádel y barbacoa junto a Cabañeros. Pack fin de semana 850 € o 1.050 € con jacuzzi, y días entre semana. 850 € o 1.050 € con jacuzzi. Reserva por WhatsApp 722 705 922." />
   <meta name="theme-color" content="#0E0C0A" />
-  <meta property="og:title" content="Las Madroñas · Escapada Rural by Aureon Project" />
+  <meta property="og:title" content="Escapada Rural en Ciudad Real · by Aureon Project" />
   <meta property="og:description" content="Un fin de semana entero para 12 personas: piscina, jacuzzi, pádel y naturaleza junto a Cabañeros." />
   <meta property="og:image" content="img/hero.webp" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230E0C0A' stroke='%23C9A45C' stroke-width='3'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Georgia,serif' font-size='30' fill='%23C9A45C'%3EA%3C/text%3E%3C/svg%3E" />
@@ -185,6 +185,27 @@
     .opt span small { color: var(--sand); font-size: .86rem; }
     .opt input:checked + span { border-color: var(--gold); background: rgba(201,164,92,.1); }
     .opt input:focus-visible + span { outline: 2px solid var(--gold); }
+    .tabs { display: grid; grid-template-columns: 1fr 1fr; background: var(--night); border-radius: 999px; padding: 4px; margin-bottom: 22px; border: 1px solid rgba(243,234,217,.12); }
+    .tab input { position: absolute; opacity: 0; pointer-events: none; }
+    .tab span { display: block; text-align: center; padding: 11px 8px; border-radius: 999px; cursor: pointer; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; color: var(--sand); transition: all .25s; }
+    .tab input:checked + span { background: var(--gold); color: var(--black); }
+    .tab input:focus-visible + span { outline: 2px solid var(--gold-2); }
+    .field[hidden] { display: none; }
+    .weekday { margin: 30px auto 0; max-width: 940px; display: flex; gap: 30px; align-items: center; justify-content: space-between; border: 1px dashed rgba(201,164,92,.45); border-radius: 8px; padding: 30px 36px; background: rgba(30,26,22,.45); }
+    .weekday h3 { font-size: 2rem; margin: 8px 0 8px; }
+    .weekday h3 em { color: var(--gold-2); font-style: italic; }
+    .weekday p:not(.eyebrow) { color: var(--sand); max-width: 520px; }
+    .weekday-cta { text-align: center; flex: none; }
+    .weekday-cta .ask { display: block; font-family: var(--serif); font-style: italic; font-size: 1.6rem; color: var(--gold-2); margin-bottom: 12px; }
+    .badge-soft { background: transparent; border: 1px solid var(--gold); color: var(--gold-2); }
+    /* Música */
+    .sound { position: fixed; left: 20px; bottom: 22px; z-index: 75; display: flex; align-items: center; gap: 10px; background: rgba(14,12,10,.72); backdrop-filter: blur(8px); border: 1px solid rgba(201,164,92,.35); color: var(--sand); border-radius: 999px; padding: 9px 15px 9px 12px; font: 500 .7rem var(--sans); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+    .sound .eq { display: flex; gap: 2px; align-items: flex-end; height: 14px; }
+    .sound .eq i { width: 2px; height: 3px; background: var(--gold); border-radius: 1px; }
+    .sound.on .eq i { animation: eq 1s ease-in-out infinite; }
+    .sound.on .eq i:nth-child(2) { animation-delay: .2s; } .sound.on .eq i:nth-child(3) { animation-delay: .4s; } .sound.on .eq i:nth-child(4) { animation-delay: .1s; }
+    @keyframes eq { 0%,100% { height: 3px; } 50% { height: 14px; } }
+    #intro .sound-hint { position: absolute; z-index: 5; left: 0; right: 0; bottom: calc(26px + env(safe-area-inset-bottom)); text-align: center; font: 400 .72rem var(--sans); letter-spacing: .3em; text-transform: uppercase; color: rgba(243,234,217,.55); pointer-events: none; animation: fadeIn 1s 1s both; }
     .summary { margin: 18px 0; padding: 16px 18px; border-radius: 8px; background: var(--night); border-left: 3px solid var(--gold); font-size: .95rem; color: var(--sand); display: none; }
     .summary.on { display: block; }
     .summary b { color: var(--cream); font-weight: 500; }
@@ -298,6 +319,11 @@
       .scroll-cue { display: none; }
       .frame { height: 52vh; }
       .schedule { flex-direction: column; }
+      .weekday { flex-direction: column; align-items: flex-start; padding: 26px 22px; }
+      .weekday-cta { text-align: left; width: 100%; } .weekday-cta .btn { width: 100%; }
+      .sound { top: calc(14px + env(safe-area-inset-top)); bottom: auto; left: auto; right: 12px; padding: 8px 10px; }
+      .sound span { display: none; }
+      #intro .skip { bottom: calc(64px + env(safe-area-inset-bottom)); }
       .schedule div + div { border-left: 0; border-top: 1px solid rgba(201,164,92,.25); }
       .float-wa { display: none; }
       .mbar { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(14,12,10,.94); backdrop-filter: blur(10px); border-top: 1px solid rgba(201,164,92,.2); }
@@ -321,18 +347,24 @@
     <div class="t1"><div>Aureon Project<em>presenta</em></div></div>
     <div class="t2"><div>
       <small>Escapada Rural</small>
-      <strong>Las Madroñas</strong>
+      <strong>Ciudad Real</strong>
       <div class="rule"></div>
       <span>Un fin de semana para 12, a las puertas de Cabañeros</span>
     </div></div>
     <button type="button" class="skip" id="skipIntro">Saltar</button>
+    <div class="sound-hint">♪ Toca para entrar con sonido</div>
   </div>
+
+  <audio id="music" src="ambiente.mp3" loop preload="auto" playsinline></audio>
+  <button type="button" class="sound" id="soundBtn" aria-pressed="false" aria-label="Activar o silenciar la música">
+    <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="soundTxt">Música</span>
+  </button>
 
   <div class="grain" aria-hidden="true"></div>
 
   <header id="top">
     <div class="wrap nav">
-      <a href="#" class="brand"><b>Las Madroñas</b><small>Escapada Rural · by Aureon Project</small></a>
+      <a href="#" class="brand"><b>Escapada Rural</b><small>Ciudad Real · by Aureon Project</small></a>
       <nav class="nav-links" aria-label="Secciones">
         <a href="#finca">La finca</a><a href="#galeria">Galería</a><a href="#precios">Precios</a><a href="#reservar">Reservar</a>
       </nav>
@@ -343,20 +375,20 @@
   <!-- HERO -->
   <section class="hero">
     <div class="slides" id="slides">
-      <img src="img/hero.webp" alt="Casa rural Las Madroñas con piscina y montaña" class="on" fetchpriority="high" />
+      <img src="img/hero.webp" alt="Casa rural en Ciudad Real con piscina y montaña" class="on" fetchpriority="high" />
       <img data-src="img/porche-vistas.webp" alt="Vistas desde el porche" />
       <img data-src="img/piscina-casa.webp" alt="Piscina junto a la casa" />
       <img data-src="img/jacuzzi.webp" alt="Jacuzzi acristalado" />
-      <img data-src="img/noche.webp" alt="Noche estrellada en Las Madroñas" />
+      <img data-src="img/noche.webp" alt="Noche estrellada en la casa rural" />
     </div>
     <div class="wrap hero-content">
       <p class="eyebrow reveal">Escapada Rural · by Aureon Project</p>
-      <h1 class="reveal d1">Las <em>Madroñas</em></h1>
-      <p class="lead reveal d2">Una casa rural entera para hasta 12 personas, con piscina, jacuzzi acristalado y pista de pádel, en una finca de 12.000 m² junto al río Bullaque y a un paso de Cabañeros.</p>
+      <h1 class="reveal d1">Escapada rural <em>en Ciudad Real</em></h1>
+      <p class="lead reveal d2">Una casa rural entera para hasta 12 personas, con piscina, jacuzzi acristalado y pista de pádel, en una finca privada de 12.000 m² a un paso del Parque Nacional de Cabañeros.</p>
       <div class="hero-cta reveal d3">
         <a class="btn btn-gold" href="#reservar">Reservar mi fin de semana</a>
         <a class="btn btn-line js-wa" href="https://wa.me/34722705922" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg> 722 705 922</a>
-        <span class="price-chip"><small>Fin de semana desde</small>850 €</span>
+        <span class="price-chip"><small>Oferta fin de semana</small>850 €</span>
       </div>
     </div>
     <div class="dots" id="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
@@ -370,21 +402,21 @@
       <div class="fact"><b>4</b><span>dormitorios con baño</span></div>
       <div class="fact"><b>13×7 m</b><span>piscina</span></div>
       <div class="fact"><b>12.000 m²</b><span>de finca</span></div>
-      <div class="fact"><b>Vie → Dom</b><span>fin de semana entero</span></div>
+      <div class="fact"><b>Vie → Dom</b><span>o días entre semana</span></div>
     </div>
   </div>
 
   <!-- CHAPTER I -->
   <section class="chapter" id="finca">
     <div class="letterbox t"></div><div class="letterbox b"></div>
-    <div class="bg" data-parallax><img src="img/casa-palmera.webp" alt="La finca de Las Madroñas" loading="lazy" /></div>
+    <div class="bg" data-parallax><img src="img/casa-palmera.webp" alt="La finca" loading="lazy" /></div>
     <div class="wrap"><div class="copy">
       <p class="num reveal">Capítulo I</p>
       <h2 class="reveal d1">La <em>llegada</em></h2>
       <p class="lead reveal d2">Viernes, una de la tarde. Se abre la verja y aparece la casa de piedra entre palmeras, césped y montaña. Todo el fin de semana es vuestro.</p>
       <ul class="ticks reveal d3">
         <li>Finca privada de 12.000 m² con 2.000 m² de césped</li>
-        <li>Junto al río Bullaque y el arroyo de El Roblillo</li>
+        <li>Con un arroyo dentro de la finca y un río muy cerca</li>
         <li>Muy cerca del Parque Nacional de Cabañeros</li>
         <li>Aparcamiento dentro de la finca</li>
       </ul>
@@ -443,14 +475,14 @@
   <!-- CHAPTER V -->
   <section class="chapter">
     <div class="letterbox t"></div><div class="letterbox b"></div>
-    <div class="bg" data-parallax><img src="img/rio-bullaque.webp" alt="Río Bullaque" loading="lazy" /></div>
+    <div class="bg" data-parallax><img src="img/rio.webp" alt="El río" loading="lazy" /></div>
     <div class="wrap"><div class="copy">
       <p class="num reveal">Capítulo V</p>
       <h2 class="reveal d1">El <em>entorno</em></h2>
-      <p class="lead reveal d2">Encinas, madroños, robles y jara. En octubre se escucha la berrea del ciervo desde la misma casa.</p>
+      <p class="lead reveal d2">Encinas, robles, jara y romero. En octubre se escucha la berrea del ciervo desde la misma casa.</p>
       <ul class="ticks reveal d3">
         <li>Rutas a pie o en 4x4 por Cabañeros (con cita previa)</li>
-        <li>Paseos y baños en el río Bullaque en verano</li>
+        <li>Paseos y baños en el río cercano en verano</li>
         <li>Rutas a caballo, senderismo, setas, caza y pesca en la zona</li>
         <li>Gastronomía local: migas, gachas, carne de caza, tiznao</li>
       </ul>
@@ -474,7 +506,7 @@
       <figure class="frame"><img loading="lazy" src="img/barbacoa-s.webp" data-full="img/barbacoa.webp" alt="Barbacoa" /><figcaption>La barbacoa</figcaption></figure>
       <figure class="frame"><img loading="lazy" src="img/jacuzzi-nieve-s.webp" data-full="img/jacuzzi-nieve.webp" alt="Jacuzzi en invierno" /><figcaption>También en invierno</figcaption></figure>
       <figure class="frame"><img loading="lazy" src="img/jardin-s.webp" data-full="img/jardin.webp" alt="Jardín" /><figcaption>El jardín</figcaption></figure>
-      <figure class="frame"><img loading="lazy" src="img/rio-2-s.webp" data-full="img/rio-2.webp" alt="Río Bullaque" /><figcaption>El río Bullaque</figcaption></figure>
+      <figure class="frame"><img loading="lazy" src="img/rio-2-s.webp" data-full="img/rio-2.webp" alt="El río" /><figcaption>El río, muy cerca</figcaption></figure>
     </div>
     <div class="strip-nav"><button type="button" id="prevF" aria-label="Anterior">←</button><button type="button" id="nextF" aria-label="Siguiente">→</button></div>
   </section>
@@ -500,9 +532,9 @@
   <section class="block pricing" id="precios">
     <div class="wrap">
       <div class="center">
-        <p class="eyebrow reveal">Precios</p>
-        <h2 class="reveal d1">Un precio, <em>todo el fin de semana</em></h2>
-        <p class="lead reveal d2">La casa entera para vuestro grupo, hasta 12 personas. Sin precios por persona ni sorpresas por noche.</p>
+        <p class="eyebrow reveal">Oferta especial</p>
+        <h2 class="reveal d1">Pack <em>fin de semana</em></h2>
+        <p class="lead reveal d2">Tres días en la casa entera para vuestro grupo, de viernes a domingo, por un precio cerrado. Sin precios por persona y sin sorpresas.</p>
       </div>
       <div class="schedule reveal">
         <div><small>Entrada</small><b>Viernes · 13:00</b></div>
@@ -511,9 +543,10 @@
       </div>
       <div class="plans">
         <div class="plan reveal">
-          <h3>Fin de semana</h3>
+          <span class="badge-best badge-soft">Oferta fin de semana</span>
+          <h3>Pack fin de semana</h3>
           <div class="amount">850 €</div>
-          <div class="per">Fin de semana completo · grupo</div>
+          <div class="per">Viernes a domingo · todo el grupo</div>
           <ul>
             <li>Casa entera para hasta 12 personas</li>
             <li>Piscina 13 × 7 m, pádel y barbacoa</li>
@@ -523,10 +556,10 @@
           <a class="btn btn-line" href="#reservar" data-plan="sin">Reservar · 850 €</a>
         </div>
         <div class="plan best reveal d1">
-          <span class="badge-best">La experiencia completa</span>
-          <h3>Fin de semana + jacuzzi</h3>
+          <span class="badge-best">✦ La experiencia completa</span>
+          <h3>Pack fin de semana + jacuzzi</h3>
           <div class="amount">1.050 €</div>
-          <div class="per">Fin de semana completo · grupo</div>
+          <div class="per">Viernes a domingo · todo el grupo</div>
           <ul>
             <li>Todo lo del fin de semana</li>
             <li><b>Jacuzzi acristalado</b> durante toda la estancia</li>
@@ -534,6 +567,17 @@
             <li>Perfecto para celebraciones de grupo</li>
           </ul>
           <a class="btn btn-gold" href="#reservar" data-plan="con">Reservar · 1.050 €</a>
+        </div>
+      </div>
+      <div class="weekday reveal">
+        <div>
+          <p class="eyebrow">También entre semana</p>
+          <h3>Días sueltos de <em>lunes a jueves</em></h3>
+          <p>¿Preferís una escapada entre semana, más tranquila? Podéis reservar los días que queráis, con o sin jacuzzi. El precio se da por privado según las fechas y el grupo.</p>
+        </div>
+        <div class="weekday-cta">
+          <span class="ask">Precio por privado</span>
+          <a class="btn btn-line" href="#reservar" data-mode="semana">Pedir precio</a>
         </div>
       </div>
     </div>
@@ -549,7 +593,7 @@
         <div class="contact-lines reveal d3">
           <a class="cl js-wa" href="https://wa.me/34722705922" target="_blank" rel="noopener"><i style="background:var(--wa)"><svg aria-hidden="true"><use href="#i-wa"/></svg></i><span><small>WhatsApp · reservas</small><b>722 705 922</b></span></a>
           <a class="cl" href="tel:+34722705922"><i style="background:#2A241E;border:1px solid rgba(201,164,92,.4)"><svg aria-hidden="true"><use href="#i-phone"/></svg></i><span><small>Llamar</small><b>722 705 922</b></span></a>
-          <a class="cl" href="mailto:joseandresautomatiza@gmail.com?subject=Reserva%20Las%20Madro%C3%B1as"><i style="background:var(--terra)"><svg aria-hidden="true"><use href="#i-mail"/></svg></i><span><small>Email</small><b>joseandresautomatiza@gmail.com</b></span></a>
+          <a class="cl" href="mailto:joseandresautomatiza@gmail.com?subject=Reserva%20Escapada%20Rural%20Ciudad%20Real"><i style="background:var(--terra)"><svg aria-hidden="true"><use href="#i-mail"/></svg></i><span><small>Email</small><b>joseandresautomatiza@gmail.com</b></span></a>
         </div>
       </div>
 
@@ -557,19 +601,25 @@
         <form id="bookForm" novalidate>
           <div id="formBody">
             <h3>Solicitud de reserva</h3>
-            <p class="sub">Entrada viernes 13:00 · salida domingo hasta 18:00 · máximo 12 personas.</p>
+            <p class="sub" id="formSub">Pack fin de semana: entrada viernes 13:00 · salida domingo hasta 18:00 · máximo 12 personas.</p>
             <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" />
+
+            <div class="tabs" role="tablist">
+              <label class="tab"><input type="radio" name="mode" value="finde" checked><span>Pack fin de semana</span></label>
+              <label class="tab"><input type="radio" name="mode" value="semana"><span>Días entre semana</span></label>
+            </div>
 
             <div class="field">
               <label>Opción</label>
               <div class="opts">
-                <label class="opt"><input type="radio" name="plan" value="sin" checked><span><b>850 €</b><small>Fin de semana</small></span></label>
-                <label class="opt"><input type="radio" name="plan" value="con"><span><b>1.050 €</b><small>Con jacuzzi</small></span></label>
+                <label class="opt"><input type="radio" name="plan" value="sin" checked><span><b class="pr" data-p="850 €">850 €</b><small>Sin jacuzzi</small></span></label>
+                <label class="opt"><input type="radio" name="plan" value="con"><span><b class="pr" data-p="1.050 €">1.050 €</b><small>Con jacuzzi</small></span></label>
               </div>
             </div>
             <div class="row2">
-              <div class="field"><label for="llegada">Viernes de llegada *</label><input type="date" id="llegada" required /><p class="help" id="llegadaHelp">Elige un viernes.</p></div>
-              <div class="field"><label for="personas">Personas *</label>
+              <div class="field"><label for="llegada" id="llegadaLbl">Viernes de llegada *</label><input type="date" id="llegada" required /><p class="help" id="llegadaHelp">Elige un viernes.</p></div>
+              <div class="field" id="salidaField" hidden><label for="salida">Día de salida *</label><input type="date" id="salida" /><p class="help">Salida hasta las 18:00.</p></div>
+              <div class="field" id="personasField"><label for="personas">Personas *</label>
                 <select id="personas" required><option value="">Selecciona…</option></select></div>
             </div>
             <div class="row2">
@@ -601,17 +651,17 @@
     <div class="wrap">
       <div class="center">
         <p class="eyebrow reveal">Dónde</p>
-        <h2 class="reveal d1">El Robledo, <em>Ciudad Real</em></h2>
-        <p class="lead reveal d2">Ctra. Golondrina, km 6,200 · 13114 El Robledo. En el valle de la Boca de los Carriles, entre Porzuna, Piedrabuena y El Robledo.</p>
+        <h2 class="reveal d1">Ciudad Real, <em>junto a Cabañeros</em></h2>
+        <p class="lead reveal d2">Una finca aislada en plena naturaleza, con acceso asfaltado, a las puertas del Parque Nacional de Cabañeros. La ubicación exacta y cómo llegar se envían al confirmar la reserva.</p>
       </div>
-      <div class="map reveal"><iframe title="Mapa de Las Madroñas" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-4.36%2C39.11%2C-4.23%2C39.19&amp;layer=mapnik&amp;marker=39.1505%2C-4.2941"></iframe></div>
 
       <div class="faq">
-        <details open><summary>¿Cuál es el horario?</summary><p>Entrada el viernes a partir de las 13:00 y salida el domingo como máximo a las 18:00. Se alquila el fin de semana completo.</p></details>
+        <details open><summary>¿Cuál es el horario?</summary><p>Pack fin de semana: entrada el viernes a partir de las 13:00 y salida el domingo como máximo a las 18:00. Entre semana podéis reservar días sueltos de lunes a jueves; el horario se confirma al reservar.</p></details>
         <details><summary>¿Cuántas personas caben?</summary><p>Hasta 12 personas como máximo, en 4 dormitorios con baño propio (con camas supletorias). Hay cuna disponible.</p></details>
-        <details><summary>¿Cuánto cuesta?</summary><p>850 € el fin de semana completo para el grupo, o 1.050 € con jacuzzi incluido durante toda la estancia.</p></details>
+        <details><summary>¿Cuánto cuesta?</summary><p>El pack fin de semana es una oferta cerrada para todo el grupo: 850 €, o 1.050 € con jacuzzi durante toda la estancia. Los días sueltos entre semana tienen precio por privado: pídelo por WhatsApp o desde el formulario.</p></details>
         <details><summary>¿Cómo se reserva?</summary><p>Envía la solicitud desde esta página o escribe directamente por WhatsApp al 722 705 922. Te confirmamos la disponibilidad y los detalles de la reserva.</p></details>
-        <details><summary>¿Qué hay para hacer cerca?</summary><p>Parque Nacional de Cabañeros (rutas a pie o en 4x4 con cita previa), el río Bullaque, el embalse de la Torre de Abraham, rutas a caballo, senderismo y, en octubre, la berrea del ciervo.</p></details>
+        <details><summary>¿Qué hay para hacer cerca?</summary><p>El Parque Nacional de Cabañeros (rutas a pie o en 4x4 con cita previa), paseos y baños en el río, rutas a caballo, senderismo, setas y, en octubre, la berrea del ciervo.</p></details>
+        <details><summary>¿Dónde está exactamente?</summary><p>En la provincia de Ciudad Real, junto a Cabañeros. Por privacidad, la dirección exacta y las indicaciones se envían en cuanto la reserva queda confirmada.</p></details>
         <details><summary>¿Puedo llevar a mi mascota o pedir algo especial?</summary><p>Indícalo en la solicitud o pregúntalo por WhatsApp y te respondemos antes de reservar.</p></details>
       </div>
     </div>
@@ -633,10 +683,10 @@
   <footer>
     <div class="wrap">
       <div class="foot">
-        <div class="brand"><b>Las Madroñas</b><small>Escapada Rural · by Aureon Project</small></div>
+        <div class="brand"><b>Escapada Rural</b><small>Ciudad Real · by Aureon Project</small></div>
         <div><a href="tel:+34722705922">722 705 922</a> &nbsp;·&nbsp; <a href="mailto:joseandresautomatiza@gmail.com">joseandresautomatiza@gmail.com</a></div>
       </div>
-      <small>© <span id="year"></span> Aureon Project · Casa rural Las Madroñas, Ctra. Golondrina km 6,200, 13114 El Robledo (Ciudad Real) · Nº de registro de turismo: 13650500126</small>
+      <small>© <span id="year"></span> Aureon Project · Escapada Rural en Ciudad Real. Ubicación exacta tras confirmar la reserva.</small>
     </div>
   </footer>
 
@@ -655,6 +705,29 @@
     <a class="r" href="#reservar">Reservar</a>
   </div>
 
+  <script>
+    /* Música de ambiente: intenta sonar sola; si el navegador lo impide, arranca en el primer toque */
+    (function () {
+      var a = document.getElementById('music'), btn = document.getElementById('soundBtn'), txt = document.getElementById('soundTxt');
+      var VOL = 0.38, off = false, fadeT;
+      try { off = localStorage.getItem('aureonMute') === '1'; } catch (e) {}
+      a.volume = 0;
+      function ui(on) { btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false'); txt.textContent = on ? 'Música' : 'Sin música'; }
+      function fade(to) { clearInterval(fadeT); fadeT = setInterval(function () { var v = a.volume + (to > a.volume ? .02 : -.04); if ((to > a.volume && v >= to) || (to <= a.volume && v <= to)) { v = to; clearInterval(fadeT); if (to === 0) a.pause(); } a.volume = Math.max(0, Math.min(1, v)); }, 80); }
+      function start() { if (off) return; var p = a.play(); if (p && p.then) p.then(function () { ui(true); fade(VOL); disarm(); }).catch(function () { ui(false); }); }
+      var evs = ['pointerdown', 'touchend', 'keydown', 'click'];
+      function onGesture(e) { if (e.target.closest && e.target.closest('#soundBtn')) return; start(); }
+      function disarm() { evs.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
+      evs.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
+      btn.addEventListener('click', function () {
+        if (!a.paused && a.volume > 0) { off = true; fade(0); ui(false); }
+        else { off = false; a.play().then(function () { ui(true); fade(VOL); disarm(); }).catch(function () {}); }
+        try { localStorage.setItem('aureonMute', off ? '1' : '0'); } catch (e) {}
+      });
+      document.addEventListener('visibilitychange', function () { if (document.hidden && !a.paused) a.pause(); else if (!document.hidden && !off && btn.classList.contains('on')) a.play().catch(function () {}); });
+      ui(false); start();
+    })();
+  </script>
   <script>
     /* Intro */
     (function () {
@@ -676,8 +749,7 @@
     (function () {
       var PHONE = '34722705922', EMAIL = 'joseandresautomatiza@gmail.com';
       var ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
-      var PRICES = { sin: { n: 'Fin de semana', p: '850' }, con: { n: 'Fin de semana con jacuzzi', p: '1.050' } };
-      var WA_TEXT = 'Hola, quiero información para reservar Las Madroñas (Escapada Rural by Aureon Project).';
+      var WA_TEXT = 'Hola, quiero información para reservar la Escapada Rural en Ciudad Real (by Aureon Project).';
       document.getElementById('year').textContent = new Date().getFullYear();
       document.querySelectorAll('.js-wa').forEach(function (a) { a.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(WA_TEXT); });
 
@@ -735,62 +807,108 @@
         if (e.key === 'Escape') lb.classList.remove('on'); if (e.key === 'ArrowLeft') openLb(li - 1); if (e.key === 'ArrowRight') openLb(li + 1);
       });
 
-      /* Booking form */
+      /* Booking form: pack fin de semana o días entre semana */
       var form = document.getElementById('bookForm'), msg = document.getElementById('msg'), sum = document.getElementById('summary');
-      var llegada = document.getElementById('llegada'), personas = document.getElementById('personas'), help = document.getElementById('llegadaHelp');
+      var llegada = document.getElementById('llegada'), salida = document.getElementById('salida'), personas = document.getElementById('personas');
+      var help = document.getElementById('llegadaHelp'), lbl = document.getElementById('llegadaLbl'), salidaField = document.getElementById('salidaField');
       for (var n = 1; n <= 12; n++) personas.add(new Option(n + (n === 1 ? ' persona' : ' personas'), n));
       function pad(x) { return (x < 10 ? '0' : '') + x; }
       function iso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
       var today = new Date(); today.setHours(0, 0, 0, 0);
       var nextFri = new Date(today); nextFri.setDate(today.getDate() + ((5 - today.getDay() + 7) % 7));
-      llegada.min = iso(nextFri); llegada.step = 7;
       function parse(v) { var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
       function long(d) { return d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
       function plan() { return form.querySelector('input[name="plan"]:checked').value; }
-      function dateOk() { if (!llegada.value) return false; var d = parse(llegada.value); return d.getDay() === 5 && d >= today; }
+      function mode() { return form.querySelector('input[name="mode"]:checked').value; }
+      function nights(a, b) { return Math.round((b - a) / 864e5); }
+
+      // Devuelve '' si las fechas son válidas, o el motivo si no
+      function dateError() {
+        if (!llegada.value) return 'empty';
+        var d = parse(llegada.value);
+        if (d < today) return 'La fecha ya ha pasado.';
+        if (mode() === 'finde') return d.getDay() === 5 ? '' : 'El pack de fin de semana empieza siempre en viernes.';
+        if (d.getDay() < 1 || d.getDay() > 4) return 'Entre semana se entra de lunes a jueves.';
+        if (!salida.value) return 'empty';
+        var s = parse(salida.value), fri = new Date(d); fri.setDate(d.getDate() + (5 - d.getDay()));
+        if (s <= d) return 'La salida debe ser después de la entrada.';
+        if (s > fri) return 'Entre semana la salida es como tarde el viernes. Para el fin de semana, usa el pack.';
+        return '';
+      }
+
+      function setMode() {
+        var w = mode() === 'semana';
+        salidaField.hidden = !w; salida.required = w;
+        lbl.textContent = w ? 'Día de entrada *' : 'Viernes de llegada *';
+        llegada.step = w ? 1 : 7; llegada.min = iso(w ? today : nextFri);
+        salida.min = llegada.value || iso(today);
+        document.getElementById('formSub').textContent = w
+          ? 'Días sueltos de lunes a jueves · máximo 12 personas · precio por privado.'
+          : 'Pack fin de semana: entrada viernes 13:00 · salida domingo hasta 18:00 · máximo 12 personas.';
+        form.querySelectorAll('.pr').forEach(function (b) { b.textContent = w ? 'Consultar' : b.dataset.p; });
+      }
+
+      function info() {
+        var d = parse(llegada.value), w = mode() === 'semana', jac = plan() === 'con';
+        var out = w ? parse(salida.value) : new Date(d.getFullYear(), d.getMonth(), d.getDate() + 2);
+        var opt = w ? 'Días entre semana ' + (jac ? 'con' : 'sin') + ' jacuzzi · ' + nights(d, out) + (nights(d, out) === 1 ? ' noche' : ' noches')
+                    : 'Pack fin de semana ' + (jac ? 'con jacuzzi · 1.050 €' : 'sin jacuzzi · 850 €');
+        return { d: d, out: out, w: w, opt: opt, price: w ? 'Precio por privado' : (jac ? '1.050 €' : '850 €') };
+      }
 
       function update() {
-        if (llegada.value && !dateOk()) { help.textContent = 'La entrada es siempre en viernes. Elige un viernes.'; help.style.color = '#F2B1A6'; }
-        else { help.textContent = 'Elige un viernes.'; help.style.color = ''; }
-        if (!dateOk()) { sum.classList.remove('on'); return; }
-        var d = parse(llegada.value), out = new Date(d); out.setDate(d.getDate() + 2); var pl = PRICES[plan()];
-        sum.innerHTML = '<b>' + pl.n + ' · ' + pl.p.toLocaleString('es-ES') + ' €</b><br>Entrada: ' + long(d) + ', 13:00<br>Salida: ' + long(out) + ', hasta las 18:00' + (personas.value ? '<br>Grupo: ' + personas.value + ' personas' : '');
+        setMode();
+        var err = dateError();
+        if (err && err !== 'empty') { help.textContent = err; help.style.color = '#F2B1A6'; }
+        else { help.textContent = mode() === 'semana' ? 'De lunes a jueves.' : 'Elige un viernes.'; help.style.color = ''; }
+        if (err) { sum.classList.remove('on'); return; }
+        var i = info();
+        sum.innerHTML = '<b>' + i.opt + '</b><br>Entrada: ' + long(i.d) + (i.w ? '' : ', 13:00') + '<br>Salida: ' + long(i.out) + ', hasta las 18:00' +
+          (personas.value ? '<br>Grupo: ' + personas.value + ' personas' : '') + (i.w ? '<br><span class="gold">Te enviamos el precio por WhatsApp.</span>' : '');
         sum.classList.add('on');
       }
       ['change', 'input'].forEach(function (ev) { form.addEventListener(ev, update); });
       document.querySelectorAll('[data-plan]').forEach(function (a) {
-        a.addEventListener('click', function () { form.querySelector('input[value="' + a.dataset.plan + '"]').checked = true; update(); });
+        a.addEventListener('click', function () { form.querySelector('input[name="mode"][value="finde"]').checked = true; form.querySelector('input[value="' + a.dataset.plan + '"]').checked = true; update(); });
       });
+      document.querySelectorAll('[data-mode]').forEach(function (a) {
+        a.addEventListener('click', function () { form.querySelector('input[name="mode"][value="' + a.dataset.mode + '"]').checked = true; update(); });
+      });
+      setMode();
 
       form.addEventListener('submit', function (e) {
         e.preventDefault(); msg.classList.remove('on');
-        var ok = true;
+        var ok = true, err = dateError();
         form.querySelectorAll('[required]').forEach(function (f) {
           var bad = f.type === 'checkbox' ? !f.checked : !f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value));
-          if (f.id === 'llegada' && !dateOk()) bad = true;
+          if ((f.id === 'llegada' || f.id === 'salida') && err) bad = true;
           var w = f.closest('.field'); if (w) w.classList.toggle('invalid', bad); if (bad) ok = false;
         });
-        if (!ok) { msg.textContent = 'Revisa los campos marcados: el día de llegada debe ser un viernes y hay que aceptar la casilla.'; msg.classList.add('on'); return; }
+        if (!ok) {
+          msg.textContent = err && err !== 'empty' ? err : 'Revisa los campos marcados y acepta la casilla de privacidad.';
+          msg.classList.add('on'); return;
+        }
         if (form._honey.value) return;
 
-        var d = parse(llegada.value), out = new Date(d); out.setDate(d.getDate() + 2);
-        var pl = PRICES[plan()], v = function (id) { return document.getElementById(id).value.trim(); };
+        var i = info(), v = function (id) { return document.getElementById(id).value.trim(); };
         var data = {
-          'Opción': pl.n + ' (' + pl.p + ' €)', 'Entrada': long(d) + ', 13:00', 'Salida': long(out) + ', hasta las 18:00',
+          'Tipo': i.w ? 'Días entre semana' : 'Pack fin de semana', 'Opción': i.opt, 'Precio': i.price,
+          'Entrada': long(i.d) + (i.w ? '' : ', 13:00'), 'Salida': long(i.out) + ', hasta las 18:00',
           'Personas': v('personas'), 'Nombre': v('nombre'), 'Teléfono': v('telefono'), 'Email': v('email')
         };
         if (v('mensaje')) data['Mensaje'] = v('mensaje');
-        var wa = ['Hola, quiero reservar Las Madroñas (Escapada Rural by Aureon Project) 🏡', '',
+        var wa = [i.w ? 'Hola, quiero reservar la Escapada Rural en Ciudad Real (by Aureon Project) unos días entre semana 🏡'
+                      : 'Hola, quiero reservar el pack fin de semana de la Escapada Rural en Ciudad Real (by Aureon Project) 🏡', '',
           '📅 Entrada: ' + data['Entrada'], '📅 Salida: ' + data['Salida'], '👥 Personas: ' + data['Personas'],
           '✨ Opción: ' + data['Opción'], '', 'Nombre: ' + data['Nombre'], 'Teléfono: ' + data['Teléfono'], 'Email: ' + data['Email']];
         if (data['Mensaje']) wa.push('Comentarios: ' + data['Mensaje']);
-        wa.push('', '¿Está disponible ese fin de semana?');
+        wa.push('', i.w ? '¿Está disponible y qué precio tendría?' : '¿Está disponible ese fin de semana?');
         var waUrl = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(wa.join('\n'));
 
         // 1) WhatsApp al momento (gesto del usuario, sin bloqueos)  2) email en segundo plano
         window.open(waUrl, '_blank', 'noopener');
-        var payload = Object.assign({}, data, { _subject: 'Nueva reserva Las Madroñas: ' + data['Entrada'] + ' · ' + data['Personas'] + ' pers. · ' + pl.p + ' €', _template: 'table', _replyto: data['Email'] });
-        try { fetch(ENDPOINT, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) }).catch(function () {}); } catch (err) {}
+        var payload = Object.assign({}, data, { _subject: 'Nueva reserva Escapada Rural Ciudad Real (' + data['Tipo'] + '): ' + data['Entrada'] + ' · ' + data['Personas'] + ' pers.', _template: 'table', _replyto: data['Email'] });
+        try { fetch(ENDPOINT, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) }).catch(function () {}); } catch (err2) {}
 
         document.getElementById('doneWa').href = waUrl;
         document.getElementById('formBody').style.display = 'none';
