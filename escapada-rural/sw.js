@@ -1,6 +1,6 @@
 /* Escapada Rural · service worker: abre al instante y funciona sin cobertura */
-const V = 'er-v3';
-const CORE = ['./', 'index.html', 'app.css?v=3', 'app.js?v=3', 'manifest.webmanifest', 'img/hero.webp', 'img/icon-192.png'];
+const V = 'er-v4';
+const CORE = ['./', 'index.html', 'app.css?v=4', 'app.js?v=4', 'manifest.webmanifest', 'img/hero.webp', 'img/icon-192.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {

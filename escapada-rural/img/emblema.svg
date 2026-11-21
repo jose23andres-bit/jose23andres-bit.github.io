@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke="#C9A45C" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <path id="ring" d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/>
+    <clipPath id="inner"><circle cx="100" cy="100" r="72"/></clipPath>
+    <radialGradient id="glow" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#3A2E1E"/><stop offset="1" stop-color="#0E0C0A"/></radialGradient>
+    <g id="blade"><path d="M100 92V52"/><rect x="100.8" y="54" width="8" height="30"/><path d="M100.8 61.5h8M100.8 69h8M100.8 76.5h8"/></g>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#glow)" stroke-width="1.4"/>
+  <circle cx="100" cy="100" r="74" stroke-width=".9"/>
+  <text fill="#E2C68A" stroke="none" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.6" font-weight="500" letter-spacing="2.4"><textPath href="#ring" startOffset="0" textLength="520" lengthAdjust="spacing">ESCAPADA RURAL · CIUDAD REAL · BY AUREON PROJECT ·</textPath></text>
+  <g clip-path="url(#inner)" stroke-width="1.5">
+    <path d="M146 52a11 11 0 1 0 7 18a9 9 0 1 1-7-18z" fill="#E2C68A" stroke="none"/>
+    <g fill="#E2C68A" stroke="none"><circle cx="62" cy="56" r="1.1"/><circle cx="76" cy="44" r=".8"/><circle cx="124" cy="40" r="1"/><circle cx="54" cy="78" r=".7"/><circle cx="160" cy="88" r=".8"/><circle cx="132" cy="72" r=".6"/></g>
+    <path d="M24 150C52 126 78 134 100 130C124 126 148 118 178 140V180H24Z" fill="#17130F"/>
+    <path d="M89 141 92 98H108L111 141Z" fill="#0E0C0A"/>
+    <path d="M88.5 98 100 81.5 111.5 98Z" fill="#0E0C0A"/>
+    <path d="M97 141v-8a3 3 0 0 1 6 0v8M98.6 108h2.8v4h-2.8z" stroke-width="1.2"/>
+    <g transform="rotate(20 100 92)" stroke-width="1.2"><use href="#blade"/><use href="#blade" transform="rotate(90 100 92)"/><use href="#blade" transform="rotate(180 100 92)"/><use href="#blade" transform="rotate(270 100 92)"/></g>
+    <circle cx="100" cy="92" r="2.6" fill="#E2C68A" stroke="none"/>
+    <path d="M30 141.5H170" stroke-width="1.1"/>
+  </g>
+</svg>

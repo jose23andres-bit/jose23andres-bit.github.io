@@ -12,50 +12,90 @@
   $('#year').textContent = new Date().getFullYear();
   $$('.js-wa').forEach(function (a) { a.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(WA_TEXT); });
 
-  /* ---------- Música: arranca con el primer toque (los navegadores no dejan sonar sin gesto) ---------- */
-  (function () {
-    var a = $('#music'), btn = $('#soundBtn'), VOL = 0.38, off = false, fadeT;
+  /* ---------- Música: Relax FM en directo (respaldo: pista propia). Arranca con el primer toque o al pulsar "Entrar" ---------- */
+  var Music = (function () {
+    var RADIO = 'https://server9.emitironline.com:19288/', LOCAL = 'ambiente.mp3';
+    var a = $('#music'), btn = $('#soundBtn'), VOL = 0.5, off = false, fadeT, usingLocal = false, wd;
     try { off = localStorage.getItem('aureonMute') === '1'; } catch (e) {}
-    a.volume = 0;
-    function ui(on) { btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+    function ui(on) { btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.title = on ? 'Relax FM · silenciar' : 'Activar música'; }
     function fade(to) {
       clearInterval(fadeT);
       fadeT = setInterval(function () {
-        var up = to > a.volume, v = a.volume + (up ? .02 : -.04);
+        var up = to > a.volume, v = a.volume + (up ? .03 : -.05);
         if ((up && v >= to) || (!up && v <= to)) { v = to; clearInterval(fadeT); if (to === 0) a.pause(); }
-        a.volume = Math.max(0, Math.min(1, v));
+        try { a.volume = Math.max(0, Math.min(1, v)); } catch (e) {}
       }, 80);
     }
+    function useLocal() { if (usingLocal) return; usingLocal = true; a.loop = true; a.src = LOCAL; if (!off) play(); }
+    function load() { if (usingLocal) return; a.src = RADIO + (RADIO.indexOf('?') < 0 ? '?t=' : '&t=') + Date.now(); a.load(); }
+    a.addEventListener('error', function () { if (!usingLocal) useLocal(); });
     var evs = ['pointerdown', 'touchend', 'keydown', 'click'];
     function disarm() { evs.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
-    function start() { if (off) return; var p = a.play(); if (p && p.then) p.then(function () { ui(true); fade(VOL); disarm(); }).catch(function () { ui(false); }); }
+    function play() {
+      if (!a.src) load();
+      a.volume = 0;
+      var p = a.play();
+      clearTimeout(wd);
+      if (!usingLocal) wd = setTimeout(function () { if (a.paused || a.readyState < 3) useLocal(); }, 9000);
+      if (p && p.then) p.then(function () { ui(true); fade(VOL); disarm(); }).catch(function (e) { if (e && e.name === 'NotAllowedError') ui(false); else useLocal(); });
+    }
+    function start() { if (!off && a.paused) play(); }
     function onGesture(e) { if (e.target.closest && e.target.closest('#soundBtn')) return; start(); }
     evs.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
     btn.addEventListener('click', function () {
       if (!a.paused && a.volume > 0) { off = true; fade(0); ui(false); }
-      else { off = false; a.play().then(function () { ui(true); fade(VOL); disarm(); }).catch(function () {}); }
+      else { off = false; if (!usingLocal) load(); play(); }
       try { localStorage.setItem('aureonMute', off ? '1' : '0'); } catch (e) {}
     });
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden && !a.paused) a.pause();
-      else if (!document.hidden && !off && btn.classList.contains('on')) a.play().catch(function () {});
+      if (document.hidden) { if (!a.paused) a.pause(); }
+      else if (!off && btn.classList.contains('on')) { if (!usingLocal) load(); play(); }
     });
-    ui(false); start();
+    ui(false);
+    return { start: start };
   })();
 
-  /* ---------- Intro ---------- */
+  /* ---------- Intro: emblema que se dibuja, chispas doradas y botón "Entrar" ---------- */
   (function () {
     if (!root.classList.contains('show-intro')) return;
-    var intro = $('#intro'), done = false, t = setTimeout(finish, 6200);
-    function finish() {
-      if (done) return; done = true; clearTimeout(t);
-      try { localStorage.setItem('aureonIntro', '1'); } catch (e) {}
-      intro.classList.add('leaving');
-      setTimeout(function () { intro.classList.add('open'); }, 450);
-      setTimeout(function () { intro.classList.add('out'); }, 900);
-      setTimeout(function () { root.classList.remove('show-intro'); intro.remove(); scrollTo(0, 0); }, 1800);
+    var intro = $('#intro'), done = false, t = $('#ititle'), words = t.textContent.trim().split(' '), k = 0;
+    t.setAttribute('aria-label', t.textContent.trim());
+    t.innerHTML = words.map(function (w, wi) {
+      return w.split('').map(function (ch) { return '<span aria-hidden="true" class="' + (wi ? 'g' : '') + '" style="--i:' + (k++) + '">' + ch + '</span>'; }).join('') + (wi < words.length - 1 ? '<span class="sp" aria-hidden="true" style="--i:' + (k++) + '"> </span>' : '');
+    }).join('');
+    // Chispas doradas
+    var cv = $('#sparks'), cx = cv.getContext('2d'), P = [], raf, dpr = Math.min(2, devicePixelRatio || 1), W, H;
+    function size() { W = cv.width = innerWidth * dpr; H = cv.height = innerHeight * dpr; }
+    size(); addEventListener('resize', size);
+    for (var i = 0; i < (innerWidth < 600 ? 55 : 90); i++) P.push({ x: Math.random(), y: Math.random(), r: .4 + Math.random() * 1.6, s: .00025 + Math.random() * .0009, ph: Math.random() * 6.28, dr: (Math.random() - .5) * .0004 });
+    var t0 = performance.now();
+    function frame(now) {
+      var e = Math.min(1, (now - t0) / 2500);
+      cx.clearRect(0, 0, W, H);
+      for (var j = 0; j < P.length; j++) {
+        var p = P[j]; p.y -= p.s; p.x += p.dr + Math.sin(now / 1800 + p.ph) * .00025; if (p.y < -.02) { p.y = 1.02; p.x = Math.random(); }
+        var a = e * (.35 + .65 * Math.abs(Math.sin(now / 900 + p.ph)));
+        var g = cx.createRadialGradient(p.x * W, p.y * H, 0, p.x * W, p.y * H, p.r * 5 * dpr);
+        g.addColorStop(0, 'rgba(240,215,160,' + a + ')'); g.addColorStop(1, 'rgba(201,164,92,0)');
+        cx.fillStyle = g; cx.beginPath(); cx.arc(p.x * W, p.y * H, p.r * 5 * dpr, 0, 6.283); cx.fill();
+      }
+      raf = requestAnimationFrame(frame);
     }
-    intro.addEventListener('click', finish);
+    if (!reduce) raf = requestAnimationFrame(frame);
+    function enter(ev) {
+      if (done) return; done = true;
+      Music.start(); buzz();
+      try { sessionStorage.setItem('aureonIntro', '1'); } catch (e) {}
+      var x = ev && ev.clientX ? ev.clientX : innerWidth / 2, y = ev && ev.clientY ? ev.clientY : innerHeight * .75;
+      intro.style.setProperty('--x', x + 'px'); intro.style.setProperty('--y', y + 'px');
+      if (!(window.CSS && CSS.registerProperty) || reduce) intro.classList.add('nofx');
+      intro.classList.add('exit');
+      setTimeout(function () { root.classList.remove('show-intro'); scrollTo(0, 0); }, 500);
+      setTimeout(function () { cancelAnimationFrame(raf); intro.remove(); }, 1350);
+    }
+    intro.addEventListener('click', enter);
+    intro.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); enter(); } });
+    setTimeout(function () { try { $('#enterBtn').focus({ preventScroll: true }); } catch (e) {} }, 3900);
   })();
 
   /* ---------- Router de pestañas (View Transitions API) ---------- */
@@ -256,12 +296,12 @@
     var hint = $('#calHint'); hint.classList.remove('err');
     if (S.mode === 'finde') {
       $('#calTitle').textContent = 'Elige tu viernes';
-      $('#calSub').textContent = 'Se reserva de viernes 13:00 a domingo 18:00. Toca un viernes marcado.';
-      hint.textContent = S.start ? short(S.start) + ', 13:00 a ' + short(S.end) + ', 18:00 · 2 noches' : '';
+      $('#calSub').textContent = 'Se reserva de viernes 16:00 a domingo 17:00. Toca un viernes marcado.';
+      hint.textContent = S.start ? short(S.start) + ', 16:00 a ' + short(S.end) + ', 17:00 · 2 noches' : '';
     } else {
       $('#calTitle').textContent = S.start && !S.end ? 'Ahora, el día de salida' : 'Elige tus días';
       $('#calSub').textContent = 'Entrada de lunes a jueves. Salida como tarde el viernes.';
-      hint.textContent = !S.start ? 'Toca el día de entrada.' : !S.end ? 'Entrada ' + short(S.start) + '. Toca el día de salida (hasta el viernes).' : short(S.start) + ' a ' + short(S.end) + ', hasta las 18:00 · ' + nights() + (nights() === 1 ? ' noche' : ' noches');
+      hint.textContent = !S.start ? 'Toca el día de entrada.' : !S.end ? 'Entrada ' + short(S.start) + '. Toca el día de salida (hasta el viernes).' : short(S.start) + ' a ' + short(S.end) + ', hasta las 17:00 · ' + nights() + (nights() === 1 ? ' noche' : ' noches');
     }
   }
   $('#cal').addEventListener('click', function (e) {
@@ -309,7 +349,7 @@
     var opt = w ? 'Días entre semana ' + (jac ? 'con' : 'sin') + ' jacuzzi · ' + nights() + (nights() === 1 ? ' noche' : ' noches')
                 : 'Fin de semana ' + (jac ? 'con jacuzzi · 1.050 €' : 'sin jacuzzi · 850 €');
     return { w: w, opt: opt, price: w ? 'Precio por privado' : (jac ? '1.050 €' : '850 €'),
-      entrada: long(S.start) + (w ? '' : ', 13:00'), salida: long(S.end) + ', hasta las 18:00' };
+      entrada: long(S.start) + (w ? '' : ', 16:00'), salida: long(S.end) + ', hasta las 17:00' };
   }
   function drawRecap() {
     var i = summary(), ex = extras(), rows = [
@@ -335,7 +375,7 @@
     var w = S.mode === 'semana';
     $$('.price', book).forEach(function (p) { p.innerHTML = (w ? 'Consultar' : p.dataset.p) + '<small>' + (w ? 'por privado' : 'total') + '</small>'; });
     $('#modeNote').innerHTML = w ? 'Entre semana: <b>días sueltos de lunes a jueves</b>. El precio te lo damos por privado.'
-                                 : 'Fin de semana completo: <b>viernes 13:00 a domingo 18:00</b>. Precio total para todo el grupo.';
+                                 : 'Fin de semana completo: <b>viernes 16:00 a domingo 17:00</b>. Precio total para todo el grupo.';
     $('#bkPrice').textContent = priceTxt();
     steps.forEach(function (s, k) { var on = k === S.step; if (on && !s.classList.contains('on')) { s.classList.toggle('back', !!back); } s.classList.toggle('on', on); });
     var title = steps[S.step].dataset.title;
