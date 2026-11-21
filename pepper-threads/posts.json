@@ -1,0 +1,57 @@
+{
+  "base": "https://jose23andres-bit.github.io/pepper-clinicas/",
+  "firma": "José Gómez · Comercial de Pepper · WhatsApp 679 510 923",
+  "sectores": {
+    "dental": { "topic": "Odontología" },
+    "estetica": { "topic": "MedicinaEstética" },
+    "oftalmologia": { "topic": "Oftalmología" },
+    "audiologia": { "topic": "Audiología" },
+    "general": { "topic": "Clínicas", "link": "" }
+  },
+  "posts": [
+    { "sector": "dental", "text": "Un paciente necesita implantes de 2.400 € y te dice “me lo pienso”. Muchas veces no es que no quiera: es pagarlo de golpe.\n\nCon Pepper le ofreces pagarlo a plazos y tu clínica cobra el importe en el momento. Solo con su DNI.\n\nSi tienes clínica dental, mira cómo darte de alta 👇" },
+    { "sector": "dental", "text": "¿Qué necesita tu paciente para financiar su tratamiento dental con Pepper?\n\nSu DNI. Nada más. Sin papeleo innecesario.\n\nDe 150 € a 10.000 € por operación, y tú cobras en el momento." },
+    { "sector": "dental", "text": "Ortodoncia, implantes, estética dental… Tratamientos que el paciente quiere, pero que a veces aplaza por el precio.\n\nOfrecer pago a plazos cambia la conversación: de “¿cuánto cuesta?” a “¿cuánto al mes?”.\n\nAsí funciona Pepper en clínicas dentales 👇" },
+    { "sector": "dental", "text": "Cómo funciona Pepper en tu clínica dental, en 4 pasos:\n\n1️⃣ El paciente quiere el tratamiento\n2️⃣ Le ofreces pagar a plazos\n3️⃣ Gestionáis la operación digitalmente\n4️⃣ Recibes el importe en el momento" },
+    { "sector": "dental", "text": "Odontólogos colegiados desde hace más de 3 años: podéis ofrecer financiación Pepper a vuestros pacientes.\n\nY si la clínica lleva más de 3 años en el sector, también. Basta con cumplir una de las dos.\n\nCompruébalo en 10 segundos 👇" },
+    { "sector": "dental", "text": "Desde el móvil, la tablet o el ordenador de recepción: la financiación con Pepper se hace desde cualquier dispositivo, en la misma consulta.\n\nSin ir al banco. Sin esperar días. Tu paciente sale con el tratamiento cerrado." },
+    { "sector": "dental", "text": "Pregunta sincera a quien lleva una clínica dental: ¿cuántos presupuestos se te quedan en el cajón cada mes?\n\nUna parte suele ser por el pago. Con Pepper ofreces plazos en operaciones de 150 € a 10.000 € y tú cobras ya." },
+    { "sector": "dental", "text": "Para darte de alta como clínica dental colaboradora de Pepper necesitas:\n\n📸 3 fotos (fachada, gabinete y sala de espera)\n🎥 Un vídeo de 10-15 segundos\n📄 Colegiación o modelo 036/037\n🪪 DNI del titular\n🏦 Titularidad bancaria\n\nTodo el proceso, paso a paso 👇" },
+    { "sector": "dental", "text": "Tu paciente paga a plazos. Tú cobras en el momento.\n\nAsí de simple es Pepper para clínicas dentales. Escríbeme y te lo explico sin compromiso." },
+
+    { "sector": "estetica", "text": "En medicina estética, muchos pacientes llegan decididos… hasta que ven el total.\n\nCon Pepper les ofreces pagar a plazos y tu centro cobra el importe en el momento. Solo con su DNI.\n\n¿Tienes un centro de estética? Mira cómo darte de alta 👇" },
+    { "sector": "estetica", "text": "¿Qué necesita tu cliente para financiar su tratamiento estético con Pepper?\n\nSu DNI. Sin papeleo innecesario.\n\nDe 150 € a 10.000 € por operación." },
+    { "sector": "estetica", "text": "Un tratamiento de 1.200 € se decide mejor cuando el cliente puede repartirlo en cuotas.\n\nTú no asumes el aplazamiento: cobras el importe en el momento y Pepper se encarga del resto.\n\nAsí funciona 👇" },
+    { "sector": "estetica", "text": "Cómo funciona Pepper en tu centro de estética:\n\n1️⃣ El cliente quiere el tratamiento\n2️⃣ Le ofreces pagar a plazos\n3️⃣ Gestionáis la operación digitalmente\n4️⃣ Recibes el importe en el momento" },
+    { "sector": "estetica", "text": "¿Tu centro de estética lleva más de 3 años abierto? ¿O el profesional responsable lleva más de 3 años colegiado?\n\nCon una de las dos ya puedes ofrecer financiación Pepper a tus clientes.\n\nCompruébalo en 10 segundos 👇" },
+    { "sector": "estetica", "text": "La financiación no tiene por qué romper la experiencia de tu centro.\n\nCon Pepper se hace en minutos desde el móvil, la tablet o el ordenador, sin papeles y sin que el cliente tenga que ir a ningún sitio." },
+    { "sector": "estetica", "text": "Centros de estética: ofrecer pago a plazos no es bajar precios. Es quitar la barrera del pago de golpe.\n\nEl cliente se queda con el tratamiento que quería. Tú cobras en el momento." },
+    { "sector": "estetica", "text": "Para darte de alta como centro de estética colaborador de Pepper necesitas:\n\n📸 3 fotos del centro\n🎥 Un vídeo de 10-15 segundos\n📄 Colegiación o modelo 036/037\n🪪 DNI del titular\n🏦 Titularidad bancaria\n\nTe guío en todo el proceso 👇" },
+    { "sector": "estetica", "text": "Tu cliente paga a plazos. Tú cobras en el momento.\n\nSi tienes un centro de estética y quieres ofrecerlo, escríbeme y te lo explico." },
+
+    { "sector": "oftalmologia", "text": "Unas lentes progresivas de calidad o un tratamiento ocular no siempre encajan en un solo pago.\n\nCon Pepper tu paciente lo paga a plazos y tu centro cobra el importe en el momento. Solo con su DNI.\n\n¿Tienes óptica o centro oftalmológico? 👇" },
+    { "sector": "oftalmologia", "text": "¿Qué necesita tu paciente para financiar sus gafas o su tratamiento con Pepper?\n\nSu DNI. Sin papeleo innecesario.\n\nDe 150 € a 10.000 € por operación." },
+    { "sector": "oftalmologia", "text": "Ver bien no debería esperar a fin de mes.\n\nCon Pepper, tu óptica o centro oftalmológico ofrece pago a plazos y cobra en el momento. Así de fácil 👇" },
+    { "sector": "oftalmologia", "text": "Cómo funciona Pepper en tu óptica o centro oftalmológico:\n\n1️⃣ El paciente quiere sus gafas o su tratamiento\n2️⃣ Le ofreces pagar a plazos\n3️⃣ Gestionáis la operación digitalmente\n4️⃣ Recibes el importe en el momento" },
+    { "sector": "oftalmologia", "text": "Ópticos-optometristas y oftalmólogos colegiados desde hace más de 3 años, o centros con más de 3 años en el sector: podéis ofrecer financiación Pepper.\n\nCompruébalo en 10 segundos 👇" },
+    { "sector": "oftalmologia", "text": "La financiación con Pepper se hace desde el móvil, la tablet o el ordenador de tu óptica. En el mostrador, en minutos.\n\nTu paciente se lleva lo que necesita. Tú cobras ya." },
+    { "sector": "oftalmologia", "text": "¿Cuántos pacientes eligen la opción más barata solo porque tienen que pagarla entera hoy?\n\nCon pago a plazos pueden elegir lo que de verdad les conviene. Y tu centro cobra en el momento." },
+    { "sector": "oftalmologia", "text": "Para darte de alta como óptica o centro oftalmológico colaborador de Pepper necesitas:\n\n📸 3 fotos del centro\n🎥 Un vídeo de 10-15 segundos\n📄 Colegiación o modelo 036/037\n🪪 DNI del titular\n🏦 Titularidad bancaria\n\nTodo el proceso aquí 👇" },
+    { "sector": "oftalmologia", "text": "Tu paciente paga a plazos. Tú cobras en el momento.\n\nSi tienes una óptica o un centro oftalmológico, escríbeme y te cuento cómo empezar." },
+
+    { "sector": "audiologia", "text": "Unos audífonos son una inversión importante para tu paciente. A veces la retrasa meses por tener que pagarla de golpe.\n\nCon Pepper la paga a plazos y tu centro cobra el importe en el momento. Solo con su DNI.\n\n¿Tienes centro de audiología? 👇" },
+    { "sector": "audiologia", "text": "¿Qué necesita tu paciente para financiar sus audífonos con Pepper?\n\nSu DNI. Sin papeleo innecesario.\n\nDe 150 € a 10.000 € por operación." },
+    { "sector": "audiologia", "text": "Oír bien cambia la vida. Que el precio no sea lo que lo frene.\n\nCon Pepper, tu centro de audiología ofrece pago a plazos y cobra en el momento 👇" },
+    { "sector": "audiologia", "text": "Cómo funciona Pepper en tu centro de audiología:\n\n1️⃣ El paciente necesita sus audífonos\n2️⃣ Le ofreces pagar a plazos\n3️⃣ Gestionáis la operación digitalmente\n4️⃣ Recibes el importe en el momento" },
+    { "sector": "audiologia", "text": "Audioprotesistas colegiados desde hace más de 3 años, o centros con más de 3 años en el sector: podéis ofrecer financiación Pepper a vuestros pacientes.\n\nCompruébalo en 10 segundos 👇" },
+    { "sector": "audiologia", "text": "Muchos pacientes de audiología son personas mayores. Por eso Pepper lo pone fácil: solo el DNI y la operación se gestiona desde el móvil, la tablet o el ordenador del centro." },
+    { "sector": "audiologia", "text": "Centros de audiología: cuando el paciente puede repartir el pago, decide antes y elige la solución que de verdad necesita.\n\nTú cobras en el momento." },
+    { "sector": "audiologia", "text": "Para darte de alta como centro de audiología colaborador de Pepper necesitas:\n\n📸 3 fotos del centro\n🎥 Un vídeo de 10-15 segundos\n📄 Colegiación o modelo 036/037\n🪪 DNI del titular\n🏦 Titularidad bancaria\n\nTodo el proceso aquí 👇" },
+    { "sector": "audiologia", "text": "Tu paciente paga a plazos. Tú cobras en el momento.\n\nSi tienes un centro de audiología, escríbeme y te lo explico." },
+
+    { "sector": "general", "text": "Soy José Gómez, comercial de Pepper. Ayudo a clínicas dentales, centros de estética, ópticas y centros de audiología a ofrecer pago a plazos a sus pacientes.\n\nDe 150 € a 10.000 €. Solo con DNI. Cobro en el momento.\n\nSi te interesa, aquí tienes toda la info 👇" },
+    { "sector": "general", "text": "Requisitos para colaborar con Pepper, sin letra pequeña:\n\n✅ Clínica dental, estética, óptica/oftalmología o audiología\n✅ Más de 3 años en el sector, o profesional colegiado más de 3 años\n\nCon una de las dos condiciones es suficiente 👇" },
+    { "sector": "general", "text": "Lo que más me preguntan las clínicas:\n\n¿Qué necesita el paciente? Su DNI.\n¿Cuánto se puede financiar? De 150 € a 10.000 €.\n¿Desde dónde? Móvil, tablet u ordenador.\n¿Cuándo cobra la clínica? En el momento." },
+    { "sector": "general", "text": "Si tienes una clínica o centro de salud y quieres que el precio deje de frenar tratamientos, escríbeme. Te explico cómo funciona Pepper en 5 minutos." }
+  ]
+}

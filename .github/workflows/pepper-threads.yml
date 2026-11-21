@@ -1,0 +1,50 @@
+# Pepper · publicaciones automáticas en Threads: 2 al día (09:00 y 14:00 en horario de invierno de España; 10:00 y 15:00 en verano).
+# Se activa en cuanto exista el secreto THREADS_TOKEN. Sin él, no publica nada.
+# Los domingos renueva la clave (dura 60 días). Si Meta devuelve una clave distinta y existe el secreto GH_PAT, la guarda sola.
+name: Pepper · Threads
+on:
+  schedule:
+    - cron: "0 8,13 * * *"
+    - cron: "30 6 * * 0"
+  workflow_dispatch:
+    inputs:
+      index: { description: "Número de publicación (vacío = la que toca)", required: false }
+      dry: { description: "Solo mostrar, sin publicar (true/false)", required: false, default: "false" }
+jobs:
+  threads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+      THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      PEPPER_INDEX: ${{ github.event.inputs.index }}
+    defaults: { run: { working-directory: pepper-threads } }
+    steps:
+      - name: Comprobar autorización de Threads
+        id: auth
+        working-directory: .
+        run: |
+          if [ -z "$THREADS_TOKEN" ]; then echo "Sin clave de Threads todavía: no se publica nada."; echo "ok=0" >> $GITHUB_OUTPUT; else echo "ok=1" >> $GITHUB_OUTPUT; fi
+      - uses: actions/checkout@v4
+        if: steps.auth.outputs.ok == '1'
+      - uses: actions/setup-node@v4
+        if: steps.auth.outputs.ok == '1'
+        with: { node-version: 22 }
+      - name: Comprobar clave
+        if: steps.auth.outputs.ok == '1'
+        run: node publish.mjs --check
+      - name: Renovar clave (domingos)
+        id: refresh
+        if: steps.auth.outputs.ok == '1' && github.event.schedule == '30 6 * * 0'
+        env: { NEW_TOKEN_FILE: /tmp/new_token }
+        run: node publish.mjs --refresh
+      - name: Guardar clave nueva
+        if: steps.refresh.outputs.changed == '1'
+        env: { GH_TOKEN: "${{ secrets.GH_PAT }}" }
+        run: |
+          if [ -z "$GH_TOKEN" ]; then echo "::warning::Meta ha devuelto una clave nueva pero no hay GH_PAT para guardarla. Actualiza THREADS_TOKEN a mano."; exit 0; fi
+          gh secret set THREADS_TOKEN --repo "$GITHUB_REPOSITORY" < /tmp/new_token && echo "Clave nueva guardada."
+      - name: Publicar en Threads
+        if: steps.auth.outputs.ok == '1' && github.event.schedule != '30 6 * * 0'
+        run: |
+          if [ "${{ github.event.inputs.dry }}" = "true" ]; then node publish.mjs --dry; else node publish.mjs; fi
