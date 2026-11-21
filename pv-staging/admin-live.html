@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Panel LIVE · PowerVane & Wellness</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml" />
+  <style>
+    :root { --black:#100D12; --burgundy:#28101F; --pink:#A51F60; --magenta:#E45A9B; --champagne:#E9A6C2; --white:#F5F0F2; --line:rgba(233,166,194,.25); }
+    * { box-sizing: border-box; }
+    body { margin:0; font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--white); background:radial-gradient(ellipse at 70% 0%, #3a1429, var(--black) 60%) fixed; }
+    main { width:min(900px,100% - 32px); margin:40px auto 80px; }
+    h1 { font:400 2rem Georgia,serif; margin:0 0 .2em; } h1 em { color:var(--champagne); }
+    h2 { font:400 1.3rem Georgia,serif; margin:0 0 .8em; color:var(--champagne); }
+    p.note { color:rgba(245,240,242,.6); font-size:.88rem; }
+    section { margin-top:22px; padding:24px; border:1px solid var(--line); border-radius:6px; background:rgba(16,13,18,.7); }
+    label { display:block; font-size:.78rem; letter-spacing:.06em; color:rgba(245,240,242,.75); margin-bottom:12px; }
+    input, select, textarea { width:100%; margin-top:5px; padding:10px 12px; border-radius:6px; border:1px solid var(--line); background:#17121A; color:var(--white); font:inherit; }
+    .row { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; }
+    .checks { display:flex; flex-wrap:wrap; gap:16px; margin:6px 0 14px; }
+    .checks label { display:flex; gap:8px; align-items:center; margin:0; font-size:.9rem; }
+    .checks input { width:auto; margin:0; }
+    button { cursor:pointer; padding:11px 20px; border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--white); font:600 .78rem system-ui; letter-spacing:.12em; text-transform:uppercase; }
+    button.pink { background:linear-gradient(135deg,var(--pink),#c22d74); border-color:transparent; }
+    button.small { padding:6px 12px; font-size:.68rem; }
+    ul { list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+    li { display:flex; justify-content:space-between; gap:12px; align-items:center; padding:12px 14px; border:1px solid var(--line); border-radius:6px; }
+    li small { color:rgba(245,240,242,.6); display:block; }
+    .msg { min-height:1.4em; color:var(--magenta); font-size:.88rem; }
+    .steps li { display:block; }
+    code { color:var(--champagne); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Panel <em>LIVE TRAINING</em></h1>
+  <p class="note">Solo para la entrenadora. Aquí programas las clases en directo y las sesiones exclusivas. El enlace de cada clase se guarda cifrado: solo lo abren las clientas con el código de su plan.</p>
+
+  <section>
+    <h2>1 · Tus códigos de acceso</h2>
+    <p class="note">Se guardan solo en este navegador. Dale a cada clienta el código de su plan.</p>
+    <div class="row">
+      <label>Programas especializados<input id="c-esp" autocomplete="off" /></label>
+      <label>PowerStart<input id="c-start" autocomplete="off" /></label>
+      <label>Power Transformation<input id="c-trans" autocomplete="off" /></label>
+    </div>
+    <button type="button" id="checkCodes">Comprobar y guardar códigos</button>
+    <button type="button" id="newCodes">Generar códigos nuevos</button>
+    <p class="msg" id="codeMsg"></p>
+  </section>
+
+  <section>
+    <h2>2 · Programar una clase</h2>
+    <form id="sessionForm">
+      <label>Título<input name="title" maxlength="80" required placeholder="Ej.: Glute Focus en directo" /></label>
+      <div class="row">
+        <label>Tipo<select name="kind"><option value="live">Clase en directo</option><option value="exclusive">Sesión exclusiva</option></select></label>
+        <label>Fecha y hora<input type="datetime-local" name="start" required /></label>
+        <label>Duración (min)<input type="number" name="duration" min="10" max="240" value="45" required /></label>
+      </div>
+      <label>Descripción (opcional)<textarea name="desc" rows="2" maxlength="200"></textarea></label>
+      <label>Enlace de la clase (Zoom, Google Meet, YouTube en directo oculto…)<input type="url" name="link" required placeholder="https://" /></label>
+      <p class="note">¿Para qué planes es?</p>
+      <div class="checks">
+        <label><input type="checkbox" name="plans" value="esp" checked /> Programas especializados</label>
+        <label><input type="checkbox" name="plans" value="start" checked /> PowerStart</label>
+        <label><input type="checkbox" name="plans" value="trans" checked /> Power Transformation</label>
+      </div>
+      <button class="pink" type="submit">Añadir clase</button>
+      <p class="msg" id="sessMsg"></p>
+    </form>
+  </section>
+
+  <section>
+    <h2>3 · Clases programadas</h2>
+    <ul id="list"></ul>
+  </section>
+
+  <section>
+    <h2>4 · Publicar</h2>
+    <ol class="steps">
+      <li>Pulsa <strong>Descargar live-data.js</strong>.</li>
+      <li>Súbelo a Netlify sustituyendo el anterior en la raíz de la web (o envíaselo a quien te gestiona la web).</li>
+      <li>En 1-2 minutos aparece en la web.</li>
+    </ol>
+    <button class="pink" type="button" id="download">Descargar live-data.js</button>
+  </section>
+</main>
+
+<script src="live-data.js"></script>
+<script src="live.js"></script>
+<script>
+(() => {
+  const C = window.PVLiveCrypto, PLANS = ["esp", "start", "trans"];
+  let DATA = JSON.parse(JSON.stringify(window.PV_LIVE));
+  const $ = (id) => document.getElementById(id);
+  const esc = (t) => String(t).replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  const STORE = "powervane-live-admin-codes";
+  const saved = JSON.parse(localStorage.getItem(STORE) || "{}");
+  PLANS.forEach((p) => { $("c-" + p).value = saved[p] || ""; });
+  const keys = {};
+
+  async function verify() {
+    const msg = [];
+    for (const p of PLANS) {
+      const code = $("c-" + p).value; keys[p] = null;
+      if (!code) { msg.push(`${C.PLAN_NAMES[p]}: falta`); continue; }
+      const r = await C.unlock(code, { iter: DATA.iter, plans: { [p]: DATA.plans[p] } });
+      if (r) keys[p] = r.key; else msg.push(`${C.PLAN_NAMES[p]}: no coincide`);
+    }
+    localStorage.setItem(STORE, JSON.stringify(Object.fromEntries(PLANS.map((p) => [p, C.norm($("c-" + p).value)]))));
+    $("codeMsg").textContent = msg.length ? msg.join(" · ") : "Códigos correctos ✓";
+    return !msg.length;
+  }
+  $("checkCodes").addEventListener("click", verify);
+
+  $("newCodes").addEventListener("click", async () => {
+    if (!(await verify())) { $("codeMsg").textContent = "Para cambiar los códigos primero escribe los actuales."; return; }
+    if (!confirm("Las clientas tendrán que usar los códigos nuevos. ¿Continuar?")) return;
+    const A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", rnd = (n) => Array.from(crypto.getRandomValues(new Uint8Array(n)), (x) => A[x % A.length]).join("");
+    const newKeys = {};
+    for (const p of PLANS) {
+      const code = `PV-${rnd(4)}-${rnd(4)}`, salt = C.b64(crypto.getRandomValues(new Uint8Array(16)));
+      const k = await C.planKey(code, salt, DATA.iter);
+      DATA.plans[p] = { name: C.PLAN_NAMES[p], salt, check: await C.aesEncrypt(k, new TextEncoder().encode("powervane-ok:" + p)) };
+      newKeys[p] = k; $("c-" + p).value = code;
+    }
+    for (const s of DATA.sessions) {
+      let raw = null;
+      for (const p of s.plans) { try { raw = await C.aesDecrypt(keys[p], s.keys[p]); break; } catch {} }
+      if (!raw) continue;
+      for (const p of s.plans) s.keys[p] = await C.aesEncrypt(newKeys[p], raw);
+    }
+    Object.assign(keys, newKeys);
+    localStorage.setItem(STORE, JSON.stringify(Object.fromEntries(PLANS.map((p) => [p, $("c-" + p).value]))));
+    $("codeMsg").textContent = "Códigos nuevos creados. Descarga y publica live-data.js.";
+  });
+
+  function list() {
+    const s = [...DATA.sessions].sort((a, b) => (a.start < b.start ? -1 : 1));
+    $("list").innerHTML = s.length ? s.map((x) => `<li><div><strong>${esc(x.title)}</strong><small>${x.kind === "exclusive" ? "Sesión exclusiva" : "Clase en directo"} · ${esc(new Date(x.start).toLocaleString("es-ES"))} · ${x.duration} min · ${x.plans.map((p) => C.PLAN_NAMES[p]).join(", ")}</small></div><button class="small" data-del="${esc(x.id)}">Eliminar</button></li>`).join("") : `<li>No hay clases programadas.</li>`;
+  }
+  $("list").addEventListener("click", (e) => {
+    const id = e.target.dataset.del;
+    if (id && confirm("¿Eliminar esta clase?")) { DATA.sessions = DATA.sessions.filter((s) => s.id !== id); list(); }
+  });
+
+  $("sessionForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target, plans = [...f.querySelectorAll('[name="plans"]:checked')].map((i) => i.value);
+    if (!plans.length) { $("sessMsg").textContent = "Elige al menos un plan."; return; }
+    if (!/^https:\/\//.test(f.link.value)) { $("sessMsg").textContent = "El enlace debe empezar por https://"; return; }
+    await verify();
+    const missing = plans.filter((p) => !keys[p]);
+    if (missing.length) { $("sessMsg").textContent = "Faltan o no coinciden los códigos de: " + missing.map((p) => C.PLAN_NAMES[p]).join(", "); return; }
+    const raw = crypto.getRandomValues(new Uint8Array(32));
+    const k = await crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["encrypt"]);
+    const box = await C.aesEncrypt(k, new TextEncoder().encode(f.link.value.trim()));
+    const wrapped = {};
+    for (const p of plans) wrapped[p] = await C.aesEncrypt(keys[p], raw);
+    DATA.sessions.push({ id: Math.random().toString(36).slice(2, 10), title: f.title.value.trim(), kind: f.kind.value, start: f.start.value, duration: +f.duration.value, desc: f.desc.value.trim(), plans, iv: box.iv, ct: box.ct, keys: wrapped });
+    f.reset(); $("sessMsg").textContent = "Clase añadida. Recuerda descargar y publicar live-data.js."; list();
+  });
+
+  $("download").addEventListener("click", () => {
+    const txt = "/* Generado con admin-live.html. Los enlaces van cifrados: solo se abren con el código del plan. */\nwindow.PV_LIVE = " + JSON.stringify(DATA, null, 2) + ";\n";
+    const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(new Blob([txt], { type: "text/javascript" })), download: "live-data.js" });
+    a.click();
+  });
+  list();
+})();
+</script>
+</body>
+</html>
