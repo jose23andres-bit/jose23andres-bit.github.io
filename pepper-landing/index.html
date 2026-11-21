@@ -303,6 +303,20 @@
     .step-n { display: inline-block; background: var(--red); color: #fff; border-radius: 999px; padding: 2px 12px; font-size: .8rem; font-weight: 600; margin-bottom: 8px; }
     .step-box h4 { font-size: 1.15rem; font-weight: 600; margin-bottom: 4px; }
     .step-box > p { color: var(--muted); margin-bottom: 16px; font-size: .95rem; }
+    .warn { background: #fff; border: 2px dashed var(--red); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; }
+    .warn b { display: block; color: var(--red); margin-bottom: 2px; }
+    .warn span { color: var(--muted); font-size: .93rem; }
+    .back-banner {
+      position: fixed; left: 50%; top: 86px; transform: translateX(-50%); z-index: 70; width: min(560px, 92%);
+      background: var(--ink); color: #fff; border-radius: 18px; padding: 16px 18px; box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      display: flex; gap: 14px; align-items: center;
+    }
+    .back-banner[hidden] { display: none; }
+    .back-banner p { flex: 1; font-size: .95rem; }
+    .back-banner b { display: block; font-size: 1.05rem; }
+    .back-banner button { background: var(--red); color: #fff; border: none; border-radius: 999px; padding: 10px 16px; font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,51,51,.5); } 50% { box-shadow: 0 0 0 10px rgba(255,51,51,0); } }
+    .step-box.attention { outline: 2px solid var(--red); animation: pulse 1.2s ease 3; }
     .confirm-list { display: grid; gap: 10px; margin-bottom: 18px; }
     .confirm-list label { display: flex; gap: 12px; align-items: flex-start; background: #fff; border-radius: 12px; padding: 12px 14px; cursor: pointer; border: 1.5px solid transparent; }
     .confirm-list label:has(input:checked) { border-color: var(--red); }
@@ -779,6 +793,10 @@
               <span class="step-n">Paso 1</span>
               <h4>Rellena primero la afiliación online de Pepper</h4>
               <p>Completa el alta en el portal oficial de Pepper y firma el contrato.</p>
+              <div class="warn">
+                <b>Importante: cuando termines, vuelve a esta página</b>
+                <span>La afiliación se abre en otra pestaña. Al terminarla, regresa aquí y marca en el <strong>Paso 2</strong> que ya lo has enviado para continuar. Tu progreso se guarda aunque cierres la página.</span>
+              </div>
               <a class="btn btn-primary" id="afilBtn" href="https://afiliacion.pepperfinance.es/" target="_blank" rel="noopener">Abrir afiliación de Pepper</a>
             </div>
 
@@ -841,6 +859,11 @@
   <a class="float-wa js-wa" href="https://wa.me/34679510923" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp al 679 510 923">
     <svg aria-hidden="true"><use href="#i-wa"/></svg>
   </a>
+
+  <div class="back-banner" id="backBanner" role="status" hidden>
+    <p><b>¿Ya has terminado la afiliación?</b>Marca que lo has enviado para continuar con tu alta.</p>
+    <button type="button" id="backGo">Continuar</button>
+  </div>
 
   <div class="mobile-bar">
     <a class="m-call" href="tel:+34679510923">Llamar</a>
@@ -1000,7 +1023,7 @@
         notifyBtn.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(waMessage());
         notifyBtn.setAttribute('aria-disabled', all ? 'false' : 'true');
         notifyHint.textContent = all ? 'Si WhatsApp no se ha abierto, pulsa el botón.' : 'Marca las 4 casillas para continuar.';
-        if (all) setProgress(4);
+        if (all) { setProgress(4); document.getElementById('backBanner').hidden = true; }
         if (all && fromUser) {
           // Se abre WhatsApp automáticamente con el aviso ya escrito
           window.open(notifyBtn.href, '_blank', 'noopener');
@@ -1009,9 +1032,32 @@
         }
       }
 
-      boxes.forEach(function (b) { b.addEventListener('change', function () { updateConfirm(true); }); });
+      boxes.forEach(function (b) { b.addEventListener('change', function () { document.getElementById('backBanner').hidden = true; updateConfirm(true); }); });
       notifyBtn.addEventListener('click', function () { document.getElementById('finalOk').hidden = false; });
-      document.getElementById('afilBtn').addEventListener('click', function () { save({ afil: true }); setProgress(3); });
+      var ORIGINAL_TITLE = document.title;
+      var banner = document.getElementById('backBanner');
+      var confirmBox = document.getElementById('confirmBox');
+      function allChecked() { return Array.prototype.every.call(boxes, function (b) { return b.checked; }); }
+      function goConfirm() {
+        banner.hidden = true;
+        confirmBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        confirmBox.classList.remove('attention'); void confirmBox.offsetWidth; confirmBox.classList.add('attention');
+      }
+      function onReturn() {
+        var s = load();
+        if (!s || !s.afil || allChecked() || onb.hidden) return;
+        document.title = ORIGINAL_TITLE;
+        banner.hidden = false;
+        goConfirm(); banner.hidden = false;
+      }
+      document.getElementById('afilBtn').addEventListener('click', function () {
+        save({ afil: true }); setProgress(3);
+        // Recordatorio en la pestaña mientras está en el portal de afiliación
+        document.title = '⏳ Vuelve aquí al terminar la afiliación | Pepper';
+      });
+      document.getElementById('backGo').addEventListener('click', goConfirm);
+      document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') onReturn(); });
+      window.addEventListener('focus', onReturn);
       document.getElementById('resetOnb').addEventListener('click', function () {
         try { localStorage.removeItem(STORE); } catch (err) {}
         lead = null; boxes.forEach(function (b) { b.checked = false; });
@@ -1025,6 +1071,7 @@
         lead = saved.lead;
         showOnboarding();
         if (saved.notified) document.getElementById('finalOk').hidden = false;
+        else if (saved.afil) setTimeout(onReturn, 700);
       }
     })();
   </script>
