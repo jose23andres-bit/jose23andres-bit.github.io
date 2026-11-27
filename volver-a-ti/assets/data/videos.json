@@ -1,8 +1,20 @@
 {
   "channelId": "UCTq2U_TT7BjBU3QTsp5ah0Q",
   "live": false,
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "videos": [
+    {
+      "id": "Q13kmRHrVP8",
+      "title": "Qué hacer cuando estás estresada 💜 #Shorts",
+      "published": "2026-11-27T02:39:17+00:00",
+      "series": "guiada"
+    },
+    {
+      "id": "DVzNS_hN8sk",
+      "title": "Música 432 Hz para Calmar la Mente 🌲 Bosque al Amanecer · 1 Hora para Dormir y Meditar",
+      "published": "2026-11-26T20:49:14+00:00",
+      "series": "dormir"
+    },
     {
       "id": "gGERa4KXVQA",
       "title": "Respira conmigo 🌸 Inhala 4 · Sostén 2 · Exhala 6 #Shorts",
@@ -62,18 +74,6 @@
       "title": "963 Hz Frecuencia de los Dioses ✨ Geometría Sagrada · Activa tu Chakra Corona",
       "published": "2026-11-24T05:22:32+00:00",
       "series": "chakras"
-    },
-    {
-      "id": "_VuVmgSkVzw",
-      "title": "Cómo manifestar lo que deseas 💜 #Shorts",
-      "published": "2026-11-24T04:36:28+00:00",
-      "series": "guiada"
-    },
-    {
-      "id": "IvGBWqeoPhY",
-      "title": "Lluvia Suave para Dormir Profundamente 🌧️ Ondas Delta · 1 Hora para Dormir y Meditar",
-      "published": "2026-11-23T22:35:20+00:00",
-      "series": "dormir"
     }
   ]
 }
